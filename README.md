@@ -1,0 +1,47 @@
+# Getting started: custom Vividstasis songs
+
+Build a custom song from an audio file, a **6K osu!mania `.osu` chart**, and the unaltered `data.win` supplied with this game build.
+
+## Requirements
+
+- Python 3.11 or newer.
+- FFmpeg with the `libvorbis` encoder available on your PATH.
+- UndertaleModTool CLI at `./UndertaleMTCLI`, relative to the directory you run the command from. Use `--cli /path/to/UndertaleModCli` to override it.
+- The original game files. The patcher checks the archive hash and rejects other builds or previously patched archives.
+
+## Build your song
+
+From this directory, run:
+
+```sh
+python tools/patch_custom_song.py \
+  /path/to/music.mp3 \
+  /path/to/chart.osu \
+  vividstasis/data.win \
+  --output-dir custom-build \
+  --chart-id my_song \
+  --bump-both
+```
+
+Choose a new output directory for each build. Title, artist and designer come from the chart; override them with `--title`, `--artist` and `--designer`. Use `--level 8` to set the displayed difficulty.
+
+Source lanes **1 and 6** become left/right bumpers. Lanes **2–5** become the four normal lanes, preserving holds. Choose how bumper holds are converted:
+
+- `--bump-start`: one bumper at the hold start.
+- `--bump-both`: bumpers at the start and end.
+- `--reject-bump-holds`: reject them; this is the default when no option is given.
+
+Use audio that matches the chart's timeline, including leading silence. The converter does not transfer osu scroll-speed changes, hitsounds or storyboard effects.
+
+## Install and play
+
+1. Make a copy of the **complete original game directory**.
+2. Copy `custom-build/data.win` into that copy, replacing its archive.
+3. Merge `custom-build/Charts/` into that copy's `Charts/` directory, preserving existing charts.
+4. Launch the copied game and open the **Custom Charts** pack.
+
+The three base difficulties contain the same input chart. Custom playback uses GameMaker audio and skips the stock results screen, returning to song select. This version adds one custom song per clean build.
+
+The builder has passed synthetic compilation, saved-archive, audio and chart checks. **In-game playback has not yet been verified here.** Test with a copied game and backed-up profile. Build logs and generated patch code are in `custom-build/build/`.
+
+For more detail, see [the builder guide](docs/BUILD_CUSTOM_SONG.md), [chart registration](docs/CHART_REGISTRATION.md), [custom audio](docs/CUSTOM_AUDIO.md), and [the VSB format](docs/VSB_FORMAT.md).

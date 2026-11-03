@@ -11,7 +11,7 @@ from osu_to_vsb import convert
 from vsb import parse_chart
 
 SOURCE_SHA256 = '73e98f6c77f66675af9ce5cc52e4710457e4eefc82e91ef245b7d9ba12c15e45'
-DEFAULT_CLI = '/home/porta/Code/UndertaleModTool/CLI/UndertaleModCli'
+DEFAULT_CLI = './UndertaleMTCLI'
 
 
 def sha256(path):
