@@ -1,1 +1,1 @@
-((i == 3 && custom_apotheosis_active) ? "" : get_grade_string(get_score_grade(global.highscores.normal[song.song_id][i].score)))
+get_grade_string(get_score_grade(global.highscores.normal[song.song_id][i].score))

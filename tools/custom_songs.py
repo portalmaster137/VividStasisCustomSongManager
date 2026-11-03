@@ -10,6 +10,8 @@ from pathlib import Path
 
 DIFFICULTIES = ('opening', 'middle', 'finale', 'encore')
 PACKAGE_DIFFICULTIES = DIFFICULTIES + ('apotheosis',)
+# PRELUDE keeps the stock engine ID 4; package order is a display order.
+DIFFICULTY_IDS = dict(zip(PACKAGE_DIFFICULTIES, (0, 1, 2, 3, 5)))
 LIMIT = 1024 ** 3
 
 
@@ -93,8 +95,6 @@ class Package:
         self.asset(m['audio'])
         if m.get('jacket'): self.asset(m['jacket'])
         if not isinstance(self.charts, dict) or not self.charts or set(self.charts) - set(PACKAGE_DIFFICULTIES): raise ValueError('Invalid difficulty set')
-        if 'apotheosis' in self.charts and 'encore' not in self.charts:
-            raise ValueError('APOTHEOSIS requires an ENCORE chart to toggle from')
         for name, chart in self.charts.items():
             if not isinstance(chart, dict) or not isinstance(chart.get('file'), str):
                 raise ValueError(f'Missing chart file for {name}')

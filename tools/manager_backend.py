@@ -5,7 +5,6 @@ compiled, reopened, and verified. A write-ahead journal preserves previous bytes
 """
 from __future__ import annotations
 
-from patch_templates import render_patch
 import contextlib
 import copy
 import hashlib
@@ -21,13 +20,14 @@ import uuid
 # Existing converter/package helpers are also executable scripts using local imports.
 if str(Path(__file__).resolve().parent) not in sys.path:
     sys.path.insert(0, str(Path(__file__).resolve().parent))
+from patch_templates import render_patch
 try:
-    from custom_songs import Package, DIFFICULTIES
+    from custom_songs import Package, DIFFICULTIES, DIFFICULTY_IDS
     from osu_to_vsb import convert
     from vsb import parse_chart
     from patch_custom_song import SOURCE_SHA256, cs, gml, make_compiler_preamble, make_asset_import, sha256
 except ModuleNotFoundError:
-    from tools.custom_songs import Package, DIFFICULTIES
+    from tools.custom_songs import Package, DIFFICULTIES, DIFFICULTY_IDS
     from tools.osu_to_vsb import convert
     from tools.vsb import parse_chart
     from tools.patch_custom_song import SOURCE_SHA256, cs, gml, make_compiler_preamble, make_asset_import, sha256
@@ -48,9 +48,6 @@ def atomic_json(path, value):
 def make_multi_script(songs, work, highest_id):
     """One audio/cover import batch and one code compilation for the entire set."""
     work = Path(work)
-    for song in songs:
-        if 'apotheosis' in song['charts'] and 'encore' not in song['charts']:
-            raise ValueError('APOTHEOSIS requires an ENCORE chart in the same song')
     preamble = make_compiler_preamble(work)
     audio_imports = [
         '{\n' + make_asset_import(song['audio'], song['chart_id'], song.get('cover')) + '\n}'
@@ -61,7 +58,7 @@ def make_multi_script(songs, work, highest_id):
     )
     for i, song in enumerate(songs):
         v = f'custom_song_{i}'
-        available = ['true' if d in song['charts'] else 'false' for d in DIFFICULTIES]
+        available = ['true' if any(engine_id == i and d in song['charts'] for d,engine_id in DIFFICULTY_IDS.items()) else 'false' for i in range(6)]
         register += render_patch('manager/register_song.gml',
             v=v,
             song_id=song['song_id'],
@@ -73,9 +70,10 @@ def make_multi_script(songs, work, highest_id):
             initial_bpm=format(song['bpm'] / 2, '.12g'),
             has_encore='true' if 'encore' in song['charts'] else 'false',
             available_difficulties=', '.join(available),
-            allowed_difficulties=', '.join(str(j) for j,d in enumerate(DIFFICULTIES) if d in song["charts"]),
+            allowed_difficulties=', '.join(str(engine_id) for d,engine_id in DIFFICULTY_IDS.items() if d in song['charts']),
         )
-        for j, diff in enumerate(DIFFICULTIES, 1):
+        for diff, engine_id in DIFFICULTY_IDS.items():
+            j = engine_id + 1
             chart = song['charts'].get(diff)
             level = float(chart['level']) if chart else 0
             display = str(math.floor(level)) + ('+' if level % 1 >= .5 else '') if chart else '--'
@@ -111,8 +109,6 @@ def make_multi_script(songs, work, highest_id):
     next_new = render_patch('manager/legacy_next.gml')
     previous_new = render_patch('manager/legacy_previous.gml')
     apotheosis_metadata = render_patch('manager/apotheosis_metadata.gml')
-    apotheosis_toggle = render_patch('manager/apotheosis_toggle.gml')
-    apotheosis_hint = render_patch('manager/apotheosis_hint.gml')
     apotheosis_transition = render_patch('manager/apotheosis_transition.gml')
     finish = render_patch('manager/apply_patches.csx',
         register_cs=cs(register),
@@ -127,9 +123,6 @@ def make_multi_script(songs, work, highest_id):
         next_new_cs=cs(next_new),
         previous_old_cs=cs(previous_old),
         previous_new_cs=cs(previous_new),
-        initialize_alternate_cs=cs(chr(10)+'custom_apotheosis_active = false;'+chr(10)),
-        apotheosis_toggle_cs=cs(apotheosis_toggle),
-        apotheosis_hint_cs=cs(apotheosis_hint),
         work_cs=cs(work),
     )
     return preamble + '\n'.join(audio_imports) + finish
@@ -155,25 +148,34 @@ def make_verify_script(songs, work):
                 cover=cs(song['cover']),
             )
     markers = {
-        'gml_Object_o_transitionsong_Alarm_0': ['case \"APOTHEOSIS\":', 'song.custom_apotheosis.display', 'song.custom_apotheosis.designer', 'jacket_designer = struct_get_fallback'],
-        'gml_GlobalScript_load_song_information': ['custom_chart_song_ids', 'custom_difficulties'],
+        'gml_Object_o_transitionsong_Alarm_0': ['case "APOTHEOSIS":', 'song.custom_apotheosis.display', 'song.custom_apotheosis.designer', 'jacket_designer = struct_get_fallback'],
+        'gml_GlobalScript_load_song_information': ['custom_chart_song_ids', 'custom_difficulties', 'difficulty_constant_6'],
         'gml_GlobalScript_create_song_packs': ['Custom Charts'],
-        'gml_GlobalScript_start_song': ['custom_apotheosis', 'APOTHEOSIS', 'custom_audio_previous', 'custom_difficulties', 'arg2.clear_room = scene_songselect_old;', 'arg2.quit_room = scene_songselect_old;', 'arg2.fail_room = scene_songselect_old;'],
+        'gml_GlobalScript_start_song': ['custom_has_apotheosis', 'APOTHEOSIS', 'arg1 == 5', 'song.difficulty_display_6', 'custom_audio_previous', 'arg2.clear_room = scene_songselect_old;'],
+        'gml_Object_initiategame_Other_10': ['custom_score_record', 'global.highscores_at_load.normal[custom_score_i][5]'],
+        'gml_GlobalScript_define_options': ['custom_score_record'],
+        'gml_Object_o_profile_select_2023boot_Step_0': ['custom_score_record'],
+        'gml_GlobalScript_process_song_unlocks': ['custom_difficulties', 'custom_d < 6'],
         'gml_Object_cc_CleanUp_0': ['custom_audio_restore_pending'],
-        'gml_GlobalScript_refresh_song_objects': ['custom_difficulties'],
-        'gml_Object_o_songselect_confirm_Step_0': ['custom_diffs'],
-        'gml_Object_o_songselect_confirm_Draw_64': ['custom_difficulties'],
-        'gml_Object_o_songselect_newconfirm_Create_0': ['custom_wanted_diff', 'custom_apotheosis_active'],
-        'gml_Object_o_songselect_newconfirm_Step_0': ['difficulties[selected_difficulty].id', 'custom_apotheosis_active', 'keyboard_check_pressed'],
-        'gml_Object_o_songselect_newconfirm_Draw_0': ['TAB: switch to APOTHEOSIS', 'custom_apotheosis_active'],
-        'gml_Object_o_songselect_newconfirm_Draw_64': ['TAB: switch to APOTHEOSIS', 'custom_apotheosis_active'],
-        'gml_Object_o_songselect_main_Create_0': ['custom_actual_difficulty', 'difficulties[confirm_menu.selected_difficulty].id'],
+        'gml_GlobalScript_refresh_song_objects': ['allowed_difficulties', 'custom_d != 5', 'APOTHEOSIS'],
+        'gml_Object_o_songselect_confirm_Step_0': ['custom_diffs', 'allowed_difficulties'],
+        'gml_Object_o_songselect_confirm_Draw_64': ['allowed_difficulties'],
+        'gml_Object_o_songselect_newconfirm_Create_0': ['custom_wanted_diff', 'APOTHEOSIS'],
+        'gml_Object_o_songselect_newconfirm_Step_0': ['difficulties[selected_difficulty].id'],
+        'gml_Object_o_songselect_newconfirm_Draw_0': ['custom_spacing', 'choice.id == 5'],
+        'gml_Object_o_songselect_newconfirm_Draw_64': ['custom_spacing', 'choice.id == 5'],
+        'gml_Object_o_songselect_main_Create_0': ['custom_actual_difficulty', 'difficulties[confirm_menu.selected_difficulty].id', 'APOTHEOSIS'],
+        'gml_Object_o_songselect_main_Other_25': ['!struct_get_fallback(selected_song, "is_custom_chart", false)'],
+        'gml_Object_o_songselect_main_Draw_0': ['custom_footer_id'],
+        'gml_Object_o_songobject_main_Other_25': ['[APOTHEOSIS]', 'min(diff, 3)'],
+        'gml_Object_cc_Draw_0': ['global.df_load == "APOTHEOSIS"'],
     }
     for name, expected in markers.items():
         text += '{\nstring source = Read(' + cs(name) + ');\n'
         for marker in expected:
             text += 'if (!source.Contains(' + cs(marker) + ')) throw new Exception(' + cs('Missing saved patch ' + name + ':' + marker) + ');\n'
         text += f'File.WriteAllText(Path.Combine({cs(work)}, {cs("verified_"+name+".gml")}), source);\n}}\n'
+    text += render_patch('manager/verify_stock_scores.csx', work_cs=cs(work))
     text += render_patch('manager/verify_done.csx',
         work_cs=cs(work),
     )

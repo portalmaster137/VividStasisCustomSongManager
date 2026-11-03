@@ -15,5 +15,6 @@
     @@v@@.invalid = false;
     @@v@@.sort_artists = [@@v@@.artist];
     @@v@@.is_custom_chart = true;
+    @@v@@.custom_has_apotheosis = false;
     @@v@@.custom_difficulties = [@@available_difficulties@@];
     @@v@@.allowed_difficulties = [@@allowed_difficulties@@];

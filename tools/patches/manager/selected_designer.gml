@@ -1,1 +1,1 @@
-charter = (difficulty == 3 && custom_apotheosis_active) ? song.custom_apotheosis.designer : struct_get(song, $"note_designer_{difficulty + 1}");
+charter = struct_get(song, $"note_designer_{difficulty + 1}");

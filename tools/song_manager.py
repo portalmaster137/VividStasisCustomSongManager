@@ -248,9 +248,9 @@ class SongManagerWindow(QMainWindow):
         self.cover_preview.setMinimumHeight(80)
         editor_layout.addWidget(self.cover_preview)
         editor_layout.addWidget(QLabel('4K / 6K osu!mania charts — detected automatically'))
-        alternate_help = QLabel('APOTHEOSIS requires ENCORE. In-game: select ENCORE, then press Tab to toggle APOTHEOSIS.')
-        alternate_help.setWordWrap(True)
-        editor_layout.addWidget(alternate_help)
+        difficulty_help = QLabel('APOTHEOSIS is directly selectable for custom songs and can be supplied on its own.')
+        difficulty_help.setWordWrap(True)
+        editor_layout.addWidget(difficulty_help)
         self.charts = QTableWidget(0, 7)
         self.charts.setHorizontalHeaderLabels(['Difficulty', 'Chart file', 'Browse', 'Level', 'Designer', 'Bumper holds', 'Type'])
         self.charts.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeMode.Stretch)
@@ -659,8 +659,6 @@ class SongManagerWindow(QMainWindow):
                                  designer=self.charts.cellWidget(row, 4).text().strip(),
                                  bumper_holds=self.charts.cellWidget(row, 5).currentData())
                     metadata['charts'][difficulty] = chart
-                if 'apotheosis' in metadata['charts'] and 'encore' not in metadata['charts']:
-                    raise ValueError('APOTHEOSIS is an alternate ENCORE chart. Add an ENCORE chart before saving APOTHEOSIS.')
                 write_metadata(root / 'data.toml', metadata)
                 with Package(root) as package:
                     package.install_library(self.library, replace=self._current_id is not None)

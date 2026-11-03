@@ -1,23 +1,24 @@
 import tempfile
 import unittest
 from pathlib import Path
-from custom_songs import Package, delete_library_song, write_metadata
+from custom_songs import DIFFICULTY_IDS, Package, delete_library_song, write_metadata
 from test_custom_songs import fixture, metadata
 
 
 class LibraryActions(unittest.TestCase):
-    def test_alternate_requires_encore_and_roundtrips(self):
+    def test_package_order_preserves_reserved_prelude_engine_id(self):
+        self.assertEqual(list(DIFFICULTY_IDS.values()), [0, 1, 2, 3, 5])
+        self.assertNotIn(4, DIFFICULTY_IDS.values())
+
+    def test_standalone_apotheosis_roundtrips(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = fixture(Path(temporary)/'test')
             chart = dict(file='chart.osu', level=12)
             data = metadata(charts={'apotheosis':chart})
             write_metadata(root/'data.toml', data)
-            with self.assertRaisesRegex(ValueError, 'requires an ENCORE'): Package(root)
-            data['charts']['encore'] = dict(chart, level=10)
-            write_metadata(root/'data.toml', data)
             with Package(root) as package: package.export(Path(temporary)/'song.vsc')
             with Package(Path(temporary)/'song.vsc') as package:
-                self.assertEqual(set(package.charts), {'encore','apotheosis'})
+                self.assertEqual(set(package.charts), {'apotheosis'})
 
     def test_delete_removes_only_selected_library_entry(self):
         with tempfile.TemporaryDirectory() as temporary:
