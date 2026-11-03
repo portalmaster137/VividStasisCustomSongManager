@@ -1,0 +1,43 @@
+
+string loader = "gml_GlobalScript_load_song_information";
+Queue(loader, ReplaceOnce(Read(loader), "file_text_close(artists_file);", "file_text_close(artists_file);" + @@register_cs@@));
+string packs = "gml_GlobalScript_create_song_packs";
+Queue(packs, ReplaceOnce(Read(packs), "var all_songs = [];", @@pack_cs@@ + "var all_songs = [];"));
+string start = "gml_GlobalScript_start_song";
+string startSource = ReplaceOnce(Read(start), "global.boundary_shatter = false;\n    var song", @@launch_cs@@ + "global.boundary_shatter = false;\n    var song");
+startSource = ReplaceOnce(startSource, "if (force_chart != undefined)", @@apotheosis_metadata_cs@@ + "if (force_chart != undefined)");
+Queue(start, startSource);
+string transition = "gml_Object_o_transitionsong_Alarm_0";
+Queue(transition, ReplaceOnce(Read(transition), @"case ""PRELUDE"":", @@apotheosis_transition_cs@@ + @"case ""PRELUDE"":"));
+string clean = "gml_Object_cc_CleanUp_0";
+Queue(clean, Read(clean) + @@cleanup_cs@@);
+string select = "gml_GlobalScript_refresh_song_objects";
+Queue(select, ReplaceOnce(Read(select), "var chk = floor", @@filter_code_cs@@ + "var chk = floor"));
+string confirm = "gml_Object_o_songselect_confirm_Step_0";
+string confirmation = ReplaceOnce(Read(confirm), "if (active)", @@correction_cs@@ + "if (active)");
+confirmation = ReplaceOnce(confirmation, @@next_old_cs@@, @@next_new_cs@@);
+confirmation = ReplaceOnce(confirmation, @@previous_old_cs@@, @@previous_new_cs@@);
+Queue(confirm, confirmation);
+string draw = "gml_Object_o_songselect_confirm_Draw_64";
+Queue(draw, ReplaceOnce(Read(draw), "var unlocked = global.unlocked_songs[song.song_id][i];", "if (struct_get_fallback(song, \"is_custom_chart\", false) && !song.custom_difficulties[i]) continue;\n        var unlocked = global.unlocked_songs[song.song_id][i];"));
+string modernCreate = "gml_Object_o_songselect_newconfirm_Create_0";
+string modernCreateSource = ReplaceOnce(Read(modernCreate), "selected_difficulty = clamp(selected_difficulty, 0, array_length(difficulties) - 1);", @@include_cs:manager/select_initial_difficulty.gml@@);
+Queue(modernCreate, modernCreateSource + @@initialize_alternate_cs@@);
+string modernStep = "gml_Object_o_songselect_newconfirm_Step_0";
+string modernStepSource = ReplaceOnce(Read(modernStep), @"illustrator = song_get_info(song, ""jacket_artist"", selected_difficulty);", @@include_cs:manager/selected_jacket_artist.gml@@);
+modernStepSource = ReplaceOnce(modernStepSource, "global.unlocked_songs[song.song_id][selected_difficulty]", @@include_cs:manager/selected_unlock.gml@@);
+modernStepSource = ReplaceOnce(modernStepSource, "illustrator = song_get_info", @@apotheosis_toggle_cs@@ + "illustrator = song_get_info");
+Queue(modernStep, modernStepSource);
+string mainSelect = "gml_Object_o_songselect_main_Create_0";
+Queue(mainSelect, ReplaceOnce(Read(mainSelect), "start_song(selected_song.song_id, confirm_menu.selected_difficulty);", @@include_cs:manager/launch_from_menu.gml@@));
+foreach (string modernDraw in new[] { "gml_Object_o_songselect_newconfirm_Draw_0", "gml_Object_o_songselect_newconfirm_Draw_64" }) {
+    string render = ReplaceOnce(Read(modernDraw), @"charter = struct_get(song, $""note_designer_{difficulty + 1}"");", @@include_cs:manager/selected_designer.gml@@);
+    render = ReplaceOnce(render, @"struct_get(song, $""difficulty_display_{i + 1}"")", @@include_cs:manager/display_difficulty.gml@@);
+    render = render.Replace(@"format_score(global.highscores.normal[song.song_id][i].score)", @@include_cs:manager/display_score.gml@@);
+    render = ReplaceOnce(render, @"get_grade_string(get_score_grade(global.highscores.normal[song.song_id][i].score))", @@include_cs:manager/display_grade.gml@@);
+    int enums = render.IndexOf("\nenum ", StringComparison.Ordinal);
+    render = enums < 0 ? render + @@apotheosis_hint_cs@@ : render.Insert(enums, @@apotheosis_hint_cs@@);
+    Queue(modernDraw, render);
+}
+imports.Import();
+File.WriteAllText(Path.Combine(@@work_cs@@, "patch-applied.txt"), "Compiled all custom song patches");

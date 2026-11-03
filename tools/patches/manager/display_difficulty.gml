@@ -1,0 +1,1 @@
+((i == 3 && custom_apotheosis_active) ? song.custom_apotheosis.display : struct_get(song, $"difficulty_display_{i + 1}"))

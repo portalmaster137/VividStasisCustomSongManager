@@ -4,6 +4,8 @@ The game installation is never edited until a clean-source archive has been
 compiled, reopened, and verified. A write-ahead journal preserves previous bytes.
 """
 from __future__ import annotations
+
+from patch_templates import render_patch
 import contextlib
 import copy
 import hashlib
@@ -23,12 +25,12 @@ try:
     from custom_songs import Package, DIFFICULTIES
     from osu_to_vsb import convert
     from vsb import parse_chart
-    from patch_custom_song import SOURCE_SHA256, cs, gml, make_script, sha256
+    from patch_custom_song import SOURCE_SHA256, cs, gml, make_compiler_preamble, make_asset_import, sha256
 except ModuleNotFoundError:
     from tools.custom_songs import Package, DIFFICULTIES
     from tools.osu_to_vsb import convert
     from tools.vsb import parse_chart
-    from tools.patch_custom_song import SOURCE_SHA256, cs, gml, make_script, sha256
+    from tools.patch_custom_song import SOURCE_SHA256, cs, gml, make_compiler_preamble, make_asset_import, sha256
 
 class Cancelled(RuntimeError):
     pass
@@ -46,257 +48,112 @@ def atomic_json(path, value):
 def make_multi_script(songs, work, highest_id):
     """One audio/cover import batch and one code compilation for the entire set."""
     work = Path(work)
-    first = songs[0]
     for song in songs:
         if 'apotheosis' in song['charts'] and 'encore' not in song['charts']:
             raise ValueError('APOTHEOSIS requires an ENCORE chart in the same song')
-    # Reuse the tested import primitives, enclosing each import in its own scope.
-    templates = [make_script(s['audio'], work, s['chart_id'], s['title'], s['artist'], '', s['bpm'], 1, s.get('cover')) for s in songs]
-    preamble = templates[0].split('string name = "music_chart_', 1)[0]
-    audio_imports = []
-    for template in templates:
-        segment = 'string name = "music_chart_' + template.split('string name = "music_chart_', 1)[1].split('string loader = ', 1)[0]
-        audio_imports.append('{\n' + segment + '\n}')
-    register = f'''\nglobal.custom_chart_song_ids = [];
-    for (var fill = array_length(global.song_list); fill <= {highest_id}; fill++) {{
-        global.song_list[fill] = getGenericInvalidSong(fill);
-    }}
-    global.custom_audio_restore_pending = false;
-'''
+    preamble = make_compiler_preamble(work)
+    audio_imports = [
+        '{\n' + make_asset_import(song['audio'], song['chart_id'], song.get('cover')) + '\n}'
+        for song in songs
+    ]
+    register = render_patch('manager/initialize_catalog.gml',
+        highest_id=highest_id,
+    )
     for i, song in enumerate(songs):
         v = f'custom_song_{i}'
         available = ['true' if d in song['charts'] else 'false' for d in DIFFICULTIES]
-        register += f'''\n    var {v} = getGenericSong({song['song_id']});
-    {v}.name = {gml(song['title'])};
-    {v}.formatted_name = {v}.name;
-    {v}.artist = {gml(song['artist'])};
-    {v}.jacket_artist = {gml(song.get('jacket_artist', 'Unknown'))};
-    {v}.chart_id = "{song['chart_id']}";
-    {v}.audio_id = asset_get_index("music_chart_{song['chart_id']}");
-    {v}.preview_id = {v}.audio_id;
-    {f'{v}.jacket = asset_get_index("song_{song["chart_id"]}");' if song.get('cover') else ''}
-    {v}.bpm_display = "{song['bpm'] / 2:.12g}";
-    {v}.version = "6.2.2";
-    {v}.has_encore = {'true' if 'encore' in song['charts'] else 'false'};
-    {v}.is_published = true;
-    {v}.invalid = false;
-    {v}.sort_artists = [{v}.artist];
-    {v}.is_custom_chart = true;
-    {v}.custom_difficulties = [{', '.join(available)}];
-    {v}.allowed_difficulties = [{', '.join(str(j) for j,d in enumerate(DIFFICULTIES) if d in song["charts"])}];
-'''
+        register += render_patch('manager/register_song.gml',
+            v=v,
+            song_id=song['song_id'],
+            title_gml=gml(song['title']),
+            artist_gml=gml(song['artist']),
+            jacket_artist_gml=gml(song.get('jacket_artist', 'Unknown')),
+            chart_id=song['chart_id'],
+            jacket_assignment=f'{v}.jacket = asset_get_index("song_{song["chart_id"]}");' if song.get('cover') else '',
+            initial_bpm=format(song['bpm'] / 2, '.12g'),
+            has_encore='true' if 'encore' in song['charts'] else 'false',
+            available_difficulties=', '.join(available),
+            allowed_difficulties=', '.join(str(j) for j,d in enumerate(DIFFICULTIES) if d in song["charts"]),
+        )
         for j, diff in enumerate(DIFFICULTIES, 1):
             chart = song['charts'].get(diff)
             level = float(chart['level']) if chart else 0
             display = str(math.floor(level)) + ('+' if level % 1 >= .5 else '') if chart else '--'
             designer = chart.get('designer', 'Unknown') if chart else ''
-            register += f'    {v}.difficulty_constant_{j} = {level:.12g};\n    {v}.difficulty_display_{j} = {gml(display)};\n    {v}.note_designer_{j} = {gml(designer)};\n'
+            register += render_patch('manager/register_difficulty.gml',
+                v=v,
+                slot=j,
+                level=format(level, '.12g'),
+                display_gml=gml(display),
+                designer_gml=gml(designer),
+            )
         if 'apotheosis' in song['charts']:
             alternate = song['charts']['apotheosis']
             level = float(alternate['level'])
             display = str(math.floor(level)) + ('+' if level % 1 >= .5 else '')
-            register += f'    {v}.custom_apotheosis = {{level: {level:.12g}, display: {gml(display)}, designer: {gml(alternate.get("designer", "Unknown"))}}};\n'
-        register += f'    global.song_list[{song["song_id"]}] = {v};\n    array_push(global.custom_chart_song_ids, {song["song_id"]});\n'
-    pack = '''if (arg0 == -1) {
-        array_push(global.song_packs, {name: "Custom Charts",
-            songs: global.custom_chart_song_ids, color1: 16777215,
-            color2: 16724480, description: "Local custom song library."});
-    }
-    '''
-    launch = '''
-    if (variable_global_exists("custom_audio_restore_pending") && global.custom_audio_restore_pending) {
-        global.op_use_gamemaker_audio = global.custom_audio_previous;
-        global.custom_audio_restore_pending = false;
-    }
-    var custom_start_song = global.song_list[arg0];
-    if (struct_get_fallback(custom_start_song, "is_custom_chart", false)) {
-        if (arg1 < 0 || arg1 > 3 || !custom_start_song.custom_difficulties[arg1]) {
-            for (var cd = 0; cd < 4; cd++) {
-                if (custom_start_song.custom_difficulties[cd]) { arg1 = cd; break; }
-            }
-        }
-        if (arg1 == 3 && struct_exists(custom_start_song, "custom_apotheosis") && struct_get_fallback(arg2, "custom_apotheosis", false)) {
-            arg2.force_chart = "APOTHEOSIS";
-        }
-        global.custom_audio_previous = global.op_use_gamemaker_audio;
-        global.custom_audio_restore_pending = true;
-        global.op_use_gamemaker_audio = true;
-        arg2.actually_skip_results = true;
-        arg2.clear_room = scene_songselect_old;
-        arg2.fail_room = scene_songselect_old;
-        arg2.quit_room = scene_songselect_old;
-        arg2.gameplay_room = scene_gameplay;
-    }
-    '''
-    cleanup = '''
-if (variable_global_exists("custom_audio_restore_pending") && global.custom_audio_restore_pending) {
-    global.op_use_gamemaker_audio = global.custom_audio_previous;
-    global.custom_audio_restore_pending = false;
-}
-'''
+            register += render_patch(
+                'manager/register_apotheosis.gml', variable=v,
+                level=format(level, '.12g'), display=gml(display),
+                designer=gml(alternate.get('designer', 'Unknown')),
+            )
+        register += render_patch('manager/publish_song.gml',
+            song_id=song["song_id"],
+            v=v,
+        )
+    pack = render_patch('manager/pack.gml')
+    launch = render_patch('manager/launch.gml')
+    cleanup = render_patch('manager/cleanup.gml')
     # Filtering inside the shared insertion helper also covers Encore fallback.
-    filter_code = '''if (struct_get_fallback(song_list[arg2[0]], "is_custom_chart", false) && !song_list[arg2[0]].custom_difficulties[arg2[1]]) return;
-            '''
-    correction = '''var custom_diffs = struct_get_fallback(song, "custom_difficulties", [true, true, true, true]);
-if (!custom_diffs[difficulty]) {
-    for (var cd = 0; cd < 4; cd++) { if (custom_diffs[cd]) { difficulty = cd; break; } }
-}
-'''
-    next_old = '''if (difficulty == maxd)
-                    {
-                        difficulty = 0;
-                    }
-                    else
-                    {
-                        difficulty++;
-                    }'''
-    previous_old = '''if (difficulty == 0)
-                    {
-                        difficulty = maxd;
-                    }
-                    else
-                    {
-                        difficulty--;
-                    }'''
-    next_new = '''repeat (4) {
-                        difficulty = (difficulty + 1) % (maxd + 1);
-                        if (custom_diffs[difficulty]) break;
-                    }'''
-    previous_new = '''repeat (4) {
-                        difficulty = (difficulty + maxd) % (maxd + 1);
-                        if (custom_diffs[difficulty]) break;
-                    }'''
-    apotheosis_metadata = '''
-    if (struct_get_fallback(song, "is_custom_chart", false) && arg1 == 3 && struct_exists(song, "custom_apotheosis") && struct_get_fallback(arg2, "custom_apotheosis", false)) {
-        global.songdifficulty = song.custom_apotheosis.display;
-        global.songdifficultyconstant = song.custom_apotheosis.level;
-        global.note_designer = song.custom_apotheosis.designer;
-    }
-    '''
-    apotheosis_toggle = '''
-if (struct_exists(song, "custom_apotheosis")) {
-    var custom_encore_selected = difficulties[selected_difficulty].id == 3;
-    if (!custom_encore_selected) custom_apotheosis_active = false;
-    if (custom_encore_selected && keyboard_check_pressed(vk_tab)) {
-        custom_apotheosis_active = !custom_apotheosis_active;
-        play_se(sfx_songsel_diff);
-    }
-    for (var ca = 0; ca < array_length(difficulties); ca++) {
-        if (difficulties[ca].id == 3) {
-            difficulties[ca].name = custom_apotheosis_active ? "APOTHEOSIS" : "ENCORE";
-            difficulties[ca].value = custom_apotheosis_active ? song.custom_apotheosis.display : song.difficulty_display_4;
-            difficulties[ca].charter = custom_apotheosis_active ? song.custom_apotheosis.designer : song.note_designer_4;
-            diff_opt.choices[ca] = difficulties[ca].name;
-        }
-    }
-    diff_names[3] = custom_apotheosis_active ? "APOTHEOSIS" : "ENCORE";
-}
-'''
-    apotheosis_hint = '''
-if (struct_exists(song, "custom_apotheosis") && difficulties[selected_difficulty].id == 3) {
-    draw_set_default();
-    draw_set_alpha(image_alpha);
-    draw_set_font(global.default_font);
-    draw_set_halign(fa_left);
-    draw_text_outlined(4, 168, custom_apotheosis_active ? "TAB: switch to ENCORE" : "TAB: switch to APOTHEOSIS", c_white, c_black);
-}
-'''
-    apotheosis_transition = '''
-        case "APOTHEOSIS":
-            diff_str = "APOTHEOSIS";
-            diff_num = "Level " + song.custom_apotheosis.display;
-            chart_designer = song.custom_apotheosis.designer;
-            jacket_designer = struct_get_fallback(song, "jacket_artist", "Unknown");
-            diff_col = 16711858;
-            break;
-'''
-    finish = f'''
-string loader = "gml_GlobalScript_load_song_information";
-Queue(loader, ReplaceOnce(Read(loader), "file_text_close(artists_file);", "file_text_close(artists_file);" + {cs(register)}));
-string packs = "gml_GlobalScript_create_song_packs";
-Queue(packs, ReplaceOnce(Read(packs), "var all_songs = [];", {cs(pack)} + "var all_songs = [];"));
-string start = "gml_GlobalScript_start_song";
-string startSource = ReplaceOnce(Read(start), "global.boundary_shatter = false;\\n    var song", {cs(launch)} + "global.boundary_shatter = false;\\n    var song");
-startSource = ReplaceOnce(startSource, "if (force_chart != undefined)", {cs(apotheosis_metadata)} + "if (force_chart != undefined)");
-Queue(start, startSource);
-string transition = "gml_Object_o_transitionsong_Alarm_0";
-Queue(transition, ReplaceOnce(Read(transition), {cs('case "PRELUDE":')}, {cs(apotheosis_transition)} + {cs('case "PRELUDE":')}));
-string clean = "gml_Object_cc_CleanUp_0";
-Queue(clean, Read(clean) + {cs(cleanup)});
-string select = "gml_GlobalScript_refresh_song_objects";
-Queue(select, ReplaceOnce(Read(select), "var chk = floor", {cs(filter_code)} + "var chk = floor"));
-string confirm = "gml_Object_o_songselect_confirm_Step_0";
-string confirmation = ReplaceOnce(Read(confirm), "if (active)", {cs(correction)} + "if (active)");
-confirmation = ReplaceOnce(confirmation, {cs(next_old)}, {cs(next_new)});
-confirmation = ReplaceOnce(confirmation, {cs(previous_old)}, {cs(previous_new)});
-Queue(confirm, confirmation);
-string draw = "gml_Object_o_songselect_confirm_Draw_64";
-Queue(draw, ReplaceOnce(Read(draw), "var unlocked = global.unlocked_songs[song.song_id][i];", "if (struct_get_fallback(song, \\"is_custom_chart\\", false) && !song.custom_difficulties[i]) continue;\\n        var unlocked = global.unlocked_songs[song.song_id][i];"));
-string modernCreate = "gml_Object_o_songselect_newconfirm_Create_0";
-string modernCreateSource = ReplaceOnce(Read(modernCreate), "selected_difficulty = clamp(selected_difficulty, 0, array_length(difficulties) - 1);", {cs('if (struct_get_fallback(song, "is_custom_chart", false)) {\n            var custom_wanted_diff = selected_difficulty;\n            selected_difficulty = 0;\n            for (var ci = 0; ci < array_length(difficulties); ci++) {\n                if (difficulties[ci] == custom_wanted_diff) { selected_difficulty = ci; break; }\n            }\n        } else {\n            selected_difficulty = clamp(selected_difficulty, 0, array_length(difficulties) - 1);\n        }')});
-Queue(modernCreate, modernCreateSource + {cs(chr(10)+'custom_apotheosis_active = false;'+chr(10))});
-string modernStep = "gml_Object_o_songselect_newconfirm_Step_0";
-string modernStepSource = ReplaceOnce(Read(modernStep), {cs('illustrator = song_get_info(song, "jacket_artist", selected_difficulty);')}, {cs('illustrator = song_get_info(song, "jacket_artist", struct_get_fallback(song, "is_custom_chart", false) ? difficulties[selected_difficulty].id : selected_difficulty);')});
-modernStepSource = ReplaceOnce(modernStepSource, "global.unlocked_songs[song.song_id][selected_difficulty]", {cs('global.unlocked_songs[song.song_id][struct_get_fallback(song, "is_custom_chart", false) ? difficulties[selected_difficulty].id : selected_difficulty]')});
-modernStepSource = ReplaceOnce(modernStepSource, "illustrator = song_get_info", {cs(apotheosis_toggle)} + "illustrator = song_get_info");
-Queue(modernStep, modernStepSource);
-string mainSelect = "gml_Object_o_songselect_main_Create_0";
-Queue(mainSelect, ReplaceOnce(Read(mainSelect), "start_song(selected_song.song_id, confirm_menu.selected_difficulty);", {cs('var custom_actual_difficulty = confirm_menu.selected_difficulty;\n    var custom_start_args = {};\n    if (struct_get_fallback(selected_song, "is_custom_chart", false)) {\n        custom_actual_difficulty = confirm_menu.difficulties[confirm_menu.selected_difficulty].id;\n        if (custom_actual_difficulty == 3 && struct_exists(selected_song, "custom_apotheosis") && confirm_menu.custom_apotheosis_active) {\n            custom_start_args.force_chart = "APOTHEOSIS";\n            custom_start_args.custom_apotheosis = true;\n        }\n    }\n    start_song(selected_song.song_id, custom_actual_difficulty, custom_start_args);')}));
-foreach (string modernDraw in new[] {{ "gml_Object_o_songselect_newconfirm_Draw_0", "gml_Object_o_songselect_newconfirm_Draw_64" }}) {{
-    string render = ReplaceOnce(Read(modernDraw), {cs('charter = struct_get(song, $"note_designer_{difficulty + 1}");')}, {cs('charter = (difficulty == 3 && custom_apotheosis_active) ? song.custom_apotheosis.designer : struct_get(song, $"note_designer_{difficulty + 1}");')});
-    render = ReplaceOnce(render, {cs('struct_get(song, $"difficulty_display_{i + 1}")')}, {cs('((i == 3 && custom_apotheosis_active) ? song.custom_apotheosis.display : struct_get(song, $"difficulty_display_{i + 1}"))')});
-    render = render.Replace({cs('format_score(global.highscores.normal[song.song_id][i].score)')}, {cs('((i == 3 && custom_apotheosis_active) ? "--" : format_score(global.highscores.normal[song.song_id][i].score))')});
-    render = ReplaceOnce(render, {cs('get_grade_string(get_score_grade(global.highscores.normal[song.song_id][i].score))')}, {cs('((i == 3 && custom_apotheosis_active) ? "" : get_grade_string(get_score_grade(global.highscores.normal[song.song_id][i].score)))')});
-    int enums = render.IndexOf("\\nenum ", StringComparison.Ordinal);
-    render = enums < 0 ? render + {cs(apotheosis_hint)} : render.Insert(enums, {cs(apotheosis_hint)});
-    Queue(modernDraw, render);
-}}
-imports.Import();
-File.WriteAllText(Path.Combine({cs(work)}, "patch-applied.txt"), "Compiled all custom song patches");
-'''
+    filter_code = render_patch('manager/filter_difficulties.gml')
+    correction = render_patch('manager/correct_legacy_selection.gml')
+    next_old = render_patch('manager/legacy_next_anchor.gml')
+    previous_old = render_patch('manager/legacy_previous_anchor.gml')
+    next_new = render_patch('manager/legacy_next.gml')
+    previous_new = render_patch('manager/legacy_previous.gml')
+    apotheosis_metadata = render_patch('manager/apotheosis_metadata.gml')
+    apotheosis_toggle = render_patch('manager/apotheosis_toggle.gml')
+    apotheosis_hint = render_patch('manager/apotheosis_hint.gml')
+    apotheosis_transition = render_patch('manager/apotheosis_transition.gml')
+    finish = render_patch('manager/apply_patches.csx',
+        register_cs=cs(register),
+        pack_cs=cs(pack),
+        launch_cs=cs(launch),
+        apotheosis_metadata_cs=cs(apotheosis_metadata),
+        apotheosis_transition_cs=cs(apotheosis_transition),
+        cleanup_cs=cs(cleanup),
+        filter_code_cs=cs(filter_code),
+        correction_cs=cs(correction),
+        next_old_cs=cs(next_old),
+        next_new_cs=cs(next_new),
+        previous_old_cs=cs(previous_old),
+        previous_new_cs=cs(previous_new),
+        initialize_alternate_cs=cs(chr(10)+'custom_apotheosis_active = false;'+chr(10)),
+        apotheosis_toggle_cs=cs(apotheosis_toggle),
+        apotheosis_hint_cs=cs(apotheosis_hint),
+        work_cs=cs(work),
+    )
     return preamble + '\n'.join(audio_imports) + finish
 
 
 def make_verify_script(songs, work):
-    text = '''using System;
-using System.IO;
-using System.Linq;
-using UndertaleModLib;
-using UndertaleModLib.Decompiler;
-EnsureDataLoaded();
-var context = new GlobalDecompileContext(Data);
-string Read(string name) {
-    var code = Data.Code.ByName(name);
-    if (code == null) throw new Exception("Missing saved code " + name);
-    return new Underanalyzer.Decompiler.DecompileContext(context, code, Data.ToolInfo.DecompilerSettings).DecompileToString();
-}
-'''
+    text = render_patch('manager/verify_preamble.csx')
     expected_audio = ', '.join(cs('music_chart_'+s['chart_id']) for s in songs)
     expected_covers = ', '.join(cs('song_'+s['chart_id']) for s in songs if s.get('cover'))
-    text += f'''var expectedAudio = new string[] {{ {expected_audio} }};
-var expectedCovers = new string[] {{ {expected_covers} }};
-if (!Data.Sounds.Where(s => s?.Name?.Content?.StartsWith("music_chart_custom_manager_", StringComparison.Ordinal) == true).Select(s => s.Name.Content).OrderBy(s => s).SequenceEqual(expectedAudio.OrderBy(s => s))) throw new Exception("Saved audio selection differs");
-if (!Data.Sprites.Where(s => s?.Name?.Content?.StartsWith("song_custom_manager_", StringComparison.Ordinal) == true).Select(s => s.Name.Content).OrderBy(s => s).SequenceEqual(expectedCovers.OrderBy(s => s))) throw new Exception("Saved jacket selection differs");
-'''
+    text += render_patch('manager/verify_selection.csx',
+        expected_audio=expected_audio,
+        expected_covers=expected_covers,
+    )
     for song in songs:
         cid = song['chart_id']
-        text += f'''{{
-var sound = Data.Sounds.ByName("music_chart_{cid}");
-if (sound == null || sound.GroupID != 0 || sound.AudioFile == null || !sound.AudioFile.Data.SequenceEqual(File.ReadAllBytes({cs(song['audio'])}))) throw new Exception("Audio verification failed: {cid}");
-if (!Read("gml_GlobalScript_load_song_information").Contains("music_chart_{cid}")) throw new Exception("Missing song registration: {cid}");
-}}
-'''
+        text += render_patch('manager/verify_audio.csx',
+            cid=cid,
+            audio=cs(song['audio']),
+        )
         if song.get('cover'):
-            text += f'''{{
-var sprite = Data.Sprites.ByName("song_{cid}");
-if (sprite == null || sprite.Width != 100 || sprite.Height != 100 || sprite.Textures.Count != 1) throw new Exception("Invalid saved cover: {cid}");
-var page = sprite.Textures[0].Texture;
-if (page == null || page.SourceWidth != 100 || page.SourceHeight != 100 || page.TexturePage == null) throw new Exception("Invalid saved texture page");
-using var output = new MemoryStream();
-page.TexturePage.TextureData.Image.SavePng(output);
-if (!output.ToArray().SequenceEqual(File.ReadAllBytes({cs(song['cover'])}))) throw new Exception("Saved cover differs: {cid}");
-}}
-'''
+            text += render_patch('manager/verify_cover.csx',
+                cid=cid,
+                cover=cs(song['cover']),
+            )
     markers = {
         'gml_Object_o_transitionsong_Alarm_0': ['case \"APOTHEOSIS\":', 'song.custom_apotheosis.display', 'song.custom_apotheosis.designer', 'jacket_designer = struct_get_fallback'],
         'gml_GlobalScript_load_song_information': ['custom_chart_song_ids', 'custom_difficulties'],
@@ -317,7 +174,9 @@ if (!output.ToArray().SequenceEqual(File.ReadAllBytes({cs(song['cover'])}))) thr
         for marker in expected:
             text += 'if (!source.Contains(' + cs(marker) + ')) throw new Exception(' + cs('Missing saved patch ' + name + ':' + marker) + ');\n'
         text += f'File.WriteAllText(Path.Combine({cs(work)}, {cs("verified_"+name+".gml")}), source);\n}}\n'
-    text += f'File.WriteAllText(Path.Combine({cs(work)}, "verified.txt"), "Saved archive reopened; all imported assets and compiled patches verified");\n'
+    text += render_patch('manager/verify_done.csx',
+        work_cs=cs(work),
+    )
     return text
 
 

@@ -1,0 +1,10 @@
+string loader = "gml_GlobalScript_load_song_information";
+Queue(loader, ReplaceOnce(Read(loader), "file_text_close(artists_file);", "file_text_close(artists_file);" + @@register_cs@@));
+string packs = "gml_GlobalScript_create_song_packs";
+Queue(packs, ReplaceOnce(Read(packs), "var all_songs = [];", @@pack_cs@@ + "var all_songs = [];"));
+string start = "gml_GlobalScript_start_song";
+Queue(start, ReplaceOnce(Read(start), "global.boundary_shatter = false;\n    var song", @@launch_cs@@ + "global.boundary_shatter = false;\n    var song"));
+string clean = "gml_Object_cc_CleanUp_0";
+Queue(clean, Read(clean) + @@cleanup_cs@@);
+imports.Import();
+File.WriteAllText(Path.Combine(@@work_cs@@, "patch-applied.txt"), "Compiled all custom song patches");
