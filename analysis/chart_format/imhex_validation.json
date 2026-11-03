@@ -1,0 +1,3234 @@
+{
+  "runtime": "/tmp/vsb-plcli-build/cli/plcli",
+  "runtime_sha256": "e37bc5b10c3b553aa2010fc5dca1b873c0803fccd081a00bce16b61cc34de931",
+  "runtime_source": "Cached ImHex 1.38.1 PatternLanguage, standalone plcli build",
+  "pattern": "patterns/vividstasis_vsb.hexpat",
+  "pattern_sha256": "016ea628c16fb63c2ae75dcb4849c56008b4f9c4f8a7d2b553f49cee395892f8",
+  "includes": "/home/porta/.cache/yay/imhex/src/ImHex-Patterns-ImHex-v1.38.1/includes",
+  "files": 805,
+  "passed": 805,
+  "failures": [],
+  "elapsed_seconds": 19.29,
+  "results": [
+    {
+      "path": "vividstasis/Charts/00/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/00/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/00/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/00/SHATTER.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/00/SLUMPAGE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/31vc1/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/31vc1/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/31vc1/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/321/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/321/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/321/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/89momentum/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/89momentum/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/89momentum/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/accelerondo/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/acolyte/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/acolyte/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/acolyte/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/acolyte/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/aleph/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/aleph/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/aleph/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/anarchic/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/anarchic/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/anarchic/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/anarchic/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/angelstar/SHATTER.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/angelstarplus/SHATTER.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/angelswindow/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/angelswindow/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/angelswindow/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/angelswindow/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/apocalypse/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/apocalypse/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/apocalypse/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/apocalypse/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/apollo/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/apollo/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/apollo/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/aquaregia/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/aquaregia/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/aquaregia/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/arcady/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/arcady/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/arcady/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/astellion/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/astellion/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/astellion/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/astellion/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/asymmetry/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/asymmetry/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/asymmetry/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/attheend/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/attheend/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/attheend/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/attractor/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/attractor/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/attractor/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/avalon/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/avalon/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/avalon/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/avalon/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/avalon/SHATTER.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/badsecret/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/badsecret/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/badsecret/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/badsecret/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/bardess/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/bardess/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/bardess/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/biet/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/biet/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/biet/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/bloom/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/bloom/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/bloom/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/bloom/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/bpm/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/bpm/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/bpm/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/brokenheart/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/brokenheart/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/brokenheart/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/c3c/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/c3c/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/c3c/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/c3c/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/calming/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/calypso/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/calypso/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/calypso/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/calypso/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/candy/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/candy/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/candy/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/cd/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/cd/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/cd/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/cd/SHATTER.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/chrono/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/chrono/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/chrono/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/chrono/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/chronomia/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/chronomia/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/chronomia/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/chronomia/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/cityride/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/cityride/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/cityride/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/claudia/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/claudia/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/claudia/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_25c1/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_25c1/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_25c1/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_25c1/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_7boss/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_7boss/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_7boss/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_7boss/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_8boss1/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_8boss1/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_8boss1/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_8boss2/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_8boss2/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_8boss2/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_8boss2/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_battle/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_battle/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_battle/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_body/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_body/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_body/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_body/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_city/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_city/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_city/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_dreams/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_dreams/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_dreams/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_dreams/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_et/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_et/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_et/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_et/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_garden/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_garden/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_garden/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_gormx/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_gormx/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_gormx/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_ign/FINALE - Copy.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_ign/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_ign/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_ign/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_image/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_image/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_image/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_loop/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_loop/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_loop/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_loop/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_lumen/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_lumen/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_lumen/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_multi/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_multi/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_multi/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_multi/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_night/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_night/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_night/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_novena/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_novena/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_novena/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_precious/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_precious/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_precious/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_precious/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_prp/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_prp/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_prp/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_prp/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_punch/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_punch/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_punch/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_real/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_real/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_real/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_san/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_san/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_san/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_san/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_secil/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_secil/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_secil/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_soma1/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_soma1/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_soma1/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_soma2/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_soma2/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_soma2/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_star/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_star/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_star/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_time/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_time/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_time/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_time/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_trip/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_trip/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_trip/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_ult/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_ult/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_ult/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_ult/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_until/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_until/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_until/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_until/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_wave/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_wave/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_wave/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_worn/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_worn/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/collab_worn/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/concrete/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/concrete/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/concrete/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/concrete/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/confecute/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/confecute/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/confecute/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/convergence/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/convergence/ENCORE_STORY.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/convergence/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/convergence/FINALE_STORY.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/convergence/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/convergence/MIDDLE_STORY.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/convergence/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/convergence/OPENING_STORY.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/convergence/PRELUDE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/cookbook/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/cookbook/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/cookbook/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/cookbook/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/cookbook/timing.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/cosmo/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/cosmo/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/cosmo/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/courage/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/courage/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/courage/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/crack/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/crack/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/crack/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/creation/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/creation/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/creation/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/creation/OPENING2.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/credits/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/credits/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/credits/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/credits/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/crimson/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/crimson/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/crimson/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/crimson/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/crosshatch/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/crosshatch/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/crosshatch/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/cyclical/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/cyclical/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/cyclical/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/desparola/SHATTER.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/domain/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/domain/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/domain/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/doppelganger/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/doppelganger/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/doppelganger/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/doppelganger/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/dracula/EVIL.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/dracula/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/dracula/SHATTER.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/dragon/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/dragon/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/dragon/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/dual/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/dual/SHATTER.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/endless/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/endless/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/endless/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/endsummer/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/endsummer/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/endsummer/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/energy/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/energy/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/energy/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/energy/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/eo/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/eo/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/eo/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/eo/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/ephemeral/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/ephemeral/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/ephemeral/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/esm/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/esm/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/esm/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/esm/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/eva/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/eva/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/eva/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/eva/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/execute/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/execute/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/execute/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/execute/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/execution/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/execution/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/execution/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/execution/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/exterminate/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/exterminate/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/exterminate/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/f1055/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/f1055/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/f1055/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/f1055/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/farewell/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/farewell/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/farewell/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/farewell/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/fauxreal/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/fauxreal/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/fauxreal/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/firstbreath/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/firstbreath/ENCORE_STORY.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/firstbreath/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/firstbreath/FINALE_STORY.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/firstbreath/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/firstbreath/MIDDLE_STORY.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/firstbreath/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/firstbreath/OPENING_STORY.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/fixations/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/fixations/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/fixations/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/foolish/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/foolish/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/foolish/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/fuli/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/fuli/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/fuli/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/fulibuster/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/fulibuster/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/fulibuster/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/gauntlet/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/gauntlet/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/gauntlet/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/gauntlet/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/gengaozo/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/gengaozo/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/gengaozo/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/gengaozo/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/goodrage/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/goodrage/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/goodrage/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/goodrage/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/grode/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/grode/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/grode/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/grode/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/grodefrums/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/grodefrums/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/grodefrums/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/grodefrums/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/grodermx/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/grodermx/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/grodermx/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/grodescarer/SHATTER.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/happygo/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/happygo/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/happygo/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/happygo/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/heptagramme/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/heptagramme/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/heptagramme/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/hotline/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/hotline/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/hotline/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/https/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/https/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/https/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/idealized/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/idealized/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/idealized/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/idealized/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/infiniteenergy/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/infiniteenergy/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/infiniteenergy/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/ione/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/ione/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/ione/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/isthisit/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/isthisit/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/isthisit/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/itgo/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/itgo/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/itgo/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/lastpage/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/lastpage/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/lastpage/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/lastwish/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/lastwish/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/lastwish/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/lastwish/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/lastwish/PRELUDE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/libertia/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/libertia/ENCORE_STORY.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/libertia/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/libertia/FINALE_STORY.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/libertia/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/libertia/MIDDLE_STORY.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/libertia/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/libertia/OPENING_STORY.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/libertia/PRELUDE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/lockedout/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/lockedout/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/lockedout/VANDALIZED.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/lostcity/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/lostcity/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/lostcity/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/lostconnection/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/lostconnection/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/lostconnection/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/luminaria/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/luminaria/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/luminaria/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/luminaria/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/macro/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/macro/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/macro/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/marenol/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/marenol/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/marenol/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/memories/SHATTER.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/minus1/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/minus1/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/minus1/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/moreicarry/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/moreicarry/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/moreicarry/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/multigrode/SHATTER.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/mysterious/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/mysterious/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/mysterious/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/mysterious/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/n1/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/n1/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/n1/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/n1/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/n2/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/n2/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/n2/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/n2/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/n3/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/n3/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/n3/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/n3/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/n4/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/n4/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/n4/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/n4/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/n6/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/n6/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/n6/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/n6/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/n7/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/n7/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/n7/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/n7/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/n7full/SHATTER.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/nhelv/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/nhelv/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/nhelv/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/nhelv/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/nightfright/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/nightfright/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/nightfright/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/nightshade/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/nightshade/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/nightshade/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/nightshade/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/nonsense/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/nonsense/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/nonsense/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/nulctrl/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/nulctrl/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/nulctrl/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/nulctrl/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/nulctrlex/SHATTER.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/nullbreak/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/nullbreak/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/nullbreak/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/nullbreak/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/nullbreak/SHATTER.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/obair/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/obair/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/obair/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/obair/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/obair/SHATTER.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/octava/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/octava/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/octava/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/opslimone/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/opslimone/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/opslimone/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/options/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/options/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/options/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/orphen/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/orphen/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/orphen/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/party/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/party/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/party/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/party/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/pictured/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/pictured/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/pictured/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/pictured/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/plaudite/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/plaudite/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/plaudite/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/plaudite/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/plauditefull/SHATTER.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/poisongarden/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/poisongarden/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/poisongarden/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/prime/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/prime/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/prime/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/prismatic/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/prismatic/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/prismatic/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/prismatic/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/properrhythm/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/properrhythm/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/properrhythm/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/properrhythm/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/psy/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/psy/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/psy/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/pygmalion/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/pygmalion/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/pygmalion/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/pygmalion/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/pyromania/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/pyromania/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/pyromania/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/pyromania/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/pyromania/PRELUDE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/quasar/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/quasar/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/quasar/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/rafflesia/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/rafflesia/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/rafflesia/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/ram/SHATTER.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/random/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/random/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/random/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/reboot/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/reboot/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/reboot/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/refract/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/refract/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/refract/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/refract/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/rena/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/rena/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/rena/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/revelation/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/revelation/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/revelation/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/rise/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/rise/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/rise/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/ruinatedwinds/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/ruinatedwinds/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/ruinatedwinds/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/ruinatedwinds/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/rush/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/rush/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/rush/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/rush/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/safestate/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/safestate/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/safestate/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/seeyoumove/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/seeyoumove/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/seeyoumove/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/seeyoumove/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/self/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/self/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/self/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/sentinel/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/sentinel/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/sentinel/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/sentinel/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/septima/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/septima/MIDDLE (2).vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/septima/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/septima/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/seraphiel/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/seraphiel/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/seraphiel/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/shatteredsky/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/shatteredsky/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/shatteredsky/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/shatteredsky/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/showdown/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/showdown/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/showdown/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/signals/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/signals/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/signals/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/simulated/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/simulated/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/simulated/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/singularity/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/singularity/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/singularity/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/sky/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/sky/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/sky/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/slic/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/slic/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/slic/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/slic/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/smots/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/smots/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/smots/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/smots/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/solomon/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/solomon/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/solomon/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/solomon/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/soyoufelt/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/soyoufelt/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/soyoufelt/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/soyoufelt/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/spelldiver/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/spelldiver/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/spelldiver/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/spincycle/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/spincycle/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/spincycle/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/starcrashers/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/starcrashers/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/starcrashers/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/starcrashers/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/stardream/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/stardream/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/stardream/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/stardust/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/stardust/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/stardust/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/stargazers/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/stargazers/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/stargazers/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/stargazers/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/stellaria/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/stellaria/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/stellaria/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/stellaria/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/sternstunde/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/sternstunde/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/sternstunde/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/stopmotion/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/stopmotion/ENCORE2.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/stopmotion/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/stopmotion/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/stopmotion/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/stopmotion/PRELUDE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/supernova/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/supernova/ENCORE_STORY.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/supernova/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/supernova/FINALE_STORY.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/supernova/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/supernova/MIDDLE_STORY.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/supernova/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/supernova/OPENING_STORY.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/supernova/PRELUDE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/surtr/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/surtr/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/surtr/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/surtr/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/synthesis/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/synthesis/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/synthesis/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/synthesis/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/synthesizerparty/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/synthesizerparty/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/synthesizerparty/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/t/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/t/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/t/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/t/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/taffy/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/taffy/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/taffy/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/tavgha/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/tavgha/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/tavgha/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/tenpo/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/tenpo/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/tenpo/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/tenpo/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/terabyte/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/terabyte/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/terabyte/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/terabyte/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/terabyte/SHATTER.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/there/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/there/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/there/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/there/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/tiebreaker1/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/tiebreaker1/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/tiebreaker1/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/times/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/times/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/times/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/times/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/tormented/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/tormented/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/tormented/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/trail/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/trail/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/trail/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/tripcoffee/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/tripcoffee/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/tripcoffee/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/tutorial/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/tutorial2/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/ua/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/ua/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/ua/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/ua/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/ultimate/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/ultimate/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/ultimate/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/ultimate/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/ultimatum/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/ultimatum/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/ultimatum/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/unraveling/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/unraveling/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/unraveling/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/unraveling/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/unraveling/PRELUDE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/unsigned/SHATTER.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/untechnical/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/untechnical/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/untechnical/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/untechnical/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/utf/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/utf/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/utf/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/utf/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/valor/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/valor/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/valor/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/valor/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/valor/PRELUDE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/vol/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/vol/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/vol/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/voltage/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/voltage/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/voltage/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/voltage/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/wavetapper/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/wavetapper/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/wavetapper/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/whatyoulove/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/whatyoulove/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/whatyoulove/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/wolv/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/wolv/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/wolv/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/xn/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/xn/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/xn/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/yamai/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/yamai/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/yamai/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/yamai/OPENING.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/zylph/ENCORE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/zylph/FINALE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/zylph/MIDDLE.vsb",
+      "returncode": 0
+    },
+    {
+      "path": "vividstasis/Charts/zylph/OPENING.vsb",
+      "returncode": 0
+    }
+  ]
+}

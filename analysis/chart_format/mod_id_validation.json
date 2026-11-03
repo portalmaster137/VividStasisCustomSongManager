@@ -1,0 +1,3025 @@
+{
+  "method": "Observed chart-specific IDs compared with static effective per-object mapping",
+  "resolved": 503,
+  "unresolved": [],
+  "mappings": [
+    {
+      "object": "obj_00_gimmick",
+      "id": 129,
+      "name": "blipzoom",
+      "occurrences": 15
+    },
+    {
+      "object": "obj_00_gimmick",
+      "id": 130,
+      "name": "blipalpha",
+      "occurrences": 10
+    },
+    {
+      "object": "obj_00_gimmick",
+      "id": 131,
+      "name": "satal",
+      "occurrences": 15
+    },
+    {
+      "object": "obj_00_gimmick",
+      "id": 132,
+      "name": "satx",
+      "occurrences": 10
+    },
+    {
+      "object": "obj_00_gimmick",
+      "id": 133,
+      "name": "saty",
+      "occurrences": 10
+    },
+    {
+      "object": "obj_aleph_gimmick",
+      "id": 140,
+      "name": "static",
+      "occurrences": 6
+    },
+    {
+      "object": "obj_aleph_gimmick",
+      "id": 129,
+      "name": "glitchamp",
+      "occurrences": 72
+    },
+    {
+      "object": "obj_aleph_gimmick",
+      "id": 136,
+      "name": "uhnoise",
+      "occurrences": 72
+    },
+    {
+      "object": "obj_aleph_gimmick",
+      "id": 135,
+      "name": "glitchoffset",
+      "occurrences": 306
+    },
+    {
+      "object": "obj_angelstar_gimmick",
+      "id": 160,
+      "name": "fx_edge",
+      "occurrences": 14
+    },
+    {
+      "object": "obj_angelstar_gimmick",
+      "id": 164,
+      "name": "fx_underwater",
+      "occurrences": 94
+    },
+    {
+      "object": "obj_angelstar_gimmick",
+      "id": 141,
+      "name": "bgalph",
+      "occurrences": 8
+    },
+    {
+      "object": "obj_angelstar_gimmick",
+      "id": 163,
+      "name": "fx_posterize_vis",
+      "occurrences": 9
+    },
+    {
+      "object": "obj_angelstar_gimmick",
+      "id": 161,
+      "name": "fx_posterize",
+      "occurrences": 389
+    },
+    {
+      "object": "obj_angelstar_gimmick",
+      "id": 131,
+      "name": "cover2",
+      "occurrences": 43
+    },
+    {
+      "object": "obj_angelstar_gimmick",
+      "id": 159,
+      "name": "fx_hue_saturation",
+      "occurrences": 8
+    },
+    {
+      "object": "obj_angelstar_gimmick",
+      "id": 158,
+      "name": "fx_hue_hue",
+      "occurrences": 50
+    },
+    {
+      "object": "obj_angelstar_gimmick",
+      "id": 144,
+      "name": "barrel2",
+      "occurrences": 411
+    },
+    {
+      "object": "obj_angelstar_gimmick",
+      "id": 156,
+      "name": "fish",
+      "occurrences": 14
+    },
+    {
+      "object": "obj_angelstar_gimmick",
+      "id": 142,
+      "name": "gray",
+      "occurrences": 14
+    },
+    {
+      "object": "obj_angelstar_gimmick",
+      "id": 166,
+      "name": "angelstar_checker_alpha",
+      "occurrences": 7
+    },
+    {
+      "object": "obj_angelstar_gimmick",
+      "id": 167,
+      "name": "angelstar_checker_set",
+      "occurrences": 618
+    },
+    {
+      "object": "obj_angelstar_gimmick",
+      "id": 168,
+      "name": "fx_zoom",
+      "occurrences": 2
+    },
+    {
+      "object": "obj_angelstar_gimmick",
+      "id": 169,
+      "name": "fx_red",
+      "occurrences": 5
+    },
+    {
+      "object": "obj_angelstar_gimmick",
+      "id": 162,
+      "name": "fx_twirl",
+      "occurrences": 44
+    },
+    {
+      "object": "obj_angelstar_gimmick",
+      "id": 135,
+      "name": "sides",
+      "occurrences": 44
+    },
+    {
+      "object": "obj_angelstar_gimmick",
+      "id": 170,
+      "name": "recolor",
+      "occurrences": 442
+    },
+    {
+      "object": "obj_distortedfate_gimmick",
+      "id": 136,
+      "name": "barrel",
+      "occurrences": 124
+    },
+    {
+      "object": "obj_distortedfate_gimmick",
+      "id": 153,
+      "name": "noteoverlayalp",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_distortedfate_gimmick",
+      "id": 146,
+      "name": "cover2",
+      "occurrences": 34
+    },
+    {
+      "object": "obj_distortedfate_gimmick",
+      "id": 150,
+      "name": "sides",
+      "occurrences": 532
+    },
+    {
+      "object": "obj_distortedfate_gimmick",
+      "id": 141,
+      "name": "abx",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_astellion_gimmick",
+      "id": 144,
+      "name": "sides",
+      "occurrences": 3184
+    },
+    {
+      "object": "obj_astellion_gimmick",
+      "id": 136,
+      "name": "aby",
+      "occurrences": 776
+    },
+    {
+      "object": "obj_astellion_gimmick",
+      "id": 130,
+      "name": "barrel",
+      "occurrences": 312
+    },
+    {
+      "object": "obj_astellion_gimmick",
+      "id": 129,
+      "name": "gray",
+      "occurrences": 32
+    },
+    {
+      "object": "obj_astellion_gimmick",
+      "id": 133,
+      "name": "fish",
+      "occurrences": 16
+    },
+    {
+      "object": "obj_astellion_gimmick",
+      "id": 132,
+      "name": "hdistort",
+      "occurrences": 68
+    },
+    {
+      "object": "obj_astellion_gimmick",
+      "id": 143,
+      "name": "rainbow",
+      "occurrences": 80
+    },
+    {
+      "object": "obj_astellion_gimmick",
+      "id": 150,
+      "name": "fxdist1",
+      "occurrences": 16
+    },
+    {
+      "object": "obj_astellion_gimmick",
+      "id": 135,
+      "name": "abx",
+      "occurrences": 24
+    },
+    {
+      "object": "obj_astellion_gimmick",
+      "id": 148,
+      "name": "astbars",
+      "occurrences": 512
+    },
+    {
+      "object": "obj_astellion_gimmick",
+      "id": 149,
+      "name": "bgalph",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_astellion_gimmick",
+      "id": 152,
+      "name": "parttimer",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_astellion_gimmick",
+      "id": 151,
+      "name": "fxdist2",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_astellion_gimmick",
+      "id": 138,
+      "name": "uialpha",
+      "occurrences": 3
+    },
+    {
+      "object": "obj_distortedfate_gimmick",
+      "id": 137,
+      "name": "barrel2",
+      "occurrences": 1148
+    },
+    {
+      "object": "obj_distortedfate_gimmick",
+      "id": 129,
+      "name": "df_sideline",
+      "occurrences": 630
+    },
+    {
+      "object": "obj_distortedfate_gimmick",
+      "id": 139,
+      "name": "fish",
+      "occurrences": 76
+    },
+    {
+      "object": "obj_distortedfate_gimmick",
+      "id": 135,
+      "name": "gray",
+      "occurrences": 168
+    },
+    {
+      "object": "obj_distortedfate_gimmick",
+      "id": 130,
+      "name": "df_whitebg",
+      "occurrences": 72
+    },
+    {
+      "object": "obj_distortedfate_gimmick",
+      "id": 131,
+      "name": "df_grid_alpha",
+      "occurrences": 683
+    },
+    {
+      "object": "obj_distortedfate_gimmick",
+      "id": 133,
+      "name": "df_grid_bottom",
+      "occurrences": 319
+    },
+    {
+      "object": "obj_distortedfate_gimmick",
+      "id": 155,
+      "name": "lr_slash",
+      "occurrences": 1212
+    },
+    {
+      "object": "obj_distortedfate_gimmick",
+      "id": 158,
+      "name": "lr_sides_red",
+      "occurrences": 288
+    },
+    {
+      "object": "obj_distortedfate_gimmick",
+      "id": 157,
+      "name": "lr_sides_blue",
+      "occurrences": 225
+    },
+    {
+      "object": "obj_distortedfate_gimmick",
+      "id": 160,
+      "name": "lr_sides_rev_red",
+      "occurrences": 68
+    },
+    {
+      "object": "obj_distortedfate_gimmick",
+      "id": 159,
+      "name": "lr_sides_rev_blue",
+      "occurrences": 101
+    },
+    {
+      "object": "obj_distortedfate_gimmick",
+      "id": 138,
+      "name": "hdistort",
+      "occurrences": 116
+    },
+    {
+      "object": "obj_distortedfate_gimmick",
+      "id": 161,
+      "name": "lr_mountain_bg",
+      "occurrences": 32
+    },
+    {
+      "object": "obj_distortedfate_gimmick",
+      "id": 149,
+      "name": "rainbow",
+      "occurrences": 7
+    },
+    {
+      "object": "obj_distortedfate_gimmick",
+      "id": 156,
+      "name": "lr_slash_color",
+      "occurrences": 1164
+    },
+    {
+      "object": "obj_distortedfate_gimmick",
+      "id": 140,
+      "name": "vig",
+      "occurrences": 158
+    },
+    {
+      "object": "obj_distortedfate_gimmick",
+      "id": 134,
+      "name": "df_sideline2",
+      "occurrences": 1084
+    },
+    {
+      "object": "obj_distortedfate_gimmick",
+      "id": 132,
+      "name": "df_grid_top",
+      "occurrences": 319
+    },
+    {
+      "object": "obj_distortedfate_gimmick",
+      "id": 154,
+      "name": "df_countdown",
+      "occurrences": 11
+    },
+    {
+      "object": "obj_times_gimmick",
+      "id": 153,
+      "name": "hid2",
+      "occurrences": 44
+    },
+    {
+      "object": "obj_times_gimmick",
+      "id": 154,
+      "name": "hid3",
+      "occurrences": 52
+    },
+    {
+      "object": "obj_times_gimmick",
+      "id": 155,
+      "name": "hid4",
+      "occurrences": 28
+    },
+    {
+      "object": "obj_times_gimmick",
+      "id": 156,
+      "name": "hid5",
+      "occurrences": 28
+    },
+    {
+      "object": "obj_times_gimmick",
+      "id": 148,
+      "name": "spinang",
+      "occurrences": 152
+    },
+    {
+      "object": "obj_times_gimmick",
+      "id": 142,
+      "name": "tz",
+      "occurrences": 476
+    },
+    {
+      "object": "obj_times_gimmick",
+      "id": 149,
+      "name": "spinrad",
+      "occurrences": 112
+    },
+    {
+      "object": "obj_times_gimmick",
+      "id": 131,
+      "name": "wflash",
+      "occurrences": 120
+    },
+    {
+      "object": "obj_times_gimmick",
+      "id": 151,
+      "name": "vib",
+      "occurrences": 192
+    },
+    {
+      "object": "obj_times_gimmick",
+      "id": 139,
+      "name": "tyj",
+      "occurrences": 1156
+    },
+    {
+      "object": "obj_times_gimmick",
+      "id": 135,
+      "name": "txj",
+      "occurrences": 420
+    },
+    {
+      "object": "obj_times_gimmick",
+      "id": 136,
+      "name": "ty",
+      "occurrences": 116
+    },
+    {
+      "object": "obj_times_gimmick",
+      "id": 132,
+      "name": "tx",
+      "occurrences": 152
+    },
+    {
+      "object": "obj_times_gimmick",
+      "id": 140,
+      "name": "trz",
+      "occurrences": 152
+    },
+    {
+      "object": "obj_times_gimmick",
+      "id": 145,
+      "name": "tspl",
+      "occurrences": 32
+    },
+    {
+      "object": "obj_times_gimmick",
+      "id": 150,
+      "name": "siny",
+      "occurrences": 24
+    },
+    {
+      "object": "obj_times_gimmick",
+      "id": 146,
+      "name": "sepx",
+      "occurrences": 16
+    },
+    {
+      "object": "obj_times_gimmick",
+      "id": 129,
+      "name": "glitchamp",
+      "occurrences": 80
+    },
+    {
+      "object": "obj_times_gimmick",
+      "id": 130,
+      "name": "static",
+      "occurrences": 16
+    },
+    {
+      "object": "obj_times_gimmick",
+      "id": 147,
+      "name": "sepy",
+      "occurrences": 8
+    },
+    {
+      "object": "obj_times_gimmick",
+      "id": 152,
+      "name": "hid1",
+      "occurrences": 8
+    },
+    {
+      "object": "obj_times_gimmick",
+      "id": 141,
+      "name": "trz2",
+      "occurrences": 40
+    },
+    {
+      "object": "obj_times_gimmick",
+      "id": 143,
+      "name": "tzx",
+      "occurrences": 72
+    },
+    {
+      "object": "obj_convergence_gimmick",
+      "id": 150,
+      "name": "setup_co",
+      "occurrences": 5
+    },
+    {
+      "object": "obj_convergence_gimmick",
+      "id": 139,
+      "name": "uhnoise",
+      "occurrences": 595
+    },
+    {
+      "object": "obj_convergence_gimmick",
+      "id": 136,
+      "name": "supernova_cg_xscale",
+      "occurrences": 10
+    },
+    {
+      "object": "obj_convergence_gimmick",
+      "id": 140,
+      "name": "abberationxamp",
+      "occurrences": 10
+    },
+    {
+      "object": "obj_convergence_gimmick",
+      "id": 141,
+      "name": "abberationyamp",
+      "occurrences": 10
+    },
+    {
+      "object": "obj_convergence_gimmick",
+      "id": 142,
+      "name": "fish",
+      "occurrences": 10
+    },
+    {
+      "object": "obj_convergence_gimmick",
+      "id": 131,
+      "name": "scorealph",
+      "occurrences": 5
+    },
+    {
+      "object": "obj_convergence_gimmick",
+      "id": 133,
+      "name": "noteoverlayalp",
+      "occurrences": 5
+    },
+    {
+      "object": "obj_convergence_gimmick",
+      "id": 132,
+      "name": "bgalph",
+      "occurrences": 30
+    },
+    {
+      "object": "obj_convergence_gimmick",
+      "id": 144,
+      "name": "supernova_cg_frame",
+      "occurrences": 5
+    },
+    {
+      "object": "obj_convergence_gimmick",
+      "id": 146,
+      "name": "sn_bg_alpha",
+      "occurrences": 30
+    },
+    {
+      "object": "obj_convergence_gimmick",
+      "id": 147,
+      "name": "sn_bg2_alpha",
+      "occurrences": 95
+    },
+    {
+      "object": "obj_convergence_gimmick",
+      "id": 148,
+      "name": "sn_bg_fxamp",
+      "occurrences": 950
+    },
+    {
+      "object": "obj_convergence_gimmick",
+      "id": 129,
+      "name": "glitchamp",
+      "occurrences": 10
+    },
+    {
+      "object": "obj_scarletdeath_gimmick",
+      "id": 141,
+      "name": "bgalph",
+      "occurrences": 5
+    },
+    {
+      "object": "obj_scarletdeath_gimmick",
+      "id": 144,
+      "name": "barrel2",
+      "occurrences": 308
+    },
+    {
+      "object": "obj_scarletdeath_gimmick",
+      "id": 156,
+      "name": "fish",
+      "occurrences": 12
+    },
+    {
+      "object": "obj_scarletdeath_gimmick",
+      "id": 143,
+      "name": "barrel",
+      "occurrences": 121
+    },
+    {
+      "object": "obj_scarletdeath_gimmick",
+      "id": 147,
+      "name": "vig",
+      "occurrences": 16
+    },
+    {
+      "object": "obj_scarletdeath_gimmick",
+      "id": 131,
+      "name": "cover2",
+      "occurrences": 2
+    },
+    {
+      "object": "obj_scarletdeath_gimmick",
+      "id": 169,
+      "name": "fx_red",
+      "occurrences": 3
+    },
+    {
+      "object": "obj_scarletdeath_gimmick",
+      "id": 161,
+      "name": "fx_posterize",
+      "occurrences": 195
+    },
+    {
+      "object": "obj_scarletdeath_gimmick",
+      "id": 163,
+      "name": "fx_posterize_vis",
+      "occurrences": 21
+    },
+    {
+      "object": "obj_scarletdeath_gimmick",
+      "id": 142,
+      "name": "gray",
+      "occurrences": 2
+    },
+    {
+      "object": "obj_scarletdeath_gimmick",
+      "id": 145,
+      "name": "hdistort",
+      "occurrences": 2
+    },
+    {
+      "object": "obj_scarletdeath_gimmick",
+      "id": 166,
+      "name": "angelstar_checker_alpha",
+      "occurrences": 355
+    },
+    {
+      "object": "obj_scarletdeath_gimmick",
+      "id": 167,
+      "name": "angelstar_checker_set",
+      "occurrences": 432
+    },
+    {
+      "object": "obj_scarletdeath_gimmick",
+      "id": 170,
+      "name": "heartattack1",
+      "occurrences": 1
+    },
+    {
+      "object": "obj_scarletdeath_gimmick",
+      "id": 171,
+      "name": "heartattack2",
+      "occurrences": 1
+    },
+    {
+      "object": "obj_scarletdeath_gimmick",
+      "id": 172,
+      "name": "heartattack3",
+      "occurrences": 1
+    },
+    {
+      "object": "obj_scarletdeath_gimmick",
+      "id": 173,
+      "name": "heartattack4",
+      "occurrences": 1
+    },
+    {
+      "object": "obj_scarletdeath_gimmick",
+      "id": 174,
+      "name": "heartattack5",
+      "occurrences": 1
+    },
+    {
+      "object": "obj_scarletdeath_gimmick",
+      "id": 175,
+      "name": "heartattack6",
+      "occurrences": 1
+    },
+    {
+      "object": "obj_dracula_gimmick",
+      "id": 133,
+      "name": "vib",
+      "occurrences": 51
+    },
+    {
+      "object": "obj_dracula_gimmick",
+      "id": 135,
+      "name": "jdesat",
+      "occurrences": 48
+    },
+    {
+      "object": "obj_dracula_gimmick",
+      "id": 136,
+      "name": "seedspeed",
+      "occurrences": 99
+    },
+    {
+      "object": "obj_dracula_gimmick",
+      "id": 134,
+      "name": "jart",
+      "occurrences": 144
+    },
+    {
+      "object": "obj_dracula_gimmick",
+      "id": 137,
+      "name": "wflash",
+      "occurrences": 6
+    },
+    {
+      "object": "obj___gimmick",
+      "id": 137,
+      "name": "cover1",
+      "occurrences": 2
+    },
+    {
+      "object": "obj___gimmick",
+      "id": 134,
+      "name": "gray",
+      "occurrences": 30
+    },
+    {
+      "object": "obj___gimmick",
+      "id": 132,
+      "name": "vig",
+      "occurrences": 26
+    },
+    {
+      "object": "obj___gimmick",
+      "id": 133,
+      "name": "bloom",
+      "occurrences": 24
+    },
+    {
+      "object": "obj___gimmick",
+      "id": 169,
+      "name": "fakezy",
+      "occurrences": 8
+    },
+    {
+      "object": "obj___gimmick",
+      "id": 170,
+      "name": "fakezyb",
+      "occurrences": 10
+    },
+    {
+      "object": "obj___gimmick",
+      "id": 167,
+      "name": "spinradiusx",
+      "occurrences": 22
+    },
+    {
+      "object": "obj___gimmick",
+      "id": 168,
+      "name": "spinradiusz",
+      "occurrences": 10
+    },
+    {
+      "object": "obj___gimmick",
+      "id": 171,
+      "name": "float",
+      "occurrences": 14
+    },
+    {
+      "object": "obj___gimmick",
+      "id": 140,
+      "name": "twx1",
+      "occurrences": 14
+    },
+    {
+      "object": "obj___gimmick",
+      "id": 141,
+      "name": "twy1",
+      "occurrences": 14
+    },
+    {
+      "object": "obj___gimmick",
+      "id": 143,
+      "name": "twr1",
+      "occurrences": 14
+    },
+    {
+      "object": "obj___gimmick",
+      "id": 142,
+      "name": "twa1",
+      "occurrences": 28
+    },
+    {
+      "object": "obj___gimmick",
+      "id": 144,
+      "name": "twx2",
+      "occurrences": 14
+    },
+    {
+      "object": "obj___gimmick",
+      "id": 145,
+      "name": "twy2",
+      "occurrences": 14
+    },
+    {
+      "object": "obj___gimmick",
+      "id": 147,
+      "name": "twr2",
+      "occurrences": 14
+    },
+    {
+      "object": "obj___gimmick",
+      "id": 146,
+      "name": "twa2",
+      "occurrences": 28
+    },
+    {
+      "object": "obj___gimmick",
+      "id": 172,
+      "name": "wiggly",
+      "occurrences": 36
+    },
+    {
+      "object": "obj___gimmick",
+      "id": 130,
+      "name": "glitchoffset",
+      "occurrences": 648
+    },
+    {
+      "object": "obj___gimmick",
+      "id": 129,
+      "name": "glitchamp",
+      "occurrences": 168
+    },
+    {
+      "object": "obj___gimmick",
+      "id": 150,
+      "name": "twa3",
+      "occurrences": 24
+    },
+    {
+      "object": "obj___gimmick",
+      "id": 151,
+      "name": "twr3",
+      "occurrences": 12
+    },
+    {
+      "object": "obj___gimmick",
+      "id": 149,
+      "name": "twy3",
+      "occurrences": 12
+    },
+    {
+      "object": "obj___gimmick",
+      "id": 148,
+      "name": "twx3",
+      "occurrences": 12
+    },
+    {
+      "object": "obj___gimmick",
+      "id": 154,
+      "name": "twa4",
+      "occurrences": 20
+    },
+    {
+      "object": "obj___gimmick",
+      "id": 155,
+      "name": "twr4",
+      "occurrences": 10
+    },
+    {
+      "object": "obj___gimmick",
+      "id": 153,
+      "name": "twy4",
+      "occurrences": 10
+    },
+    {
+      "object": "obj___gimmick",
+      "id": 152,
+      "name": "twx4",
+      "occurrences": 10
+    },
+    {
+      "object": "obj_sekaisen_gimmick",
+      "id": 148,
+      "name": "starspawner_timer",
+      "occurrences": 24
+    },
+    {
+      "object": "obj_sekaisen_gimmick",
+      "id": 151,
+      "name": "starspd_multiplier",
+      "occurrences": 1016
+    },
+    {
+      "object": "obj_sekaisen_gimmick",
+      "id": 152,
+      "name": "sekaisen_jacket",
+      "occurrences": 32
+    },
+    {
+      "object": "obj_sekaisen_gimmick",
+      "id": 155,
+      "name": "track_alpha",
+      "occurrences": 24
+    },
+    {
+      "object": "obj_sekaisen_gimmick",
+      "id": 129,
+      "name": "gray",
+      "occurrences": 12
+    },
+    {
+      "object": "obj_sekaisen_gimmick",
+      "id": 140,
+      "name": "cover2",
+      "occurrences": 8
+    },
+    {
+      "object": "obj_sekaisen_gimmick",
+      "id": 156,
+      "name": "en_whiteoverlay",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_sekaisen_gimmick",
+      "id": 162,
+      "name": "bgalph",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_sekaisen_gimmick",
+      "id": 163,
+      "name": "hide_combo",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_sekaisen_gimmick",
+      "id": 157,
+      "name": "eo_endsat1",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_sekaisen_gimmick",
+      "id": 158,
+      "name": "eo_endsat2",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_sekaisen_gimmick",
+      "id": 159,
+      "name": "eo_endsat3",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_sekaisen_gimmick",
+      "id": 160,
+      "name": "eo_endsat4",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_sekaisen_gimmick",
+      "id": 161,
+      "name": "eo_endcg",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_sekaisen_gimmick",
+      "id": 153,
+      "name": "sekaisen_arrow_point",
+      "occurrences": 148
+    },
+    {
+      "object": "obj_scarletdeath_gimmick",
+      "id": 159,
+      "name": "fx_hue_saturation",
+      "occurrences": 8
+    },
+    {
+      "object": "obj_firstbreath_gimmick",
+      "id": 135,
+      "name": "gray",
+      "occurrences": 20
+    },
+    {
+      "object": "obj_firstbreath_gimmick",
+      "id": 131,
+      "name": "df_grid_alpha",
+      "occurrences": 648
+    },
+    {
+      "object": "obj_firstbreath_gimmick",
+      "id": 132,
+      "name": "df_grid_top",
+      "occurrences": 8
+    },
+    {
+      "object": "obj_firstbreath_gimmick",
+      "id": 133,
+      "name": "df_grid_bottom",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_firstbreath_gimmick",
+      "id": 137,
+      "name": "barrel2",
+      "occurrences": 2024
+    },
+    {
+      "object": "obj_firstbreath_gimmick",
+      "id": 140,
+      "name": "vig",
+      "occurrences": 16
+    },
+    {
+      "object": "obj_firstbreath_gimmick",
+      "id": 146,
+      "name": "cover2",
+      "occurrences": 16
+    },
+    {
+      "object": "obj_firstbreath_gimmick",
+      "id": 158,
+      "name": "lr_sides_red",
+      "occurrences": 584
+    },
+    {
+      "object": "obj_firstbreath_gimmick",
+      "id": 160,
+      "name": "lr_sides_rev_red",
+      "occurrences": 420
+    },
+    {
+      "object": "obj_firstbreath_gimmick",
+      "id": 161,
+      "name": "lr_mountain_bg",
+      "occurrences": 108
+    },
+    {
+      "object": "obj_firstbreath_gimmick",
+      "id": 138,
+      "name": "hdistort",
+      "occurrences": 184
+    },
+    {
+      "object": "obj_firstbreath_gimmick",
+      "id": 157,
+      "name": "lr_sides_blue",
+      "occurrences": 164
+    },
+    {
+      "object": "obj_firstbreath_gimmick",
+      "id": 134,
+      "name": "df_sideline2",
+      "occurrences": 476
+    },
+    {
+      "object": "obj_firstbreath_gimmick",
+      "id": 139,
+      "name": "fish",
+      "occurrences": 20
+    },
+    {
+      "object": "obj_firstbreath_gimmick",
+      "id": 153,
+      "name": "noteoverlayalp",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_firstbreath_gimmick",
+      "id": 165,
+      "name": "supernova_cg_xscale",
+      "occurrences": 8
+    },
+    {
+      "object": "obj_firstbreath_gimmick",
+      "id": 141,
+      "name": "abx",
+      "occurrences": 16
+    },
+    {
+      "object": "obj_firstbreath_gimmick",
+      "id": 142,
+      "name": "aby",
+      "occurrences": 16
+    },
+    {
+      "object": "obj_firstbreath_gimmick",
+      "id": 136,
+      "name": "barrel",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_firstbreath_gimmick",
+      "id": 155,
+      "name": "lr_slash",
+      "occurrences": 112
+    },
+    {
+      "object": "obj_firstbreath_gimmick",
+      "id": 171,
+      "name": "sn_bg_alpha",
+      "occurrences": 524
+    },
+    {
+      "object": "obj_firstbreath_gimmick",
+      "id": 156,
+      "name": "lr_slash_color",
+      "occurrences": 768
+    },
+    {
+      "object": "obj_firstbreath_gimmick",
+      "id": 130,
+      "name": "df_whitebg",
+      "occurrences": 8
+    },
+    {
+      "object": "obj_firstbreath_gimmick",
+      "id": 172,
+      "name": "sn_bg_fxamp",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_lastwish_gimmick",
+      "id": 134,
+      "name": "lwcover",
+      "occurrences": 60
+    },
+    {
+      "object": "obj_lastwish_gimmick",
+      "id": 131,
+      "name": "film",
+      "occurrences": 20
+    },
+    {
+      "object": "obj_lastwish_gimmick",
+      "id": 133,
+      "name": "filmsat",
+      "occurrences": 20
+    },
+    {
+      "object": "obj_lastwish_gimmick",
+      "id": 132,
+      "name": "glow",
+      "occurrences": 1860
+    },
+    {
+      "object": "obj_lastwish_gimmick",
+      "id": 135,
+      "name": "lwflickerspd",
+      "occurrences": 10
+    },
+    {
+      "object": "obj_lastwish_gimmick",
+      "id": 136,
+      "name": "lwjitterintensity",
+      "occurrences": 10
+    },
+    {
+      "object": "obj_lastwish_gimmick",
+      "id": 138,
+      "name": "lwtext",
+      "occurrences": 30
+    },
+    {
+      "object": "obj_lastwish_gimmick",
+      "id": 137,
+      "name": "lwchroma",
+      "occurrences": 10
+    },
+    {
+      "object": "obj_libertia_gimmick",
+      "id": 149,
+      "name": "setup_co",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_libertia_gimmick",
+      "id": 134,
+      "name": "sg_endblip",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_libertia_gimmick",
+      "id": 136,
+      "name": "supernova_cg_xscale",
+      "occurrences": 8
+    },
+    {
+      "object": "obj_libertia_gimmick",
+      "id": 139,
+      "name": "uhnoise",
+      "occurrences": 8
+    },
+    {
+      "object": "obj_libertia_gimmick",
+      "id": 140,
+      "name": "abberationxamp",
+      "occurrences": 8
+    },
+    {
+      "object": "obj_libertia_gimmick",
+      "id": 141,
+      "name": "abberationyamp",
+      "occurrences": 8
+    },
+    {
+      "object": "obj_libertia_gimmick",
+      "id": 142,
+      "name": "fish",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_libertia_gimmick",
+      "id": 130,
+      "name": "uialpha",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_libertia_gimmick",
+      "id": 131,
+      "name": "scorealph",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_libertia_gimmick",
+      "id": 133,
+      "name": "noteoverlayalp",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_libertia_gimmick",
+      "id": 132,
+      "name": "bgalph",
+      "occurrences": 8
+    },
+    {
+      "object": "obj_libertia_gimmick",
+      "id": 145,
+      "name": "sg_endblip_destroy",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_libertia_gimmick",
+      "id": 146,
+      "name": "sn_bg_alpha",
+      "occurrences": 8
+    },
+    {
+      "object": "obj_marenol_gimmick",
+      "id": 129,
+      "name": "glitchamp",
+      "occurrences": 33
+    },
+    {
+      "object": "obj_marenol_gimmick",
+      "id": 130,
+      "name": "glitchoffset",
+      "occurrences": 156
+    },
+    {
+      "object": "obj_marenol_gimmick",
+      "id": 131,
+      "name": "fish",
+      "occurrences": 522
+    },
+    {
+      "object": "obj_marenol_gimmick",
+      "id": 137,
+      "name": "twx1",
+      "occurrences": 45
+    },
+    {
+      "object": "obj_marenol_gimmick",
+      "id": 138,
+      "name": "twy1",
+      "occurrences": 45
+    },
+    {
+      "object": "obj_marenol_gimmick",
+      "id": 140,
+      "name": "twr1",
+      "occurrences": 54
+    },
+    {
+      "object": "obj_marenol_gimmick",
+      "id": 139,
+      "name": "twa1",
+      "occurrences": 105
+    },
+    {
+      "object": "obj_marenol_gimmick",
+      "id": 141,
+      "name": "twx2",
+      "occurrences": 45
+    },
+    {
+      "object": "obj_marenol_gimmick",
+      "id": 142,
+      "name": "twy2",
+      "occurrences": 45
+    },
+    {
+      "object": "obj_marenol_gimmick",
+      "id": 144,
+      "name": "twr2",
+      "occurrences": 54
+    },
+    {
+      "object": "obj_marenol_gimmick",
+      "id": 143,
+      "name": "twa2",
+      "occurrences": 105
+    },
+    {
+      "object": "obj_marenol_gimmick",
+      "id": 145,
+      "name": "twx3",
+      "occurrences": 45
+    },
+    {
+      "object": "obj_marenol_gimmick",
+      "id": 146,
+      "name": "twy3",
+      "occurrences": 45
+    },
+    {
+      "object": "obj_marenol_gimmick",
+      "id": 148,
+      "name": "twr3",
+      "occurrences": 45
+    },
+    {
+      "object": "obj_marenol_gimmick",
+      "id": 147,
+      "name": "twa3",
+      "occurrences": 108
+    },
+    {
+      "object": "obj_marenol_gimmick",
+      "id": 149,
+      "name": "twx4",
+      "occurrences": 27
+    },
+    {
+      "object": "obj_marenol_gimmick",
+      "id": 150,
+      "name": "twy4",
+      "occurrences": 27
+    },
+    {
+      "object": "obj_marenol_gimmick",
+      "id": 152,
+      "name": "twr4",
+      "occurrences": 27
+    },
+    {
+      "object": "obj_marenol_gimmick",
+      "id": 151,
+      "name": "twa4",
+      "occurrences": 45
+    },
+    {
+      "object": "obj_marenol_gimmick",
+      "id": 163,
+      "name": "vibx",
+      "occurrences": 18
+    },
+    {
+      "object": "obj_marenol_gimmick",
+      "id": 162,
+      "name": "static",
+      "occurrences": 30
+    },
+    {
+      "object": "obj_marenol_gimmick",
+      "id": 155,
+      "name": "sino",
+      "occurrences": 30
+    },
+    {
+      "object": "obj_marenol_gimmick",
+      "id": 154,
+      "name": "sinp",
+      "occurrences": 18
+    },
+    {
+      "object": "obj_marenol_gimmick",
+      "id": 153,
+      "name": "sina",
+      "occurrences": 225
+    },
+    {
+      "object": "obj_marenol_gimmick",
+      "id": 164,
+      "name": "viby",
+      "occurrences": 6
+    },
+    {
+      "object": "obj_marenol_gimmick",
+      "id": 158,
+      "name": "coso",
+      "occurrences": 213
+    },
+    {
+      "object": "obj_marenol_gimmick",
+      "id": 134,
+      "name": "cover1",
+      "occurrences": 12
+    },
+    {
+      "object": "obj_marenol_gimmick",
+      "id": 135,
+      "name": "cover2",
+      "occurrences": 15
+    },
+    {
+      "object": "obj_marenol_gimmick",
+      "id": 157,
+      "name": "cosp",
+      "occurrences": 12
+    },
+    {
+      "object": "obj_marenol_gimmick",
+      "id": 156,
+      "name": "cosa",
+      "occurrences": 213
+    },
+    {
+      "object": "obj_marenol_gimmick",
+      "id": 136,
+      "name": "cover3",
+      "occurrences": 6
+    },
+    {
+      "object": "obj_marenol_gimmick",
+      "id": 160,
+      "name": "tanp",
+      "occurrences": 12
+    },
+    {
+      "object": "obj_marenol_gimmick",
+      "id": 159,
+      "name": "tana",
+      "occurrences": 18
+    },
+    {
+      "object": "obj_marenol_gimmick",
+      "id": 161,
+      "name": "tano",
+      "occurrences": 9
+    },
+    {
+      "object": "obj_memories_gimmick",
+      "id": 149,
+      "name": "setup_co",
+      "occurrences": 1
+    },
+    {
+      "object": "obj_memories_gimmick",
+      "id": 131,
+      "name": "scorealph",
+      "occurrences": 1
+    },
+    {
+      "object": "obj_memories_gimmick",
+      "id": 132,
+      "name": "bgalph",
+      "occurrences": 1
+    },
+    {
+      "object": "obj_memories_gimmick",
+      "id": 133,
+      "name": "noteoverlayalp",
+      "occurrences": 1
+    },
+    {
+      "object": "obj_multigrode_gimmick",
+      "id": 148,
+      "name": "dialogue_id",
+      "occurrences": 19
+    },
+    {
+      "object": "obj_multigrode_gimmick",
+      "id": 150,
+      "name": "refreshdialogue",
+      "occurrences": 19
+    },
+    {
+      "object": "obj_multigrode_gimmick",
+      "id": 146,
+      "name": "dialogue_size",
+      "occurrences": 42
+    },
+    {
+      "object": "obj_multigrode_gimmick",
+      "id": 147,
+      "name": "text_alpha",
+      "occurrences": 42
+    },
+    {
+      "object": "obj_multigrode_gimmick",
+      "id": 149,
+      "name": "fruitmemoryx",
+      "occurrences": 2
+    },
+    {
+      "object": "obj_sekaisen_gimmick",
+      "id": 132,
+      "name": "hdistort",
+      "occurrences": 8
+    },
+    {
+      "object": "obj_sekaisen_gimmick",
+      "id": 135,
+      "name": "abx",
+      "occurrences": 8
+    },
+    {
+      "object": "obj_extendnova_gimmick",
+      "id": 139,
+      "name": "uhnoise",
+      "occurrences": 2272
+    },
+    {
+      "object": "obj_extendnova_gimmick",
+      "id": 140,
+      "name": "abberationxamp",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_extendnova_gimmick",
+      "id": 141,
+      "name": "abberationyamp",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_extendnova_gimmick",
+      "id": 136,
+      "name": "supernova_cg_xscale",
+      "occurrences": 60
+    },
+    {
+      "object": "obj_extendnova_gimmick",
+      "id": 169,
+      "name": "fx_edge",
+      "occurrences": 8
+    },
+    {
+      "object": "obj_extendnova_gimmick",
+      "id": 132,
+      "name": "bgalph",
+      "occurrences": 16
+    },
+    {
+      "object": "obj_extendnova_gimmick",
+      "id": 160,
+      "name": "en_slash_sat",
+      "occurrences": 5624
+    },
+    {
+      "object": "obj_extendnova_gimmick",
+      "id": 147,
+      "name": "sn_bg_fxamp",
+      "occurrences": 636
+    },
+    {
+      "object": "obj_extendnova_gimmick",
+      "id": 163,
+      "name": "en_chorus_bg_alpha",
+      "occurrences": 12
+    },
+    {
+      "object": "obj_extendnova_gimmick",
+      "id": 165,
+      "name": "en_gun_dawn",
+      "occurrences": 4552
+    },
+    {
+      "object": "obj_extendnova_gimmick",
+      "id": 168,
+      "name": "en_enddrop_bg_alpha",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_extendnova_gimmick",
+      "id": 158,
+      "name": "en_whiteoverlay",
+      "occurrences": 12
+    },
+    {
+      "object": "obj_extendnova_gimmick",
+      "id": 144,
+      "name": "supernova_cg_frame",
+      "occurrences": 92
+    },
+    {
+      "object": "obj_extendnova_gimmick",
+      "id": 150,
+      "name": "setup_co_en_s1",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_extendnova_gimmick",
+      "id": 151,
+      "name": "setup_co_en_s2",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_extendnova_gimmick",
+      "id": 152,
+      "name": "setup_co_en_s3",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_extendnova_gimmick",
+      "id": 153,
+      "name": "setup_co_en_s4",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_extendnova_gimmick",
+      "id": 154,
+      "name": "setup_co_en_s5",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_extendnova_gimmick",
+      "id": 155,
+      "name": "setup_co_en_s6",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_extendnova_gimmick",
+      "id": 156,
+      "name": "setup_co_en_s7",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_extendnova_gimmick",
+      "id": 157,
+      "name": "setup_co_en_s8",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_extendnova_gimmick",
+      "id": 166,
+      "name": "en_evildawn_hpbar_alpha",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_extendnova_gimmick",
+      "id": 164,
+      "name": "en_evildawn_hpbar_amount",
+      "occurrences": 36
+    },
+    {
+      "object": "obj_extendnova_gimmick",
+      "id": 167,
+      "name": "en_evildawn_hpbar_shake",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_pictured_gimmick",
+      "id": 129,
+      "name": "c_flash",
+      "occurrences": 2
+    },
+    {
+      "object": "obj_pictured_gimmick",
+      "id": 136,
+      "name": "1_pinkbg_vis",
+      "occurrences": 2
+    },
+    {
+      "object": "obj_pictured_gimmick",
+      "id": 137,
+      "name": "1_speech",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_pictured_gimmick",
+      "id": 138,
+      "name": "1_glitch",
+      "occurrences": 2
+    },
+    {
+      "object": "obj_pictured_gimmick",
+      "id": 134,
+      "name": "noteoverlayalp",
+      "occurrences": 1
+    },
+    {
+      "object": "obj_pictured_gimmick",
+      "id": 131,
+      "name": "uialpha",
+      "occurrences": 1
+    },
+    {
+      "object": "obj_pictured_gimmick",
+      "id": 132,
+      "name": "scorealph",
+      "occurrences": 1
+    },
+    {
+      "object": "obj_pictured_gimmick",
+      "id": 140,
+      "name": "2_dialbox_size",
+      "occurrences": 81
+    },
+    {
+      "object": "obj_pictured_gimmick",
+      "id": 141,
+      "name": "2_dialbox_circles",
+      "occurrences": 60
+    },
+    {
+      "object": "obj_pictured_gimmick",
+      "id": 145,
+      "name": "2_bg_pinkbg_vis",
+      "occurrences": 45
+    },
+    {
+      "object": "obj_pictured_gimmick",
+      "id": 144,
+      "name": "2_dialbox_speech",
+      "occurrences": 42
+    },
+    {
+      "object": "obj_pictured_gimmick",
+      "id": 142,
+      "name": "2_bg_pics",
+      "occurrences": 249
+    },
+    {
+      "object": "obj_pictured_gimmick",
+      "id": 143,
+      "name": "2_dialbox_pulsar",
+      "occurrences": 124
+    },
+    {
+      "object": "obj_pictured_gimmick",
+      "id": 147,
+      "name": "3_noteblack",
+      "occurrences": 1
+    },
+    {
+      "object": "obj_pictured_gimmick",
+      "id": 146,
+      "name": "3_pinkbg_alph",
+      "occurrences": 1
+    },
+    {
+      "object": "obj_plaudite_gimmick",
+      "id": 178,
+      "name": "setup_co_sect1",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_plaudite_gimmick",
+      "id": 179,
+      "name": "hide_combo",
+      "occurrences": 20
+    },
+    {
+      "object": "obj_plaudite_gimmick",
+      "id": 155,
+      "name": "setup_co_end",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_plaudite_gimmick",
+      "id": 157,
+      "name": "plaudite_sect2bg",
+      "occurrences": 372
+    },
+    {
+      "object": "obj_plaudite_gimmick",
+      "id": 158,
+      "name": "plaudite_sect5bg",
+      "occurrences": 36
+    },
+    {
+      "object": "obj_plaudite_gimmick",
+      "id": 172,
+      "name": "plaudite_red_particle",
+      "occurrences": 8
+    },
+    {
+      "object": "obj_plaudite_gimmick",
+      "id": 159,
+      "name": "plaudite_sect7bg",
+      "occurrences": 324
+    },
+    {
+      "object": "obj_plaudite_gimmick",
+      "id": 173,
+      "name": "plaudite_pburst",
+      "occurrences": 7428
+    },
+    {
+      "object": "obj_plaudite_gimmick",
+      "id": 156,
+      "name": "plaudite_jacket",
+      "occurrences": 36
+    },
+    {
+      "object": "obj_plaudite_gimmick",
+      "id": 160,
+      "name": "unraveling_sidething",
+      "occurrences": 480
+    },
+    {
+      "object": "obj_plaudite_gimmick",
+      "id": 161,
+      "name": "astellion_sidething",
+      "occurrences": 1920
+    },
+    {
+      "object": "obj_plaudite_gimmick",
+      "id": 163,
+      "name": "supernova_bg_visible",
+      "occurrences": 12
+    },
+    {
+      "object": "obj_plaudite_gimmick",
+      "id": 174,
+      "name": "plaudite_disable_jacket",
+      "occurrences": 12
+    },
+    {
+      "object": "obj_plaudite_gimmick",
+      "id": 139,
+      "name": "uhnoise",
+      "occurrences": 580
+    },
+    {
+      "object": "obj_plaudite_gimmick",
+      "id": 164,
+      "name": "libertia_bg_visible",
+      "occurrences": 8
+    },
+    {
+      "object": "obj_plaudite_gimmick",
+      "id": 165,
+      "name": "stopmotion_bg_visible",
+      "occurrences": 12
+    },
+    {
+      "object": "obj_plaudite_gimmick",
+      "id": 166,
+      "name": "convergence_bg_visible",
+      "occurrences": 32
+    },
+    {
+      "object": "obj_plaudite_gimmick",
+      "id": 168,
+      "name": "plaudite_finaldropwhitebg",
+      "occurrences": 20
+    },
+    {
+      "object": "obj_plaudite_gimmick",
+      "id": 175,
+      "name": "plaudite_slash_neutral",
+      "occurrences": 212
+    },
+    {
+      "object": "obj_plaudite_gimmick",
+      "id": 167,
+      "name": "plaudite_finaldropbg",
+      "occurrences": 44
+    },
+    {
+      "object": "obj_plaudite_gimmick",
+      "id": 169,
+      "name": "plaudite_slash_saturday",
+      "occurrences": 2376
+    },
+    {
+      "object": "obj_plaudite_gimmick",
+      "id": 170,
+      "name": "plaudite_slash_dawn",
+      "occurrences": 2340
+    },
+    {
+      "object": "obj_plaudite_gimmick",
+      "id": 176,
+      "name": "plaudite_finaldropbg2",
+      "occurrences": 32
+    },
+    {
+      "object": "obj_plaudite_gimmick",
+      "id": 171,
+      "name": "plaudite_ending_event",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_plaudite_gimmick",
+      "id": 133,
+      "name": "noteoverlayalp",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_plaudite_gimmick",
+      "id": 177,
+      "name": "holdoverlayalpha",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_plaudite_gimmick",
+      "id": 150,
+      "name": "setup_co_sect4",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_plaudite_gimmick",
+      "id": 136,
+      "name": "supernova_cg_xscale",
+      "occurrences": 36
+    },
+    {
+      "object": "obj_plaudite_gimmick",
+      "id": 140,
+      "name": "abberationxamp",
+      "occurrences": 40
+    },
+    {
+      "object": "obj_plaudite_gimmick",
+      "id": 141,
+      "name": "abberationyamp",
+      "occurrences": 40
+    },
+    {
+      "object": "obj_plaudite_gimmick",
+      "id": 142,
+      "name": "fish",
+      "occurrences": 40
+    },
+    {
+      "object": "obj_plaudite_gimmick",
+      "id": 144,
+      "name": "supernova_cg_frame",
+      "occurrences": 16
+    },
+    {
+      "object": "obj_plaudite_gimmick",
+      "id": 151,
+      "name": "setup_co_sect6",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_plaudite_gimmick",
+      "id": 152,
+      "name": "setup_co_sect8",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_plaudite_gimmick",
+      "id": 153,
+      "name": "setup_co_sect12",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_plaudite_gimmick",
+      "id": 154,
+      "name": "setup_co_sect14",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 230,
+      "name": "rotdir",
+      "occurrences": 1
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 231,
+      "name": "texta",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 173,
+      "name": "imgx1",
+      "occurrences": 6
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 174,
+      "name": "imgy1",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 175,
+      "name": "imgzm1",
+      "occurrences": 5
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 180,
+      "name": "imga1",
+      "occurrences": 8
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 179,
+      "name": "imgrz1",
+      "occurrences": 5
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 205,
+      "name": "imgx5",
+      "occurrences": 1
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 206,
+      "name": "imgy5",
+      "occurrences": 1
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 212,
+      "name": "imga5",
+      "occurrences": 1
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 207,
+      "name": "imgzm5",
+      "occurrences": 1
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 213,
+      "name": "imgx6",
+      "occurrences": 1
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 214,
+      "name": "imgy6",
+      "occurrences": 1
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 221,
+      "name": "imgx7",
+      "occurrences": 1
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 222,
+      "name": "imgy7",
+      "occurrences": 1
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 172,
+      "name": "wiggly",
+      "occurrences": 2
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 220,
+      "name": "imga6",
+      "occurrences": 2
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 228,
+      "name": "imga7",
+      "occurrences": 2
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 133,
+      "name": "bloom",
+      "occurrences": 164
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 229,
+      "name": "planea",
+      "occurrences": 2
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 157,
+      "name": "sinp",
+      "occurrences": 6
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 158,
+      "name": "sino",
+      "occurrences": 6
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 156,
+      "name": "sina",
+      "occurrences": 6
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 161,
+      "name": "coso",
+      "occurrences": 6
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 160,
+      "name": "cosp",
+      "occurrences": 3
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 159,
+      "name": "cosa",
+      "occurrences": 6
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 167,
+      "name": "spinradiusx",
+      "occurrences": 2
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 200,
+      "name": "imgzmb4",
+      "occurrences": 124
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 192,
+      "name": "imgzmb3",
+      "occurrences": 124
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 184,
+      "name": "imgzmb2",
+      "occurrences": 124
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 176,
+      "name": "imgzmb1",
+      "occurrences": 124
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 199,
+      "name": "imgzm4",
+      "occurrences": 2
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 198,
+      "name": "imgy4",
+      "occurrences": 2
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 201,
+      "name": "imgzmx4",
+      "occurrences": 2
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 197,
+      "name": "imgx4",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 204,
+      "name": "imga4",
+      "occurrences": 2
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 191,
+      "name": "imgzm3",
+      "occurrences": 2
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 190,
+      "name": "imgy3",
+      "occurrences": 2
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 193,
+      "name": "imgzmx3",
+      "occurrences": 2
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 189,
+      "name": "imgx3",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 196,
+      "name": "imga3",
+      "occurrences": 2
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 183,
+      "name": "imgzm2",
+      "occurrences": 2
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 182,
+      "name": "imgy2",
+      "occurrences": 2
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 185,
+      "name": "imgzmx2",
+      "occurrences": 2
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 181,
+      "name": "imgx2",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 188,
+      "name": "imga2",
+      "occurrences": 2
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 177,
+      "name": "imgzmx1",
+      "occurrences": 2
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 187,
+      "name": "imgrz2",
+      "occurrences": 2
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 195,
+      "name": "imgrz3",
+      "occurrences": 2
+    },
+    {
+      "object": "obj_ram_gimmick",
+      "id": 203,
+      "name": "imgrz4",
+      "occurrences": 2
+    },
+    {
+      "object": "obj_self_gimmick",
+      "id": 133,
+      "name": "bgalph",
+      "occurrences": 9
+    },
+    {
+      "object": "obj_self_gimmick",
+      "id": 154,
+      "name": "stopmotionnoteskin",
+      "occurrences": 3
+    },
+    {
+      "object": "obj_self_gimmick",
+      "id": 165,
+      "name": "sm_bar_show",
+      "occurrences": 18
+    },
+    {
+      "object": "obj_self_gimmick",
+      "id": 166,
+      "name": "sm_bar_progress",
+      "occurrences": 21
+    },
+    {
+      "object": "obj_self_gimmick",
+      "id": 168,
+      "name": "self_satcolor",
+      "occurrences": 12
+    },
+    {
+      "object": "obj_self_gimmick",
+      "id": 171,
+      "name": "self_tsukicolor",
+      "occurrences": 12
+    },
+    {
+      "object": "obj_self_gimmick",
+      "id": 169,
+      "name": "self_satalpha",
+      "occurrences": 6
+    },
+    {
+      "object": "obj_self_gimmick",
+      "id": 172,
+      "name": "self_tsukialpha",
+      "occurrences": 6
+    },
+    {
+      "object": "obj_self_gimmick",
+      "id": 170,
+      "name": "self_satframe",
+      "occurrences": 3
+    },
+    {
+      "object": "obj_self_gimmick",
+      "id": 173,
+      "name": "self_tsukiframe",
+      "occurrences": 3
+    },
+    {
+      "object": "obj_self_gimmick",
+      "id": 155,
+      "name": "storycheck1",
+      "occurrences": 3
+    },
+    {
+      "object": "obj_self_gimmick",
+      "id": 156,
+      "name": "storycheck2",
+      "occurrences": 3
+    },
+    {
+      "object": "obj_self_gimmick",
+      "id": 174,
+      "name": "self_destsg",
+      "occurrences": 3
+    },
+    {
+      "object": "obj_self_gimmick",
+      "id": 175,
+      "name": "self_gravebg",
+      "occurrences": 3
+    },
+    {
+      "object": "obj_self_gimmick",
+      "id": 158,
+      "name": "sm_bg_fade_alpha",
+      "occurrences": 6
+    },
+    {
+      "object": "obj_self_gimmick",
+      "id": 176,
+      "name": "self_gravefg",
+      "occurrences": 3
+    },
+    {
+      "object": "obj_self_gimmick",
+      "id": 132,
+      "name": "holdoverlayalpha",
+      "occurrences": 3
+    },
+    {
+      "object": "obj_starcrashers_gimmick",
+      "id": 154,
+      "name": "starspd_multiplier",
+      "occurrences": 64
+    },
+    {
+      "object": "obj_starcrashers_gimmick",
+      "id": 155,
+      "name": "spawn_star_mask",
+      "occurrences": 516
+    },
+    {
+      "object": "obj_starcrashers_gimmick",
+      "id": 151,
+      "name": "starspawner_timer",
+      "occurrences": 52
+    },
+    {
+      "object": "obj_starcrashers_gimmick",
+      "id": 148,
+      "name": "stargaze_mask_sat_alpha",
+      "occurrences": 144
+    },
+    {
+      "object": "obj_starcrashers_gimmick",
+      "id": 149,
+      "name": "stargaze_mask_tsuki_alpha",
+      "occurrences": 140
+    },
+    {
+      "object": "obj_starcrashers_gimmick",
+      "id": 157,
+      "name": "missinglink_bg_alpha",
+      "occurrences": 32
+    },
+    {
+      "object": "obj_starcrashers_gimmick",
+      "id": 158,
+      "name": "turningpoint_bg_alpha",
+      "occurrences": 36
+    },
+    {
+      "object": "obj_starcrashers_gimmick",
+      "id": 159,
+      "name": "frostedmemories_bg_alpha",
+      "occurrences": 32
+    },
+    {
+      "object": "obj_starcrashers_gimmick",
+      "id": 160,
+      "name": "red_bg_alpha",
+      "occurrences": 436
+    },
+    {
+      "object": "obj_starcrashers_gimmick",
+      "id": 168,
+      "name": "terminaljourney_bg_alpha",
+      "occurrences": 32
+    },
+    {
+      "object": "obj_starcrashers_gimmick",
+      "id": 161,
+      "name": "black_bg_alpha",
+      "occurrences": 20
+    },
+    {
+      "object": "obj_starcrashers_gimmick",
+      "id": 162,
+      "name": "laser_spawn",
+      "occurrences": 120
+    },
+    {
+      "object": "obj_starcrashers_gimmick",
+      "id": 163,
+      "name": "spawn_centerrect_red",
+      "occurrences": 376
+    },
+    {
+      "object": "obj_starcrashers_gimmick",
+      "id": 164,
+      "name": "spawn_centerrect_black",
+      "occurrences": 92
+    },
+    {
+      "object": "obj_starcrashers_gimmick",
+      "id": 165,
+      "name": "lasthours_checker_alpha",
+      "occurrences": 8
+    },
+    {
+      "object": "obj_starcrashers_gimmick",
+      "id": 167,
+      "name": "lasthours_checker_set",
+      "occurrences": 356
+    },
+    {
+      "object": "obj_starcrashers_gimmick",
+      "id": 166,
+      "name": "lasthours_checker_chance",
+      "occurrences": 8
+    },
+    {
+      "object": "obj_starcrashers_gimmick",
+      "id": 173,
+      "name": "chorus_backgroundchecker_alpha",
+      "occurrences": 56
+    },
+    {
+      "object": "obj_starcrashers_gimmick",
+      "id": 156,
+      "name": "intro_gradient_alpha",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_starcrashers_gimmick",
+      "id": 170,
+      "name": "buildup_cutin_alpha",
+      "occurrences": 8
+    },
+    {
+      "object": "obj_starcrashers_gimmick",
+      "id": 171,
+      "name": "buildup_cutin_frame",
+      "occurrences": 36
+    },
+    {
+      "object": "obj_starcrashers_gimmick",
+      "id": 177,
+      "name": "chorus_satalli_bg_alpha",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_starcrashers_gimmick",
+      "id": 172,
+      "name": "chorus_town_alpha",
+      "occurrences": 92
+    },
+    {
+      "object": "obj_starcrashers_gimmick",
+      "id": 176,
+      "name": "chorus_greenleft_overlay",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_starcrashers_gimmick",
+      "id": 175,
+      "name": "chorus_satalli_alpha",
+      "occurrences": 92
+    },
+    {
+      "object": "obj_starcrashers_gimmick",
+      "id": 178,
+      "name": "chorus_satalli_alli_particles",
+      "occurrences": 180
+    },
+    {
+      "object": "obj_starcrashers_gimmick",
+      "id": 179,
+      "name": "chorus_satalli_sat_particles",
+      "occurrences": 180
+    },
+    {
+      "object": "obj_starcrashers_gimmick",
+      "id": 174,
+      "name": "chorus_firework",
+      "occurrences": 324
+    },
+    {
+      "object": "obj_starcrashers_gimmick",
+      "id": 180,
+      "name": "end_libertia_bg_alpha",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_starcrashers_gimmick",
+      "id": 185,
+      "name": "ending_coroutine",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_starcrashers_gimmick",
+      "id": 181,
+      "name": "whitefade_alpha",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_starcrashers_gimmick",
+      "id": 184,
+      "name": "end_gravescene2_alpha",
+      "occurrences": 8
+    },
+    {
+      "object": "obj_starcrashers_gimmick",
+      "id": 183,
+      "name": "blackfade_alpha",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_starcrashers_gimmick",
+      "id": 182,
+      "name": "end_gravescene1_alpha",
+      "occurrences": 8
+    },
+    {
+      "object": "obj_stargazers_gimmick",
+      "id": 148,
+      "name": "bgalph",
+      "occurrences": 9
+    },
+    {
+      "object": "obj_stargazers_gimmick",
+      "id": 149,
+      "name": "holdoverlayalpha",
+      "occurrences": 9
+    },
+    {
+      "object": "obj_stargazers_gimmick",
+      "id": 150,
+      "name": "scorealph",
+      "occurrences": 3
+    },
+    {
+      "object": "obj_stargazers_gimmick",
+      "id": 154,
+      "name": "sg_judgeline",
+      "occurrences": 6
+    },
+    {
+      "object": "obj_stargazers_gimmick",
+      "id": 151,
+      "name": "sg_lanelines0",
+      "occurrences": 6
+    },
+    {
+      "object": "obj_stargazers_gimmick",
+      "id": 152,
+      "name": "sg_lanelines1",
+      "occurrences": 6
+    },
+    {
+      "object": "obj_stargazers_gimmick",
+      "id": 153,
+      "name": "sg_lanelines2",
+      "occurrences": 6
+    },
+    {
+      "object": "obj_stargazers_gimmick",
+      "id": 156,
+      "name": "starspd_low",
+      "occurrences": 15
+    },
+    {
+      "object": "obj_stargazers_gimmick",
+      "id": 157,
+      "name": "starspd_high",
+      "occurrences": 9
+    },
+    {
+      "object": "obj_stargazers_gimmick",
+      "id": 155,
+      "name": "sg_starspawner",
+      "occurrences": 12
+    },
+    {
+      "object": "obj_stargazers_gimmick",
+      "id": 158,
+      "name": "star_pause",
+      "occurrences": 507
+    },
+    {
+      "object": "obj_stargazers_gimmick",
+      "id": 144,
+      "name": "sides",
+      "occurrences": 9
+    },
+    {
+      "object": "obj_stargazers_gimmick",
+      "id": 159,
+      "name": "starspawn",
+      "occurrences": 132
+    },
+    {
+      "object": "obj_stargazers_gimmick",
+      "id": 161,
+      "name": "sg_bg_alpha",
+      "occurrences": 3
+    },
+    {
+      "object": "obj_stargazers_gimmick",
+      "id": 162,
+      "name": "sg_bg_speed",
+      "occurrences": 6
+    },
+    {
+      "object": "obj_stargazers_gimmick",
+      "id": 160,
+      "name": "sg_endblip",
+      "occurrences": 3
+    },
+    {
+      "object": "obj_stopmotion_gimmick",
+      "id": 133,
+      "name": "bgalph",
+      "occurrences": 10
+    },
+    {
+      "object": "obj_stopmotion_gimmick",
+      "id": 163,
+      "name": "sm_pushcommand",
+      "occurrences": 945
+    },
+    {
+      "object": "obj_stopmotion_gimmick",
+      "id": 164,
+      "name": "sm_killcommand",
+      "occurrences": 5
+    },
+    {
+      "object": "obj_stopmotion_gimmick",
+      "id": 165,
+      "name": "sm_bar_show",
+      "occurrences": 35
+    },
+    {
+      "object": "obj_stopmotion_gimmick",
+      "id": 166,
+      "name": "sm_bar_progress",
+      "occurrences": 35
+    },
+    {
+      "object": "obj_stopmotion_gimmick",
+      "id": 155,
+      "name": "storycheck1",
+      "occurrences": 5
+    },
+    {
+      "object": "obj_stopmotion_gimmick",
+      "id": 154,
+      "name": "stopmotionnoteskin",
+      "occurrences": 15
+    },
+    {
+      "object": "obj_stopmotion_gimmick",
+      "id": 156,
+      "name": "storycheck2",
+      "occurrences": 5
+    },
+    {
+      "object": "obj_stopmotion_gimmick",
+      "id": 158,
+      "name": "sm_bg_fade_alpha",
+      "occurrences": 45
+    },
+    {
+      "object": "obj_stopmotion_gimmick",
+      "id": 167,
+      "name": "sm_cyclecount",
+      "occurrences": 15
+    },
+    {
+      "object": "obj_stopmotion_gimmick",
+      "id": 159,
+      "name": "temporaryshadercreate",
+      "occurrences": 5
+    },
+    {
+      "object": "obj_stopmotion_gimmick",
+      "id": 160,
+      "name": "temporaryshaderdestroy",
+      "occurrences": 5
+    },
+    {
+      "object": "obj_stopmotion_gimmick",
+      "id": 161,
+      "name": "sm_leftbg_frameset",
+      "occurrences": 990
+    },
+    {
+      "object": "obj_stopmotion_gimmick",
+      "id": 157,
+      "name": "sm_bg_enable",
+      "occurrences": 5
+    },
+    {
+      "object": "obj_stopmotion_gimmick",
+      "id": 162,
+      "name": "sm_rightbg_frameset",
+      "occurrences": 990
+    },
+    {
+      "object": "obj_supernova_gimmick",
+      "id": 149,
+      "name": "setup_co",
+      "occurrences": 5
+    },
+    {
+      "object": "obj_supernova_gimmick",
+      "id": 134,
+      "name": "sg_endblip",
+      "occurrences": 10
+    },
+    {
+      "object": "obj_supernova_gimmick",
+      "id": 136,
+      "name": "supernova_cg_xscale",
+      "occurrences": 10
+    },
+    {
+      "object": "obj_supernova_gimmick",
+      "id": 139,
+      "name": "uhnoise",
+      "occurrences": 2320
+    },
+    {
+      "object": "obj_supernova_gimmick",
+      "id": 140,
+      "name": "abberationxamp",
+      "occurrences": 10
+    },
+    {
+      "object": "obj_supernova_gimmick",
+      "id": 141,
+      "name": "abberationyamp",
+      "occurrences": 10
+    },
+    {
+      "object": "obj_supernova_gimmick",
+      "id": 142,
+      "name": "fish",
+      "occurrences": 5
+    },
+    {
+      "object": "obj_supernova_gimmick",
+      "id": 130,
+      "name": "uialpha",
+      "occurrences": 4
+    },
+    {
+      "object": "obj_supernova_gimmick",
+      "id": 131,
+      "name": "scorealph",
+      "occurrences": 5
+    },
+    {
+      "object": "obj_supernova_gimmick",
+      "id": 132,
+      "name": "bgalph",
+      "occurrences": 10
+    },
+    {
+      "object": "obj_supernova_gimmick",
+      "id": 133,
+      "name": "noteoverlayalp",
+      "occurrences": 5
+    },
+    {
+      "object": "obj_supernova_gimmick",
+      "id": 145,
+      "name": "sg_endblip_destroy",
+      "occurrences": 5
+    },
+    {
+      "object": "obj_supernova_gimmick",
+      "id": 143,
+      "name": "static",
+      "occurrences": 30
+    },
+    {
+      "object": "obj_supernova_gimmick",
+      "id": 144,
+      "name": "supernova_cg_frame",
+      "occurrences": 15
+    },
+    {
+      "object": "obj_supernova_gimmick",
+      "id": 146,
+      "name": "sn_bg_alpha",
+      "occurrences": 5
+    },
+    {
+      "object": "obj_supernova_gimmick",
+      "id": 147,
+      "name": "sn_bg_fxamp",
+      "occurrences": 2315
+    },
+    {
+      "object": "obj_tutorial_gimmick",
+      "id": 131,
+      "name": "cover1",
+      "occurrences": 2
+    },
+    {
+      "object": "obj_tutorial_gimmick",
+      "id": 132,
+      "name": "scorealph",
+      "occurrences": 2
+    },
+    {
+      "object": "obj_tutorial_gimmick",
+      "id": 148,
+      "name": "tutorialA",
+      "occurrences": 72
+    },
+    {
+      "object": "obj_tutorial_gimmick",
+      "id": 149,
+      "name": "tutorialIndex",
+      "occurrences": 36
+    },
+    {
+      "object": "obj_tutorial_gimmick",
+      "id": 147,
+      "name": "tutorialX",
+      "occurrences": 1
+    },
+    {
+      "object": "obj_unraveling_gimmick",
+      "id": 131,
+      "name": "barrel2",
+      "occurrences": 2260
+    },
+    {
+      "object": "obj_unraveling_gimmick",
+      "id": 130,
+      "name": "barrel",
+      "occurrences": 70
+    },
+    {
+      "object": "obj_unraveling_gimmick",
+      "id": 142,
+      "name": "wflash",
+      "occurrences": 60
+    },
+    {
+      "object": "obj_unraveling_gimmick",
+      "id": 129,
+      "name": "gray",
+      "occurrences": 60
+    },
+    {
+      "object": "obj_unraveling_gimmick",
+      "id": 132,
+      "name": "hdistort",
+      "occurrences": 80
+    },
+    {
+      "object": "obj_unraveling_gimmick",
+      "id": 141,
+      "name": "cover3",
+      "occurrences": 10
+    },
+    {
+      "object": "obj_unraveling_gimmick",
+      "id": 140,
+      "name": "cover2",
+      "occurrences": 20
+    },
+    {
+      "object": "obj_unraveling_gimmick",
+      "id": 139,
+      "name": "cover1",
+      "occurrences": 5
+    },
+    {
+      "object": "obj_unraveling_gimmick",
+      "id": 143,
+      "name": "rainbow",
+      "occurrences": 10
+    },
+    {
+      "object": "obj_unraveling_gimmick",
+      "id": 147,
+      "name": "noteoverlayalp",
+      "occurrences": 10
+    },
+    {
+      "object": "obj_unraveling_gimmick",
+      "id": 146,
+      "name": "video",
+      "occurrences": 15
+    },
+    {
+      "object": "obj_unraveling_gimmick",
+      "id": 144,
+      "name": "sides",
+      "occurrences": 230
+    },
+    {
+      "object": "obj_unraveling_gimmick",
+      "id": 137,
+      "name": "aberamp",
+      "occurrences": 170
+    },
+    {
+      "object": "obj_unraveling_gimmick",
+      "id": 133,
+      "name": "fish",
+      "occurrences": 20
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "runtime": "/tmp/vsb-plcli-build/cli/plcli",
+  "passed": 8,
+  "tests": [
+    {
+      "name": "all_extra_types",
+      "bytes_hex": "5653430100c0a0a6b000ffb10180b202ffa7a1ffb303c01dfeffb505003eb606000020c0b70701b808e99fb300a7a1c1ff",
+      "expected_accept": true,
+      "returncode": 0,
+      "passed": true
+    },
+    {
+      "name": "defaults_repetition",
+      "bytes_hex": "5653430100c0a0a1a0a302a301a6b00105a7a6b102ffa7a1c1ff",
+      "expected_accept": true,
+      "returncode": 0,
+      "passed": true
+    },
+    {
+      "name": "mods_signed_target",
+      "bytes_hex": "5653430100e0e2e90000803f0000804013000080bf0000004081ffec00000040000040407370696e00e3e1ff",
+      "expected_accept": true,
+      "returncode": 0,
+      "passed": true
+    },
+    {
+      "name": "bad_header",
+      "bytes_hex": "4241440100ff",
+      "expected_accept": false,
+      "returncode": 1,
+      "passed": true
+    },
+    {
+      "name": "unknown_note_field",
+      "bytes_hex": "5653430100c0a0a5a1c1ff",
+      "expected_accept": false,
+      "returncode": 1,
+      "passed": true
+    },
+    {
+      "name": "truncated_f32",
+      "bytes_hex": "5653430100c0a0a40000",
+      "expected_accept": false,
+      "returncode": 1,
+      "passed": true
+    },
+    {
+      "name": "bad_extra_type",
+      "bytes_hex": "5653430100c0a0a6b40100a7a1c1ff",
+      "expected_accept": false,
+      "returncode": 1,
+      "passed": true
+    },
+    {
+      "name": "bad_trailer_size",
+      "bytes_hex": "5653430100ff00",
+      "expected_accept": false,
+      "returncode": 1,
+      "passed": true
+    }
+  ]
+}
