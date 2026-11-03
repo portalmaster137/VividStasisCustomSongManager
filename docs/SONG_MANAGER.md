@@ -14,7 +14,7 @@ FFmpeg and UndertaleModTool CLI are also required. The default CLI location is `
 
 During setup select the complete original game directory and a separate new destination. The manager copies the game and preserves `<workspace>/original/data.win.backup`. Existing backups are verified and reused, never overwritten. Every build starts from that backup. Keep your profile backed up separately; the game's save location can be outside its installation directory.
 
-Create a song by choosing audio, an optional jacket, and one or more 6K osu!mania charts. Assign each chart to OPENING, MIDDLE, FINALE or ENCORE and set its level, designer and bumper-hold policy. The normal lane conversion remains unchanged. Use audio matching the chart's timeline. Cover images become 100×100 square jackets.
+Create a song by choosing audio, an optional jacket, and one or more 4K or 6K osu!mania charts. Assign each chart to OPENING, MIDDLE, FINALE or ENCORE and set its level, designer and bumper-hold policy. The normal lane conversion remains unchanged. Use audio matching the chart's timeline. Cover images become 100×100 square jackets.
 
 Import/export uses `.vsc` ZIP archives containing `data.toml` and referenced audio, cover and chart files. Package IDs are stable lowercase identifiers. Updating a library song with the same ID preserves its game ID; unrelated songs must use different IDs. Imported packages are copied into the local library so editing them does not change the original archive.
 
@@ -54,3 +54,5 @@ level = 12.0
 designer = "Mapper"
 bumper_holds = "both"
 ```
+
+Chart type is auto-detected from `CircleSize`. 4K columns map directly to the four normal lanes and preserve holds. Bumper policies apply only to 6K charts. In the manager, the Type column shows 4K or 6K and bumper controls are disabled for 4K; switching back to 6K restores the existing policy selection. No package mode field is required.

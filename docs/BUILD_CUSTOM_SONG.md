@@ -14,7 +14,7 @@ python tools/patch_custom_song.py \
 
 `--output-dir` must not already exist. The input archive must match the SHA-256 of the original analyzed build; other releases are rejected. The script reads the original and checks that its hash is unchanged after building. It never overwrites input files. Audio formats supported by the installed FFmpeg can be used; the selected first audio stream is converted to Ogg Vorbis without deliberate trimming or timing shifts.
 
-The osu file must be 6K mania. Lanes 1/6 become left/right bumper taps, and lanes 2–5 become normal notes/holds. Bumper holds reject by default; select `--bump-start` or `--bump-both` to convert them. `--reject-bump-holds` explicitly selects rejection. See [converter details](OSU_CONVERTER.md).
+The osu file must be 4K or 6K mania. Lanes 1/6 become left/right bumper taps, and lanes 2–5 become normal notes/holds. Bumper holds reject by default; select `--bump-start` or `--bump-both` to convert them. `--reject-bump-holds` explicitly selects rejection. See [converter details](OSU_CONVERTER.md).
 
 Title, artist and chart designer come from osu metadata. Override them with `--title`, `--artist` and `--designer`. `--level` sets the displayed difficulty constant (default 4). `--chart-id` accepts lowercase ASCII letters, digits and underscores, starting with a letter. `--cli` overrides the UndertaleModCli executable path or its containing directory. The default is `./UndertaleMTCLI`.
 
@@ -46,3 +46,5 @@ An end-to-end synthetic build was compiled and serialized against the original a
 For the underlying investigation, see [song registration](CHART_REGISTRATION.md), [audio resources](CUSTOM_AUDIO.md), and [general patching](PATCHING_GAME.md).
 
 The exit destination now matches the stock `start_song` destination, `scene_songselect_old`. Earlier builds forced `scene_songselect`, a different selector whose `obj_tempEffect` mixes the game's tracked surface helper with a raw reset. That can leave the tracked stack stale and cause the reported unbalanced-surface error. Rebuild from the unaltered archive with this script and replace the previous output. Compilation and saved-code checks verify the corrected destinations; in-game clear/fail/quit checks are still needed.
+
+Chart type is auto-detected from `CircleSize`. 4K columns map directly to the four normal lanes and preserve holds. Bumper policies apply only to 6K charts. In the manager, the Type column shows 4K or 6K and bumper controls are disabled for 4K; switching back to 6K restores the existing policy selection. No package mode field is required.

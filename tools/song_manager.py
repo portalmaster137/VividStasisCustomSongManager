@@ -32,6 +32,7 @@ except ImportError as exc:
         f'Dependency error: {exc}'
     ) from exc
 
+from osu_to_vsb import detect_key_count
 from custom_songs import DIFFICULTIES, Package, write_metadata
 from manager_backend import Manager, Cancelled
 
@@ -244,9 +245,9 @@ class SongManagerWindow(QMainWindow):
         self.cover_preview = QLabel('No cover selected — generic game jacket will be used')
         self.cover_preview.setMinimumHeight(80)
         editor_layout.addWidget(self.cover_preview)
-        editor_layout.addWidget(QLabel('6K osu!mania charts'))
-        self.charts = QTableWidget(0, 6)
-        self.charts.setHorizontalHeaderLabels(['Difficulty', 'Chart file', 'Browse', 'Level', 'Designer', 'Bumper holds'])
+        editor_layout.addWidget(QLabel('4K / 6K osu!mania charts — detected automatically'))
+        self.charts = QTableWidget(0, 7)
+        self.charts.setHorizontalHeaderLabels(['Difficulty', 'Chart file', 'Browse', 'Level', 'Designer', 'Bumper holds', 'Type'])
         self.charts.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeMode.Stretch)
         self.charts.horizontalHeader().setSectionResizeMode(4, QHeaderView.ResizeMode.Stretch)
         self.charts.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
@@ -521,7 +522,7 @@ class SongManagerWindow(QMainWindow):
         difficulty_box.setCurrentIndex(DIFFICULTIES.index(difficulty))
         source = QLineEdit(path)
         browse = QPushButton('…')
-        browse.clicked.connect(lambda checked=False, e=source: self._choose_asset(e, CHART_FILTER, 'Choose 6K osu!mania chart'))
+        browse.clicked.connect(lambda checked=False, e=source: self._choose_asset(e, CHART_FILTER, 'Choose 4K or 6K osu!mania chart'))
         level_box = QDoubleSpinBox()
         level_box.setRange(0.1, 100)
         level_box.setDecimals(2)
@@ -535,6 +536,23 @@ class SongManagerWindow(QMainWindow):
         bumper_box.setCurrentIndex(max(0, bumper_box.findData(bumper)))
         for column, widget in enumerate((difficulty_box, source, browse, level_box, designer_edit, bumper_box)):
             self.charts.setCellWidget(row, column, widget)
+        type_label = QLabel()
+        self.charts.setCellWidget(row, 6, type_label)
+        def update_type():
+            try:
+                keys = detect_key_count(Path(source.text().strip()).read_text(encoding='utf-8-sig'))
+            except (OSError, UnicodeError, ValueError) as exc:
+                type_label.setText('Unknown' if not source.text().strip() else 'Invalid')
+                type_label.setToolTip(str(exc))
+                bumper_box.setEnabled(False)
+                bumper_box.setToolTip('Choose a valid 4K or 6K osu!mania chart first.')
+            else:
+                type_label.setText(f'{keys}K')
+                type_label.setToolTip('Detected from the chart’s CircleSize.')
+                bumper_box.setEnabled(keys == 6)
+                bumper_box.setToolTip('4K uses normal lanes only; bumper settings are ignored.' if keys == 4 else 'How to convert holds on the outer bumper lanes.')
+        source.textChanged.connect(update_type)
+        update_type()
         difficulty_box.currentIndexChanged.connect(self._mark_dirty)
         source.textChanged.connect(self._mark_dirty)
         level_box.valueChanged.connect(self._mark_dirty)
@@ -546,7 +564,7 @@ class SongManagerWindow(QMainWindow):
         if not remaining:
             QMessageBox.information(self, 'Charts', 'All four difficulty slots are already assigned.')
             return
-        filenames, _ = QFileDialog.getOpenFileNames(self, 'Choose 6K osu!mania charts', '', CHART_FILTER)
+        filenames, _ = QFileDialog.getOpenFileNames(self, 'Choose 4K or 6K osu!mania charts', '', CHART_FILTER)
         if len(filenames) > len(remaining):
             QMessageBox.information(self, 'Charts', f'Choose at most {len(remaining)} more chart files.')
             return

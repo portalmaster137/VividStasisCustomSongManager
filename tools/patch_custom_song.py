@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build a Vividstasis custom-song overlay from clean game data, audio and 6K .osu."""
+"""Build a Vividstasis custom-song overlay from clean game data, audio and 4K/6K .osu."""
 import argparse
 import hashlib
 import json

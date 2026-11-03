@@ -2,7 +2,7 @@
 
 For the desktop song library, package editor and managed game builds, see [the Song Manager guide](docs/SONG_MANAGER.md). The command-line workflow below remains available for single-song builds.
 
-Build a custom song from an audio file, a **6K osu!mania `.osu` chart**, and the unaltered `data.win` supplied with this game build.
+Build a custom song from an audio file, a **4K or 6K osu!mania `.osu` chart**, and the unaltered `data.win` supplied with this game build.
 
 ## Requirements
 
@@ -50,3 +50,5 @@ The three base difficulties contain the same input chart. Custom playback uses G
 The builder has passed synthetic compilation, saved-archive, audio and chart checks. **In-game playback has not yet been verified here.** Test with a copied game and backed-up profile. Build logs and generated patch code are in `custom-build/build/`.
 
 For more detail, see [the builder guide](docs/BUILD_CUSTOM_SONG.md), [chart registration](docs/CHART_REGISTRATION.md), [custom audio](docs/CUSTOM_AUDIO.md), and [the VSB format](docs/VSB_FORMAT.md).
+
+Chart type is auto-detected from `CircleSize`. 4K columns map directly to the four normal lanes and preserve holds. Bumper policies apply only to 6K charts. In the manager, the Type column shows 4K or 6K and bumper controls are disabled for 4K; switching back to 6K restores the existing policy selection. No package mode field is required.

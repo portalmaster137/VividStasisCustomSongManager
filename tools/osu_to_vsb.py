@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Convert a 6K osu!mania .osu beatmap into an unsigned VSC v1 .vsb."""
+"""Convert a 4K or 6K osu!mania chart into unsigned VSC v1."""
 import argparse
 import math
 from pathlib import Path
@@ -7,7 +7,7 @@ import sys
 from vsb import encode_chart
 
 
-def convert(text, bumper_holds='reject'):
+def detect_key_count(text):
     sections = {}
     section = None
     lines = text.lstrip('\ufeff').splitlines()
@@ -25,8 +25,32 @@ def convert(text, bumper_holds='reject'):
         return dict(line.split(':', 1) for _, line in sections.get(name, []) if ':' in line)
     if settings('General').get('Mode', '').strip() != '3':
         raise ValueError('Only osu!mania (Mode: 3) is supported')
-    if float(settings('Difficulty').get('CircleSize', '0')) != 6:
-        raise ValueError('Expected exactly six keys (CircleSize: 6)')
+    try:
+        value = float(settings('Difficulty').get('CircleSize', '0'))
+    except ValueError as exc:
+        raise ValueError('Missing or invalid CircleSize') from exc
+    if value not in (4, 6):
+        raise ValueError('Only 4K or 6K maps are supported (CircleSize: 4 or 6)')
+    return int(value)
+
+
+def convert(text, bumper_holds='reject'):
+    key_count = detect_key_count(text)
+    sections = {}
+    section = None
+    lines = text.lstrip('\ufeff').splitlines()
+    if not lines or not lines[0].startswith('osu file format v'):
+        raise ValueError('Expected an osu file format header')
+    for number, raw in enumerate(lines, 1):
+        line = raw.strip()
+        if not line or line.startswith('//'):
+            continue
+        if line.startswith('[') and line.endswith(']'):
+            section = line[1:-1]
+        elif section:
+            sections.setdefault(section, []).append((number, line))
+    def settings(name):
+        return dict(line.split(':', 1) for _, line in sections.get(name, []) if ':' in line)
     notes = []
     def finite(value):
         value = float(value)
@@ -60,14 +84,14 @@ def convert(text, bumper_holds='reject'):
             x, time, flags = int(fields[0]), finite(fields[2]), int(fields[3])
             if not 0 <= x <= 512:
                 raise ValueError('X coordinate must be between 0 and 512')
-            column = min(5, x * 6 // 512)
+            column = min(key_count - 1, x * key_count // 512)
             hold = bool(flags & 128)
             if not hold and not flags & 1:
                 raise ValueError('Unsupported hit object type')
             end = finite(fields[5].split(':')[0]) if hold else None
             if hold and end < time:
                 raise ValueError('Hold end precedes start')
-            if column in (0, 5):
+            if key_count == 6 and column in (0, 5):
                 if hold and bumper_holds == 'reject':
                     raise ValueError('Bumper hold: select --bump-start or --bump-both')
                 lane = 0 if column == 0 else 2
@@ -75,7 +99,8 @@ def convert(text, bumper_holds='reject'):
                 if hold and bumper_holds == 'both':
                     add(1, lane, end)
             else:
-                add(2 if hold else 0, column - 1, time, end)
+                lane = column if key_count == 4 else column - 1
+                add(2 if hold else 0, lane, time, end)
         except (ValueError, IndexError) as exc:
             raise ValueError(f'Line {number}: {exc}') from exc
     if not sections.get('HitObjects'):

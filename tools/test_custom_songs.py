@@ -138,8 +138,8 @@ class Packages(unittest.TestCase):
         write_metadata(self.source/'data.toml', metadata(audio='escape.mp3'))
         with self.assertRaises(ValueError): Package(self.source)
 
-    def test_chart_must_be_valid_six_key_mania(self):
-        for chart in ('not a beatmap', OSU.replace('CircleSize:6', 'CircleSize:4'), OSU.replace('Mode:3', 'Mode:0')):
+    def test_chart_must_be_supported_mania(self):
+        for chart in ('not a beatmap', OSU.replace('CircleSize:6', 'CircleSize:5'), OSU.replace('Mode:3', 'Mode:0')):
             with self.subTest(chart=chart[:20]):
                 (self.source/'chart.osu').write_text(chart)
                 with self.assertRaises(ValueError): Package(self.source)
