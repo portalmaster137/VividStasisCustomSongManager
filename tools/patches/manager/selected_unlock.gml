@@ -1,0 +1,1 @@
+global.unlocked_songs[song.song_id][struct_get_fallback(song, "is_custom_chart", false) ? difficulties[selected_difficulty].id : selected_difficulty]

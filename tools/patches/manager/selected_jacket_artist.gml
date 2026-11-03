@@ -1,0 +1,1 @@
+illustrator = song_get_info(song, "jacket_artist", struct_get_fallback(song, "is_custom_chart", false) ? difficulties[selected_difficulty].id : selected_difficulty);

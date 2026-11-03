@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """Build a Vividstasis custom-song overlay from clean game data, audio and 4K/6K .osu."""
+
+from patch_templates import render_patch
 import argparse
 import hashlib
 import json
@@ -40,142 +42,41 @@ def metadata(text):
     return result
 
 
+def make_compiler_preamble(work):
+    return render_patch('shared/compiler_preamble.csx', work_cs=cs(work))
+
+
+def make_asset_import(audio, chart_id, cover=None):
+    cover_import = '' if cover is None else render_patch(
+        'single/cover_import.csx', chart_id=chart_id, cover_cs=cs(cover),
+    )
+    return render_patch(
+        'shared/import_audio.csx', chart_id=chart_id,
+        audio_cs=cs(audio), cover_import=cover_import,
+    )
+
+
 def make_script(audio, work, chart_id, title, artist, designer, bpm, level, cover=None):
-    register = f'''
-    var custom_id = getNewSongId();
-    var custom = getGenericSong(custom_id);
-    custom.name = {gml(title)};
-    custom.formatted_name = custom.name;
-    custom.artist = {gml(artist)};
-    custom.chart_id = "{chart_id}";
-    custom.audio_id = asset_get_index("music_chart_{chart_id}");
-    custom.preview_id = custom.audio_id;
-    {f'custom.jacket = asset_get_index("song_{chart_id}");' if cover else ''}
-    custom.bpm_display = "{bpm / 2:.12g}";
-    custom.version = "6.2.2";
-    custom.has_encore = false;
-    custom.is_published = true;
-    custom.invalid = false;
-    custom.sort_artists = [custom.artist];
-    custom.is_custom_chart = true;
-    for (var slot = 1; slot <= 3; slot++) {{
-        struct_set(custom, $"difficulty_constant_{{slot}}", {level});
-        struct_set(custom, $"difficulty_display_{{slot}}", "{level:g}");
-        struct_set(custom, $"note_designer_{{slot}}", {gml(designer)});
-    }}
-    global.song_list[custom_id] = custom;
-    global.custom_chart_song_id = custom_id;
-    global.custom_audio_restore_pending = false;
-'''
-    pack = '''if (arg0 == -1) {
-        array_push(global.song_packs, {name: "Custom Charts",
-            songs: [global.custom_chart_song_id], color1: 16777215,
-            color2: 16724480, description: "Local authored chart."});
-    }
-    '''
-    launch = '''
-    if (variable_global_exists("custom_audio_restore_pending") && global.custom_audio_restore_pending) {
-        global.op_use_gamemaker_audio = global.custom_audio_previous;
-        global.custom_audio_restore_pending = false;
-    }
-    if (arg0 == global.custom_chart_song_id) {
-        global.custom_audio_previous = global.op_use_gamemaker_audio;
-        global.custom_audio_restore_pending = true;
-        global.op_use_gamemaker_audio = true;
-        // Match start_song's stock freeplay destination. scene_songselect is
-        // a different selector with an incompatible surface-effect path.
-        arg2.actually_skip_results = true;
-        arg2.clear_room = scene_songselect_old;
-        arg2.fail_room = scene_songselect_old;
-        arg2.quit_room = scene_songselect_old;
-        arg2.gameplay_room = scene_gameplay;
-    }
-    '''
-    cleanup = '''
-if (variable_global_exists("custom_audio_restore_pending") && global.custom_audio_restore_pending) {
-    global.op_use_gamemaker_audio = global.custom_audio_previous;
-    global.custom_audio_restore_pending = false;
-}
-'''
-    cover_import = '' if cover is None else f'''
-if (Data.Sprites.ByName("song_{chart_id}") != null) throw new Exception("Cover already registered");
-var template = Data.Sprites.ByName("song_generic");
-var texture = new UndertaleEmbeddedTexture {{ Name = new UndertaleString("Texture " + Data.EmbeddedTextures.Count) }};
-texture.TextureData.Image = UndertaleModLib.Util.GMImage.FromPng(File.ReadAllBytes({cs(cover)}), true);
-Data.EmbeddedTextures.Add(texture);
-var page = new UndertaleTexturePageItem {{
-    Name = new UndertaleString("PageItem " + Data.TexturePageItems.Count),
-    SourceX = 0, SourceY = 0, SourceWidth = 100, SourceHeight = 100,
-    TargetX = 0, TargetY = 0, TargetWidth = 100, TargetHeight = 100,
-    BoundingWidth = 100, BoundingHeight = 100, TexturePage = texture
-}};
-Data.TexturePageItems.Add(page);
-var sprite = new UndertaleSprite {{
-    Name = Data.Strings.MakeString("song_{chart_id}"), Width = 100, Height = 100,
-    MarginLeft = 0, MarginTop = 0, MarginRight = 99, MarginBottom = 99,
-    OriginX = 0, OriginY = 0, SVersion = template.SVersion,
-    IsSpecialType = template.IsSpecialType, SSpriteType = template.SSpriteType,
-    GMS2PlaybackSpeed = template.GMS2PlaybackSpeed,
-    GMS2PlaybackSpeedType = template.GMS2PlaybackSpeedType,
-    SepMasks = template.SepMasks, BBoxMode = template.BBoxMode
-}};
-sprite.Textures.Add(new UndertaleSprite.TextureEntry {{ Texture = page }});
-Data.Sprites.Add(sprite);
-var coverGroup = Data.TextureGroupInfo.FirstOrDefault(g => g.Sprites.Any(r => r.Resource == template));
-if (coverGroup == null) throw new Exception("Missing template texture group");
-coverGroup.TexturePages.Add(new() {{ Resource = texture }});
-coverGroup.Sprites.Add(new() {{ Resource = sprite }});
-'''
-    return f'''using System;
-using System.IO;
-using System.Linq;
-using UndertaleModLib;
-using UndertaleModLib.Models;
-using UndertaleModLib.Decompiler;
-EnsureDataLoaded();
-var context = new GlobalDecompileContext(Data);
-var imports = new UndertaleModLib.Compiler.CodeImportGroup(Data, null, Data.ToolInfo.DecompilerSettings) {{ MainThreadAction = MainThreadAction }};
-string Read(string name) {{
-    var code = Data.Code.ByName(name);
-    if (code == null) throw new Exception("Missing code: " + name);
-    return new Underanalyzer.Decompiler.DecompileContext(context, code, Data.ToolInfo.DecompilerSettings).DecompileToString();
-}}
-string ReplaceOnce(string source, string anchor, string replacement) {{
-    int at = source.IndexOf(anchor, StringComparison.Ordinal);
-    if (at < 0 || source.IndexOf(anchor, at + anchor.Length, StringComparison.Ordinal) >= 0)
-        throw new Exception("Patch anchor missing or ambiguous: " + anchor);
-    return source.Substring(0, at) + replacement + source.Substring(at + anchor.Length);
-}}
-void Queue(string name, string source) {{
-    File.WriteAllText(Path.Combine({cs(work)}, name + ".gml"), source);
-    imports.QueueReplace(Data.Code.ByName(name), source);
-}}
-string name = "music_chart_{chart_id}";
-if (Data.Sounds.Any(s => s?.Name?.Content == name)) throw new Exception("Sound already registered");
-int group = Data.GetBuiltinSoundGroupID();
-if (group != 0) throw new Exception("Unexpected built-in group");
-var payload = new UndertaleEmbeddedAudio {{ Data = File.ReadAllBytes({cs(audio)}) }};
-int payloadId = Data.EmbeddedAudio.Count;
-Data.EmbeddedAudio.Add(payload);
-Data.Sounds.Add(new UndertaleSound {{
-    Name = Data.Strings.MakeString(name), Type = Data.Strings.MakeString(".ogg"),
-    File = Data.Strings.MakeString("{chart_id}.ogg"),
-    Flags = UndertaleSound.AudioEntryFlags.IsCompressed | UndertaleSound.AudioEntryFlags.Regular,
-    Volume = 1.0f, Pitch = 1.0f, Effects = 0, AudioID = payloadId,
-    AudioFile = payload, AudioGroup = Data.AudioGroups[group], GroupID = group
-}});
-{cover_import}
-string loader = "gml_GlobalScript_load_song_information";
-Queue(loader, ReplaceOnce(Read(loader), "file_text_close(artists_file);", "file_text_close(artists_file);" + {cs(register)}));
-string packs = "gml_GlobalScript_create_song_packs";
-Queue(packs, ReplaceOnce(Read(packs), "var all_songs = [];", {cs(pack)} + "var all_songs = [];"));
-string start = "gml_GlobalScript_start_song";
-Queue(start, ReplaceOnce(Read(start), "global.boundary_shatter = false;\\n    var song", {cs(launch)} + "global.boundary_shatter = false;\\n    var song"));
-string clean = "gml_Object_cc_CleanUp_0";
-Queue(clean, Read(clean) + {cs(cleanup)});
-imports.Import();
-File.WriteAllText(Path.Combine({cs(work)}, "patch-applied.txt"), "Compiled all custom song patches");
-'''
+    register = render_patch('single/register.gml',
+        title_gml=gml(title),
+        artist_gml=gml(artist),
+        chart_id=chart_id,
+        jacket_assignment=f'custom.jacket = asset_get_index("song_{chart_id}");' if cover else '',
+        initial_bpm=format(bpm / 2, '.12g'),
+        level=level,
+        level_display=format(level, 'g'),
+        designer_gml=gml(designer),
+    )
+    pack = render_patch('single/pack.gml')
+    launch = render_patch('single/launch.gml')
+    cleanup = render_patch('single/cleanup.gml')
+    return make_compiler_preamble(work) + make_asset_import(audio, chart_id, cover) + render_patch('single/apply_patches.csx',
+        work_cs=cs(work),
+        register_cs=cs(register),
+        pack_cs=cs(pack),
+        launch_cs=cs(launch),
+        cleanup_cs=cs(cleanup),
+    )
 
 
 def main():
@@ -243,53 +144,17 @@ def main():
             subprocess.run([str(a.cli.resolve()), 'load', str(a.data.resolve()), '-s', str(script), '-o', str(staged)], stdout=log, stderr=subprocess.STDOUT, check=True)
         if not (build / 'patch-applied.txt').exists() or not staged.is_file():
             raise ValueError('CLI did not complete patching; inspect build/patch.log')
-        cover_verify = '' if cover is None else f'''
-var jacket = Data.Sprites.ByName("song_{a.chart_id}");
-if (jacket == null || jacket.Width != 100 || jacket.Height != 100 || jacket.Textures.Count != 1)
-    throw new Exception("Invalid cover sprite");
-var coverPage = jacket.Textures[0].Texture;
-if (coverPage == null || coverPage.TexturePage == null || coverPage.SourceWidth != 100 || coverPage.SourceHeight != 100)
-    throw new Exception("Invalid cover texture reference");
-var coverBytes = new MemoryStream();
-coverPage.TexturePage.TextureData.Image.SavePng(coverBytes);
-if (!coverBytes.ToArray().SequenceEqual(File.ReadAllBytes({cs(cover)})))
-    throw new Exception("Cover PNG differs after save");
-coverBytes.Dispose();
-'''
+        cover_verify = '' if cover is None else render_patch('single/verify_cover.csx',
+            value=a.chart_id,
+            cover_cs=cs(cover),
+        )
         verify = build / 'verify.csx'
-        verify.write_text(f'''using System;
-using System.IO;
-using System.Linq;
-using System.Security.Cryptography;
-using UndertaleModLib;
-using UndertaleModLib.Decompiler;
-EnsureDataLoaded();
-var sound = Data.Sounds.ByName("music_chart_{a.chart_id}");
-if (sound == null || sound.GroupID != 0 || sound.AudioFile == null)
-    throw new Exception("Missing or invalid imported sound");
-if (!sound.AudioFile.Data.SequenceEqual(File.ReadAllBytes({cs(ogg)})))
-    throw new Exception("Stored audio differs from input payload");
-{cover_verify}
-var context = new GlobalDecompileContext(Data);
-string Read(string name) {{
-    return new Underanalyzer.Decompiler.DecompileContext(context, Data.Code.ByName(name), Data.ToolInfo.DecompilerSettings).DecompileToString();
-}}
-string[,] expected = {{
-    {{"gml_GlobalScript_load_song_information", "music_chart_{a.chart_id}"}},
-    {{"gml_GlobalScript_create_song_packs", "Custom Charts"}},
-    {{"gml_GlobalScript_start_song", "custom_audio_previous"}},
-    {{"gml_GlobalScript_start_song", "arg2.clear_room = scene_songselect_old;"}},
-    {{"gml_GlobalScript_start_song", "arg2.fail_room = scene_songselect_old;"}},
-    {{"gml_GlobalScript_start_song", "arg2.quit_room = scene_songselect_old;"}},
-    {{"gml_Object_cc_CleanUp_0", "custom_audio_restore_pending"}}
-}};
-for (int i = 0; i < expected.GetLength(0); i++) {{
-    string source = Read(expected[i, 0]);
-    if (!source.Contains(expected[i, 1])) throw new Exception("Missing compiled patch: " + expected[i, 0]);
-    File.WriteAllText(Path.Combine({cs(build)}, "verified_" + expected[i, 0] + ".gml"), source);
-}}
-File.WriteAllText(Path.Combine({cs(build)}, "verified.txt"), "Saved archive reopened; imported audio and compiled code verified");
-''')
+        verify.write_text(render_patch('single/verify.csx',
+            value=a.chart_id,
+            ogg_cs=cs(ogg),
+            cover_verify=cover_verify,
+            build_cs=cs(build),
+        ))
         print('Reopening the saved archive to verify audio and compiled code...', flush=True)
         with (build / 'verify.log').open('w') as log:
             subprocess.run([str(a.cli.resolve()), 'load', str(staged), '-s', str(verify)], stdout=log, stderr=subprocess.STDOUT, check=True)

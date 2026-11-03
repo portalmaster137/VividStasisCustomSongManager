@@ -1,0 +1,1 @@
+((i == 3 && custom_apotheosis_active) ? "--" : format_score(global.highscores.normal[song.song_id][i].score))
