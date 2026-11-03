@@ -319,9 +319,9 @@ Custom registration does not itself disable stock rating/profile/network process
 ```gml
 start_song(global.custom_chart_song_id, 0, {
     gameplay_room: scene_gameplay,
-    clear_room: scene_songselect,
-    fail_room: scene_songselect,
-    quit_room: scene_songselect,
+    clear_room: scene_songselect_old,
+    fail_room: scene_songselect_old,
+    quit_room: scene_songselect_old,
     actually_skip_results: true
 });
 ```

@@ -40,7 +40,7 @@ def metadata(text):
     return result
 
 
-def make_script(audio, work, chart_id, title, artist, designer, bpm, level):
+def make_script(audio, work, chart_id, title, artist, designer, bpm, level, cover=None):
     register = f'''
     var custom_id = getNewSongId();
     var custom = getGenericSong(custom_id);
@@ -50,6 +50,7 @@ def make_script(audio, work, chart_id, title, artist, designer, bpm, level):
     custom.chart_id = "{chart_id}";
     custom.audio_id = asset_get_index("music_chart_{chart_id}");
     custom.preview_id = custom.audio_id;
+    {f'custom.jacket = asset_get_index("song_{chart_id}");' if cover else ''}
     custom.bpm_display = "{bpm / 2:.12g}";
     custom.version = "6.2.2";
     custom.has_encore = false;
@@ -81,10 +82,12 @@ def make_script(audio, work, chart_id, title, artist, designer, bpm, level):
         global.custom_audio_previous = global.op_use_gamemaker_audio;
         global.custom_audio_restore_pending = true;
         global.op_use_gamemaker_audio = true;
+        // Match start_song's stock freeplay destination. scene_songselect is
+        // a different selector with an incompatible surface-effect path.
         arg2.actually_skip_results = true;
-        arg2.clear_room = scene_songselect;
-        arg2.fail_room = scene_songselect;
-        arg2.quit_room = scene_songselect;
+        arg2.clear_room = scene_songselect_old;
+        arg2.fail_room = scene_songselect_old;
+        arg2.quit_room = scene_songselect_old;
         arg2.gameplay_room = scene_gameplay;
     }
     '''
@@ -93,6 +96,35 @@ if (variable_global_exists("custom_audio_restore_pending") && global.custom_audi
     global.op_use_gamemaker_audio = global.custom_audio_previous;
     global.custom_audio_restore_pending = false;
 }
+'''
+    cover_import = '' if cover is None else f'''
+if (Data.Sprites.ByName("song_{chart_id}") != null) throw new Exception("Cover already registered");
+var template = Data.Sprites.ByName("song_generic");
+var texture = new UndertaleEmbeddedTexture {{ Name = new UndertaleString("Texture " + Data.EmbeddedTextures.Count) }};
+texture.TextureData.Image = UndertaleModLib.Util.GMImage.FromPng(File.ReadAllBytes({cs(cover)}), true);
+Data.EmbeddedTextures.Add(texture);
+var page = new UndertaleTexturePageItem {{
+    Name = new UndertaleString("PageItem " + Data.TexturePageItems.Count),
+    SourceX = 0, SourceY = 0, SourceWidth = 100, SourceHeight = 100,
+    TargetX = 0, TargetY = 0, TargetWidth = 100, TargetHeight = 100,
+    BoundingWidth = 100, BoundingHeight = 100, TexturePage = texture
+}};
+Data.TexturePageItems.Add(page);
+var sprite = new UndertaleSprite {{
+    Name = Data.Strings.MakeString("song_{chart_id}"), Width = 100, Height = 100,
+    MarginLeft = 0, MarginTop = 0, MarginRight = 99, MarginBottom = 99,
+    OriginX = 0, OriginY = 0, SVersion = template.SVersion,
+    IsSpecialType = template.IsSpecialType, SSpriteType = template.SSpriteType,
+    GMS2PlaybackSpeed = template.GMS2PlaybackSpeed,
+    GMS2PlaybackSpeedType = template.GMS2PlaybackSpeedType,
+    SepMasks = template.SepMasks, BBoxMode = template.BBoxMode
+}};
+sprite.Textures.Add(new UndertaleSprite.TextureEntry {{ Texture = page }});
+Data.Sprites.Add(sprite);
+var coverGroup = Data.TextureGroupInfo.FirstOrDefault(g => g.Sprites.Any(r => r.Resource == template));
+if (coverGroup == null) throw new Exception("Missing template texture group");
+coverGroup.TexturePages.Add(new() {{ Resource = texture }});
+coverGroup.Sprites.Add(new() {{ Resource = sprite }});
 '''
     return f'''using System;
 using System.IO;
@@ -132,6 +164,7 @@ Data.Sounds.Add(new UndertaleSound {{
     Volume = 1.0f, Pitch = 1.0f, Effects = 0, AudioID = payloadId,
     AudioFile = payload, AudioGroup = Data.AudioGroups[group], GroupID = group
 }});
+{cover_import}
 string loader = "gml_GlobalScript_load_song_information";
 Queue(loader, ReplaceOnce(Read(loader), "file_text_close(artists_file);", "file_text_close(artists_file);" + {cs(register)}));
 string packs = "gml_GlobalScript_create_song_packs";
@@ -153,6 +186,7 @@ def main():
     p.add_argument('-o', '--output-dir', type=Path, required=True, help='New overlay directory (must not exist)')
     p.add_argument('--cli', type=Path, default=Path(DEFAULT_CLI))
     p.add_argument('--chart-id', default='custom_demo')
+    p.add_argument('--cover', type=Path, help='Cover image; resized and center-cropped to 100x100')
     p.add_argument('--title')
     p.add_argument('--artist')
     p.add_argument('--designer')
@@ -167,7 +201,9 @@ def main():
             raise ValueError('--chart-id must start with a lowercase letter and contain only lowercase letters, digits and underscores (max 64)')
         if not 0 < a.level <= 100:
             raise ValueError('--level must be between 0 and 100')
-        for path in (a.audio, a.osu, a.data, a.cli):
+        if a.cli.is_dir():
+            a.cli = a.cli / 'UndertaleModCli'
+        for path in (a.audio, a.osu, a.data, a.cli, *([a.cover] if a.cover else [])):
             if not path.is_file():
                 raise ValueError(f'Missing input: {path}')
         if a.output_dir.exists():
@@ -190,15 +226,36 @@ def main():
         ogg = build / 'audio.ogg'
         with (build / 'audio.log').open('w') as log:
             subprocess.run(['ffmpeg', '-nostdin', '-v', 'error', '-i', str(a.audio.resolve()), '-map', '0:a:0', '-vn', '-c:a', 'libvorbis', '-q:a', '6', str(ogg)], stdout=log, stderr=subprocess.STDOUT, check=True)
+        cover = None
+        if a.cover:
+            cover = build / 'cover.png'
+            with (build / 'cover.log').open('w') as log:
+                subprocess.run(['ffmpeg', '-nostdin', '-v', 'error', '-i', str(a.cover.resolve()),
+                                '-vf', 'scale=100:100:force_original_aspect_ratio=increase,crop=100:100,setsar=1',
+                                '-frames:v', '1', '-pix_fmt', 'rgba', str(cover)],
+                               stdout=log, stderr=subprocess.STDOUT, check=True)
         meta = metadata(text)
         script = build / 'patch.csx'
-        script.write_text(make_script(ogg, build, a.chart_id, a.title or meta.get('Title', a.osu.stem), a.artist or meta.get('Artist', 'Unknown'), a.designer or meta.get('Creator', 'Unknown'), bpm, a.level))
+        script.write_text(make_script(ogg, build, a.chart_id, a.title or meta.get('Title', a.osu.stem), a.artist or meta.get('Artist', 'Unknown'), a.designer or meta.get('Creator', 'Unknown'), bpm, a.level, cover))
         staged = a.output_dir / 'data.pending.win'
         print('Importing audio and compiling registration patches (see build/patch.log)...', flush=True)
         with (build / 'patch.log').open('w') as log:
             subprocess.run([str(a.cli.resolve()), 'load', str(a.data.resolve()), '-s', str(script), '-o', str(staged)], stdout=log, stderr=subprocess.STDOUT, check=True)
         if not (build / 'patch-applied.txt').exists() or not staged.is_file():
             raise ValueError('CLI did not complete patching; inspect build/patch.log')
+        cover_verify = '' if cover is None else f'''
+var jacket = Data.Sprites.ByName("song_{a.chart_id}");
+if (jacket == null || jacket.Width != 100 || jacket.Height != 100 || jacket.Textures.Count != 1)
+    throw new Exception("Invalid cover sprite");
+var coverPage = jacket.Textures[0].Texture;
+if (coverPage == null || coverPage.TexturePage == null || coverPage.SourceWidth != 100 || coverPage.SourceHeight != 100)
+    throw new Exception("Invalid cover texture reference");
+var coverBytes = new MemoryStream();
+coverPage.TexturePage.TextureData.Image.SavePng(coverBytes);
+if (!coverBytes.ToArray().SequenceEqual(File.ReadAllBytes({cs(cover)})))
+    throw new Exception("Cover PNG differs after save");
+coverBytes.Dispose();
+'''
         verify = build / 'verify.csx'
         verify.write_text(f'''using System;
 using System.IO;
@@ -212,6 +269,7 @@ if (sound == null || sound.GroupID != 0 || sound.AudioFile == null)
     throw new Exception("Missing or invalid imported sound");
 if (!sound.AudioFile.Data.SequenceEqual(File.ReadAllBytes({cs(ogg)})))
     throw new Exception("Stored audio differs from input payload");
+{cover_verify}
 var context = new GlobalDecompileContext(Data);
 string Read(string name) {{
     return new Underanalyzer.Decompiler.DecompileContext(context, Data.Code.ByName(name), Data.ToolInfo.DecompilerSettings).DecompileToString();
@@ -220,6 +278,9 @@ string[,] expected = {{
     {{"gml_GlobalScript_load_song_information", "music_chart_{a.chart_id}"}},
     {{"gml_GlobalScript_create_song_packs", "Custom Charts"}},
     {{"gml_GlobalScript_start_song", "custom_audio_previous"}},
+    {{"gml_GlobalScript_start_song", "arg2.clear_room = scene_songselect_old;"}},
+    {{"gml_GlobalScript_start_song", "arg2.fail_room = scene_songselect_old;"}},
+    {{"gml_GlobalScript_start_song", "arg2.quit_room = scene_songselect_old;"}},
     {{"gml_Object_cc_CleanUp_0", "custom_audio_restore_pending"}}
 }};
 for (int i = 0; i < expected.GetLength(0); i++) {{
@@ -241,7 +302,7 @@ File.WriteAllText(Path.Combine({cs(build)}, "verified.txt"), "Saved archive reop
         for difficulty in ('OPENING', 'MIDDLE', 'FINALE'):
             (chartdir / (difficulty + '.vsb')).write_bytes(chart)
         staged.rename(a.output_dir / 'data.win')
-        report = dict(source_sha256=source_hash, output_sha256=sha256(a.output_dir / 'data.win'), chart_id=a.chart_id, records=count, source_bpm=bpm, bumper_holds=a.bumper_holds, audio_backend='GameMaker', results='skipped for custom song', runtime_tested=False)
+        report = dict(source_sha256=source_hash, output_sha256=sha256(a.output_dir / 'data.win'), chart_id=a.chart_id, records=count, source_bpm=bpm, bumper_holds=a.bumper_holds, cover_sha256=sha256(cover) if cover else None, audio_backend='GameMaker', results='skipped for custom song', runtime_tested=False)
         (a.output_dir / 'manifest.json').write_text(json.dumps(report, indent=2) + '\n')
         print(f'Built {a.output_dir}. Copy data.win and Charts/ into a COPY of the complete game; open Custom Charts. All three base difficulties contain the same input chart.')
     except (ValueError, OSError, subprocess.CalledProcessError) as exc:

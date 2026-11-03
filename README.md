@@ -6,7 +6,7 @@ Build a custom song from an audio file, a **6K osu!mania `.osu` chart**, and the
 
 - Python 3.11 or newer.
 - FFmpeg with the `libvorbis` encoder available on your PATH.
-- UndertaleModTool CLI at `./UndertaleMTCLI`, relative to the directory you run the command from. Use `--cli /path/to/UndertaleModCli` to override it.
+- UndertaleModTool CLI at `./UndertaleMTCLI` (an executable or a directory containing `UndertaleModCli`), relative to the directory you run the command from. Use `--cli /path/to/UndertaleModCli` to override it.
 - The original game files. The patcher checks the archive hash and rejects other builds or previously patched archives.
 
 ## Build your song
@@ -20,8 +20,11 @@ python tools/patch_custom_song.py \
   vividstasis/data.win \
   --output-dir custom-build \
   --chart-id my_song \
+  --cover /path/to/cover.jpg \
   --bump-both
 ```
+
+The optional `--cover` image is embedded as the song jacket, resized and center-cropped to 100×100. Omit it to use the generic jacket.
 
 Choose a new output directory for each build. Title, artist and designer come from the chart; override them with `--title`, `--artist` and `--designer`. Use `--level 8` to set the displayed difficulty.
 

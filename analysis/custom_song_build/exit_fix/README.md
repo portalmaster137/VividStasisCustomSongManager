@@ -1,0 +1,5 @@
+# Custom-song return-room correction
+
+The original `start_song` defaults its clear room to `scene_songselect_old`. The custom patch had overridden clear, fail and quit with `scene_songselect`, a distinct room containing `obj_tempEffect`. That object's Draw event calls `surface_target(surface)` but closes it with raw `surface_reset_target()`. The wrapper pushes `global.surface_stack`; only `surface_untarget()` pops that tracked stack. A later wrapped target can therefore attempt an extra engine pop. This is static evidence consistent with the user reporting a surface-stack crash on both quit and completion; it is not a runtime trace of the failing call.
+
+The patch now uses `scene_songselect_old` for all three destinations, matching the normal freeplay path. A synthetic full build passed compilation, serialization and saved-archive reopening. Verification explicitly checked all three corrected assignments in the decompiled saved `start_song`. Seven existing VSB tests also passed. The game was not launched here; user verification of quit, completion and failure is pending.

@@ -1,0 +1,12 @@
+{
+  "source_sha256": "73e98f6c77f66675af9ce5cc52e4710457e4eefc82e91ef245b7d9ba12c15e45",
+  "output_sha256": "31ee52eb386f4c60a9867d829192941241cd07cee3ab76751404944e27a63149",
+  "chart_id": "custom_demo",
+  "records": 4,
+  "source_bpm": 120.0,
+  "bumper_holds": "reject",
+  "cover_sha256": "31c94eceb35e2fd3e1168be93d378da50f460fc817ff102cebf12d1054412364",
+  "audio_backend": "GameMaker",
+  "results": "skipped for custom song",
+  "runtime_tested": false
+}
