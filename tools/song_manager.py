@@ -33,7 +33,7 @@ except ImportError as exc:
     ) from exc
 
 from osu_to_vsb import detect_key_count
-from custom_songs import DIFFICULTIES, Package, write_metadata
+from custom_songs import PACKAGE_DIFFICULTIES, Package, write_metadata, delete_library_song
 from manager_backend import Manager, Cancelled
 
 PROJECT = Path(__file__).resolve().parents[1]
@@ -197,9 +197,10 @@ class SongManagerWindow(QMainWindow):
         self.setup_button = QPushButton('Set up game copy…')
         self.review_button = QPushButton('Review & build…')
         self.rollback_button = QPushButton('Restore previous build')
+        self.clean_button = QPushButton('RESTORE (clean game)')
         self.launch_button = QPushButton('Launch game')
         self.open_button = QPushButton('Open game folder')
-        for button in (self.setup_button, self.review_button, self.rollback_button, self.launch_button, self.open_button):
+        for button in (self.setup_button, self.review_button, self.rollback_button, self.clean_button, self.launch_button, self.open_button):
             toolbar.addWidget(button)
         toolbar.addStretch()
         layout.addLayout(toolbar)
@@ -221,7 +222,8 @@ class SongManagerWindow(QMainWindow):
         self.new_button = QPushButton('New song')
         self.import_button = QPushButton('Import .vsc…')
         self.export_button = QPushButton('Export .vsc…')
-        for button in (self.new_button, self.import_button, self.export_button):
+        self.delete_button = QPushButton('Delete song…')
+        for button in (self.new_button, self.import_button, self.export_button, self.delete_button):
             library_buttons.addWidget(button)
         library_layout.addLayout(library_buttons)
         splitter.addWidget(library_panel)
@@ -246,6 +248,9 @@ class SongManagerWindow(QMainWindow):
         self.cover_preview.setMinimumHeight(80)
         editor_layout.addWidget(self.cover_preview)
         editor_layout.addWidget(QLabel('4K / 6K osu!mania charts — detected automatically'))
+        alternate_help = QLabel('APOTHEOSIS requires ENCORE. In-game: select ENCORE, then press Tab to toggle APOTHEOSIS.')
+        alternate_help.setWordWrap(True)
+        editor_layout.addWidget(alternate_help)
         self.charts = QTableWidget(0, 7)
         self.charts.setHorizontalHeaderLabels(['Difficulty', 'Chart file', 'Browse', 'Level', 'Designer', 'Bumper holds', 'Type'])
         self.charts.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeMode.Stretch)
@@ -282,11 +287,13 @@ class SongManagerWindow(QMainWindow):
         self.setup_button.clicked.connect(self._setup)
         self.review_button.clicked.connect(self._review)
         self.rollback_button.clicked.connect(self._rollback)
+        self.clean_button.clicked.connect(self._restore_clean)
         self.launch_button.clicked.connect(self._launch)
         self.open_button.clicked.connect(self._open_game)
         self.new_button.clicked.connect(self._new)
         self.import_button.clicked.connect(self._import)
         self.export_button.clicked.connect(self._export)
+        self.delete_button.clicked.connect(self._delete_song)
         self.save_button.clicked.connect(self._save)
         self.add_chart_button.clicked.connect(self._add_charts)
         self.remove_chart_button.clicked.connect(self._remove_chart)
@@ -347,10 +354,12 @@ class SongManagerWindow(QMainWindow):
         for button in (self.setup_button, self.new_button, self.import_button, self.export_button,
                        self.save_button, self.add_chart_button, self.remove_chart_button):
             button.setEnabled(not busy)
+        self.delete_button.setEnabled(not busy and self._current_id in self._packages)
         self.editor.setEnabled(not busy)
         self.list.setEnabled(not busy)
         self.review_button.setEnabled(configured and not busy)
         self.rollback_button.setEnabled(configured and not busy and bool(self.manager.state.get('previous_installation')))
+        self.clean_button.setEnabled(configured and not busy)
         self.launch_button.setEnabled(configured and not busy)
         self.open_button.setEnabled(configured)
         self.cancel_button.setEnabled(busy)
@@ -373,7 +382,7 @@ class SongManagerWindow(QMainWindow):
             state = 'Installed'
         else:
             state = 'Pending installation' if selected else 'Library only'
-        difficulties = ' / '.join(d.upper() for d in DIFFICULTIES if d in data.get('charts', {}))
+        difficulties = ' / '.join(d.upper() for d in PACKAGE_DIFFICULTIES if d in data.get('charts', {}))
         item.setText(f"{data['title']}\n{data['artist']} · {package_id}\n{difficulties}\n{state}")
         item.setToolTip(f"{state}\n{root}")
         pixmap = QPixmap(str(root / data['jacket'])) if data.get('jacket') else QPixmap()
@@ -411,6 +420,15 @@ class SongManagerWindow(QMainWindow):
             self.list.addItem(item)
             if focus and item.data(Qt.ItemDataRole.UserRole) == focus:
                 self.list.setCurrentItem(item)
+        shown = {self.list.item(i).data(Qt.ItemDataRole.UserRole) for i in range(self.list.count())}
+        for package_id in sorted(set(self.manager.state.get('installed_ids', [])) - shown):
+            pending = 'Reimport or uncheck before rebuilding' if package_id in self._selected_ids else 'Pending removal on the next build'
+            item = QListWidgetItem(f'{package_id}\nInstalled · library package missing\n{pending}')
+            item.setData(Qt.ItemDataRole.UserRole, package_id)
+            item.setFlags((item.flags() & ~Qt.ItemFlag.ItemIsSelectable) | Qt.ItemFlag.ItemIsUserCheckable)
+            item.setCheckState(Qt.CheckState.Checked if package_id in self._selected_ids else Qt.CheckState.Unchecked)
+            item.setToolTip('Reimport this package to rebuild it, or leave it unchecked to remove its installed game files on the next build.')
+            self.list.addItem(item)
         self._loading = False
         self._update_status()
 
@@ -485,7 +503,7 @@ class SongManagerWindow(QMainWindow):
         self.audio.setText(str(root / metadata['audio']))
         self.jacket.setText(str(root / metadata['jacket']) if metadata.get('jacket') else '')
         self.charts.setRowCount(0)
-        for difficulty in DIFFICULTIES:
+        for difficulty in PACKAGE_DIFFICULTIES:
             if difficulty in metadata['charts']:
                 chart = metadata['charts'][difficulty]
                 self._chart_row(difficulty, str(root / chart['file']), chart.get('level', 4), chart.get('designer', ''), chart.get('bumper_holds', 'reject'))
@@ -493,6 +511,7 @@ class SongManagerWindow(QMainWindow):
         self._dirty = False
         self.save_button.setText('Save song to library')
         self._preview_cover()
+        self._update_status()
 
     def _new(self, checked=False, prompt=True):
         if prompt and not self._prompt_unsaved():
@@ -513,13 +532,14 @@ class SongManagerWindow(QMainWindow):
         self._dirty = False
         self.save_button.setText('Save song to library')
         self._preview_cover()
+        self._update_status()
 
     def _chart_row(self, difficulty, path='', level=4, designer='', bumper='reject'):
         row = self.charts.rowCount()
         self.charts.insertRow(row)
         difficulty_box = QComboBox()
-        difficulty_box.addItems([d.upper() for d in DIFFICULTIES])
-        difficulty_box.setCurrentIndex(DIFFICULTIES.index(difficulty))
+        difficulty_box.addItems([d.upper() for d in PACKAGE_DIFFICULTIES])
+        difficulty_box.setCurrentIndex(PACKAGE_DIFFICULTIES.index(difficulty))
         source = QLineEdit(path)
         browse = QPushButton('…')
         browse.clicked.connect(lambda checked=False, e=source: self._choose_asset(e, CHART_FILTER, 'Choose 4K or 6K osu!mania chart'))
@@ -560,9 +580,9 @@ class SongManagerWindow(QMainWindow):
         bumper_box.currentIndexChanged.connect(self._mark_dirty)
 
     def _add_charts(self):
-        remaining = [d for d in DIFFICULTIES if all(self.charts.cellWidget(r, 0).currentText().lower() != d for r in range(self.charts.rowCount()))]
+        remaining = [d for d in PACKAGE_DIFFICULTIES if all(self.charts.cellWidget(r, 0).currentText().lower() != d for r in range(self.charts.rowCount()))]
         if not remaining:
-            QMessageBox.information(self, 'Charts', 'All four difficulty slots are already assigned.')
+            QMessageBox.information(self, 'Charts', 'All five chart slots are already assigned.')
             return
         filenames, _ = QFileDialog.getOpenFileNames(self, 'Choose 4K or 6K osu!mania charts', '', CHART_FILTER)
         if len(filenames) > len(remaining):
@@ -639,6 +659,8 @@ class SongManagerWindow(QMainWindow):
                                  designer=self.charts.cellWidget(row, 4).text().strip(),
                                  bumper_holds=self.charts.cellWidget(row, 5).currentData())
                     metadata['charts'][difficulty] = chart
+                if 'apotheosis' in metadata['charts'] and 'encore' not in metadata['charts']:
+                    raise ValueError('APOTHEOSIS is an alternate ENCORE chart. Add an ENCORE chart before saving APOTHEOSIS.')
                 write_metadata(root / 'data.toml', metadata)
                 with Package(root) as package:
                     package.install_library(self.library, replace=self._current_id is not None)
@@ -757,16 +779,7 @@ class SongManagerWindow(QMainWindow):
         self.progress.setRange(0, 1)
         self.progress.setValue(0 if failure or cancelled else 1)
         self._selected_ids = set(self.manager.state.get('selected_ids', self._selected_ids))
-        self._loading = True
-        for index in range(self.list.count()):
-            item = self.list.item(index)
-            package_id = item.data(Qt.ItemDataRole.UserRole)
-            if package_id:
-                item.setCheckState(Qt.CheckState.Checked if package_id in self._selected_ids else Qt.CheckState.Unchecked)
-                if package_id in self._packages:
-                    root, data = self._packages[package_id]
-                    self._decorate_item(item, root, data)
-        self._loading = False
+        self._reload_library(focus=self._current_id)
         self._update_status('Operation failed. See details below.' if failure else None)
         if cancelled:
             self.log.appendPlainText(cancelled)
@@ -810,8 +823,57 @@ class SongManagerWindow(QMainWindow):
         self._start_operation('Reviewing selected songs…', lambda progress, cancel: self.manager.review(selected), success=ready, cancelable=False)
 
     def _rollback(self):
+        if self._worker is not None:
+            return
         if QMessageBox.question(self, 'Restore previous build', 'Restore the previous complete manager build? Library songs and reserved IDs will be retained.', QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, QMessageBox.StandardButton.No) == QMessageBox.StandardButton.Yes:
             self._start_operation('Restoring the previous build…', lambda progress, cancel: self.manager.rollback(progress=progress), cancelable=False)
+
+    def _restore_clean(self):
+        if self._worker is not None:
+            return
+        message = ('Restore the clean original game archive and remove every manager-installed custom chart? '
+                   'Library packages and reserved song IDs will be retained. '
+                   'This is separate from restoring the previous custom build.')
+        if QMessageBox.question(self, 'Restore clean game', message,
+                                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+                                QMessageBox.StandardButton.No) == QMessageBox.StandardButton.Yes:
+            self._start_operation('Restoring the clean game…',
+                                  lambda progress, cancel: self.manager.restore_clean(progress=progress),
+                                  success=lambda result: self._update_status('Clean game restored. Library packages were retained.'),
+                                  cancelable=False)
+
+    def _delete_song(self):
+        if self._worker is not None:
+            return
+        package_id = self._current_id
+        if not package_id or package_id not in self._packages:
+            QMessageBox.information(self, 'Delete library song', 'Select a saved library song first.')
+            return
+        title = self._packages[package_id][1]['title']
+        message = (f'Delete "{title}" ({package_id}) from the library? This removes its editable package files. '
+                   'An installed copy remains in the game until the next build or clean restore. '
+                   'Reserved song IDs will be retained.')
+        if self._dirty:
+            message += ' Unsaved edits to this song will also be discarded.'
+        if QMessageBox.question(self, 'Delete library song', message,
+                                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+                                QMessageBox.StandardButton.No) != QMessageBox.StandardButton.Yes:
+            return
+        try:
+            delete_library_song(self.library, package_id)
+        except Exception as exc:
+            self._error('Cannot delete library song', exc)
+            return
+        self._selected_ids.discard(package_id)
+        try:
+            self._persist_selection()
+        except Exception as exc:
+            self._error('Song deleted; selection could not be saved', exc)
+        self._dirty = False
+        self._current_id = None
+        self._new(prompt=False)
+        self._reload_library()
+        self._update_status('Song deleted from the library. Its installed copy remains until the next build or clean restore.')
 
     def _launch(self):
         self._start_operation('Checking the game copy and launching…',

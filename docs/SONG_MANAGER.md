@@ -14,13 +14,17 @@ FFmpeg and UndertaleModTool CLI are also required. The default CLI location is `
 
 During setup select the complete original game directory and a separate new destination. The manager copies the game and preserves `<workspace>/original/data.win.backup`. Existing backups are verified and reused, never overwritten. Every build starts from that backup. Keep your profile backed up separately; the game's save location can be outside its installation directory.
 
-Create a song by choosing audio, an optional jacket, and one or more 4K or 6K osu!mania charts. Assign each chart to OPENING, MIDDLE, FINALE or ENCORE and set its level, designer and bumper-hold policy. The normal lane conversion remains unchanged. Use audio matching the chart's timeline. Cover images become 100×100 square jackets.
+Create a song by choosing audio, an optional jacket, and one or more 4K or 6K osu!mania charts. Assign each chart to OPENING, MIDDLE, FINALE, ENCORE, or the optional alternate ENCORE chart APOTHEOSIS, and set its level, designer and bumper-hold policy. APOTHEOSIS requires a supplied ENCORE chart. In the game confirmation menu, select ENCORE and press Tab to toggle between ENCORE and APOTHEOSIS. The normal lane conversion remains unchanged. Use audio matching the chart's timeline. Cover images become 100×100 square jackets.
 
 Import/export uses `.vsc` ZIP archives containing `data.toml` and referenced audio, cover and chart files. Package IDs are stable lowercase identifiers. Updating a library song with the same ID preserves its game ID; unrelated songs must use different IDs. Imported packages are copied into the local library so editing them does not change the original archive.
 
 Select songs in the library, review the pending changes, then commit the rebuild. The manager stages and verifies its output before installation. Unchecking a song removes it from the next build; it does not delete the library package. The previous successful installation is retained for rollback, including its custom chart files. An empty selection restores the stock archive and removes manager-owned custom chart folders.
 
-Custom songs use GameMaker audio and return to the stock freeplay selector without entering stock results. A custom score system is not included. Source packages can contain any nonempty subset of the four difficulties; only supplied slots should be exposed in-game.
+The two restore actions have separate purposes: **Restore previous build** returns to the previous complete manager installation, while **RESTORE (clean game)** restores the pristine archive and removes manager-installed custom chart files. Both retain library packages and stable ID assignments. Restores run in the background and require confirmation.
+
+**Delete song** removes the selected editable library package after confirmation and deselects it. It does not immediately delete files from the installed game. An installed song whose package was deleted remains listed as pending removal until the next committed build or clean restore. Export a `.vsc` first if you want to retain a portable copy.
+
+Custom songs use GameMaker audio and return to the stock freeplay selector without entering stock results. A custom score system is not included. Source packages can contain any nonempty subset of the four base difficulties, plus APOTHEOSIS when ENCORE is present; only supplied base slots should be exposed in-game. APOTHEOSIS is reached through the ENCORE toggle and is not a fifth base difficulty index.
 
 By default, manager data is stored in `.song-manager` beside the project. Use `python tools/song_manager.py --workspace /path/to/workspace` to choose another location.
 
@@ -51,6 +55,13 @@ bumper_holds = "reject"
 [charts.encore]
 file = "charts/encore.osu"
 level = 12.0
+designer = "Mapper"
+bumper_holds = "both"
+
+# Optional alternate chart, available through the ENCORE toggle.
+[charts.apotheosis]
+file = "charts/apotheosis.osu"
+level = 14.0
 designer = "Mapper"
 bumper_holds = "both"
 ```

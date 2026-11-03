@@ -47,6 +47,9 @@ def make_multi_script(songs, work, highest_id):
     """One audio/cover import batch and one code compilation for the entire set."""
     work = Path(work)
     first = songs[0]
+    for song in songs:
+        if 'apotheosis' in song['charts'] and 'encore' not in song['charts']:
+            raise ValueError('APOTHEOSIS requires an ENCORE chart in the same song')
     # Reuse the tested import primitives, enclosing each import in its own scope.
     templates = [make_script(s['audio'], work, s['chart_id'], s['title'], s['artist'], '', s['bpm'], 1, s.get('cover')) for s in songs]
     preamble = templates[0].split('string name = "music_chart_', 1)[0]
@@ -88,6 +91,11 @@ def make_multi_script(songs, work, highest_id):
             display = str(math.floor(level)) + ('+' if level % 1 >= .5 else '') if chart else '--'
             designer = chart.get('designer', 'Unknown') if chart else ''
             register += f'    {v}.difficulty_constant_{j} = {level:.12g};\n    {v}.difficulty_display_{j} = {gml(display)};\n    {v}.note_designer_{j} = {gml(designer)};\n'
+        if 'apotheosis' in song['charts']:
+            alternate = song['charts']['apotheosis']
+            level = float(alternate['level'])
+            display = str(math.floor(level)) + ('+' if level % 1 >= .5 else '')
+            register += f'    {v}.custom_apotheosis = {{level: {level:.12g}, display: {gml(display)}, designer: {gml(alternate.get("designer", "Unknown"))}}};\n'
         register += f'    global.song_list[{song["song_id"]}] = {v};\n    array_push(global.custom_chart_song_ids, {song["song_id"]});\n'
     pack = '''if (arg0 == -1) {
         array_push(global.song_packs, {name: "Custom Charts",
@@ -106,6 +114,9 @@ def make_multi_script(songs, work, highest_id):
             for (var cd = 0; cd < 4; cd++) {
                 if (custom_start_song.custom_difficulties[cd]) { arg1 = cd; break; }
             }
+        }
+        if (arg1 == 3 && struct_exists(custom_start_song, "custom_apotheosis") && struct_get_fallback(arg2, "custom_apotheosis", false)) {
+            arg2.force_chart = "APOTHEOSIS";
         }
         global.custom_audio_previous = global.op_use_gamemaker_audio;
         global.custom_audio_restore_pending = true;
@@ -155,13 +166,61 @@ if (!custom_diffs[difficulty]) {
                         difficulty = (difficulty + maxd) % (maxd + 1);
                         if (custom_diffs[difficulty]) break;
                     }'''
+    apotheosis_metadata = '''
+    if (struct_get_fallback(song, "is_custom_chart", false) && arg1 == 3 && struct_exists(song, "custom_apotheosis") && struct_get_fallback(arg2, "custom_apotheosis", false)) {
+        global.songdifficulty = song.custom_apotheosis.display;
+        global.songdifficultyconstant = song.custom_apotheosis.level;
+        global.note_designer = song.custom_apotheosis.designer;
+    }
+    '''
+    apotheosis_toggle = '''
+if (struct_exists(song, "custom_apotheosis")) {
+    var custom_encore_selected = difficulties[selected_difficulty].id == 3;
+    if (!custom_encore_selected) custom_apotheosis_active = false;
+    if (custom_encore_selected && keyboard_check_pressed(vk_tab)) {
+        custom_apotheosis_active = !custom_apotheosis_active;
+        play_se(sfx_songsel_diff);
+    }
+    for (var ca = 0; ca < array_length(difficulties); ca++) {
+        if (difficulties[ca].id == 3) {
+            difficulties[ca].name = custom_apotheosis_active ? "APOTHEOSIS" : "ENCORE";
+            difficulties[ca].value = custom_apotheosis_active ? song.custom_apotheosis.display : song.difficulty_display_4;
+            difficulties[ca].charter = custom_apotheosis_active ? song.custom_apotheosis.designer : song.note_designer_4;
+            diff_opt.choices[ca] = difficulties[ca].name;
+        }
+    }
+    diff_names[3] = custom_apotheosis_active ? "APOTHEOSIS" : "ENCORE";
+}
+'''
+    apotheosis_hint = '''
+if (struct_exists(song, "custom_apotheosis") && difficulties[selected_difficulty].id == 3) {
+    draw_set_default();
+    draw_set_alpha(image_alpha);
+    draw_set_font(global.default_font);
+    draw_set_halign(fa_left);
+    draw_text_outlined(4, 168, custom_apotheosis_active ? "TAB: switch to ENCORE" : "TAB: switch to APOTHEOSIS", c_white, c_black);
+}
+'''
+    apotheosis_transition = '''
+        case "APOTHEOSIS":
+            diff_str = "APOTHEOSIS";
+            diff_num = "Level " + song.custom_apotheosis.display;
+            chart_designer = song.custom_apotheosis.designer;
+            jacket_designer = struct_get_fallback(song, "jacket_artist", "Unknown");
+            diff_col = 16711858;
+            break;
+'''
     finish = f'''
 string loader = "gml_GlobalScript_load_song_information";
 Queue(loader, ReplaceOnce(Read(loader), "file_text_close(artists_file);", "file_text_close(artists_file);" + {cs(register)}));
 string packs = "gml_GlobalScript_create_song_packs";
 Queue(packs, ReplaceOnce(Read(packs), "var all_songs = [];", {cs(pack)} + "var all_songs = [];"));
 string start = "gml_GlobalScript_start_song";
-Queue(start, ReplaceOnce(Read(start), "global.boundary_shatter = false;\\n    var song", {cs(launch)} + "global.boundary_shatter = false;\\n    var song"));
+string startSource = ReplaceOnce(Read(start), "global.boundary_shatter = false;\\n    var song", {cs(launch)} + "global.boundary_shatter = false;\\n    var song");
+startSource = ReplaceOnce(startSource, "if (force_chart != undefined)", {cs(apotheosis_metadata)} + "if (force_chart != undefined)");
+Queue(start, startSource);
+string transition = "gml_Object_o_transitionsong_Alarm_0";
+Queue(transition, ReplaceOnce(Read(transition), {cs('case "PRELUDE":')}, {cs(apotheosis_transition)} + {cs('case "PRELUDE":')}));
 string clean = "gml_Object_cc_CleanUp_0";
 Queue(clean, Read(clean) + {cs(cleanup)});
 string select = "gml_GlobalScript_refresh_song_objects";
@@ -174,13 +233,24 @@ Queue(confirm, confirmation);
 string draw = "gml_Object_o_songselect_confirm_Draw_64";
 Queue(draw, ReplaceOnce(Read(draw), "var unlocked = global.unlocked_songs[song.song_id][i];", "if (struct_get_fallback(song, \\"is_custom_chart\\", false) && !song.custom_difficulties[i]) continue;\\n        var unlocked = global.unlocked_songs[song.song_id][i];"));
 string modernCreate = "gml_Object_o_songselect_newconfirm_Create_0";
-Queue(modernCreate, ReplaceOnce(Read(modernCreate), "selected_difficulty = clamp(selected_difficulty, 0, array_length(difficulties) - 1);", {cs('if (struct_get_fallback(song, "is_custom_chart", false)) {\n            var custom_wanted_diff = selected_difficulty;\n            selected_difficulty = 0;\n            for (var ci = 0; ci < array_length(difficulties); ci++) {\n                if (difficulties[ci] == custom_wanted_diff) { selected_difficulty = ci; break; }\n            }\n        } else {\n            selected_difficulty = clamp(selected_difficulty, 0, array_length(difficulties) - 1);\n        }')}));
+string modernCreateSource = ReplaceOnce(Read(modernCreate), "selected_difficulty = clamp(selected_difficulty, 0, array_length(difficulties) - 1);", {cs('if (struct_get_fallback(song, "is_custom_chart", false)) {\n            var custom_wanted_diff = selected_difficulty;\n            selected_difficulty = 0;\n            for (var ci = 0; ci < array_length(difficulties); ci++) {\n                if (difficulties[ci] == custom_wanted_diff) { selected_difficulty = ci; break; }\n            }\n        } else {\n            selected_difficulty = clamp(selected_difficulty, 0, array_length(difficulties) - 1);\n        }')});
+Queue(modernCreate, modernCreateSource + {cs(chr(10)+'custom_apotheosis_active = false;'+chr(10))});
 string modernStep = "gml_Object_o_songselect_newconfirm_Step_0";
 string modernStepSource = ReplaceOnce(Read(modernStep), {cs('illustrator = song_get_info(song, "jacket_artist", selected_difficulty);')}, {cs('illustrator = song_get_info(song, "jacket_artist", struct_get_fallback(song, "is_custom_chart", false) ? difficulties[selected_difficulty].id : selected_difficulty);')});
 modernStepSource = ReplaceOnce(modernStepSource, "global.unlocked_songs[song.song_id][selected_difficulty]", {cs('global.unlocked_songs[song.song_id][struct_get_fallback(song, "is_custom_chart", false) ? difficulties[selected_difficulty].id : selected_difficulty]')});
+modernStepSource = ReplaceOnce(modernStepSource, "illustrator = song_get_info", {cs(apotheosis_toggle)} + "illustrator = song_get_info");
 Queue(modernStep, modernStepSource);
 string mainSelect = "gml_Object_o_songselect_main_Create_0";
-Queue(mainSelect, ReplaceOnce(Read(mainSelect), "start_song(selected_song.song_id, confirm_menu.selected_difficulty);", {cs('var custom_actual_difficulty = confirm_menu.selected_difficulty;\n    if (struct_get_fallback(selected_song, "is_custom_chart", false)) {\n        custom_actual_difficulty = confirm_menu.difficulties[confirm_menu.selected_difficulty].id;\n    }\n    start_song(selected_song.song_id, custom_actual_difficulty);')}));
+Queue(mainSelect, ReplaceOnce(Read(mainSelect), "start_song(selected_song.song_id, confirm_menu.selected_difficulty);", {cs('var custom_actual_difficulty = confirm_menu.selected_difficulty;\n    var custom_start_args = {};\n    if (struct_get_fallback(selected_song, "is_custom_chart", false)) {\n        custom_actual_difficulty = confirm_menu.difficulties[confirm_menu.selected_difficulty].id;\n        if (custom_actual_difficulty == 3 && struct_exists(selected_song, "custom_apotheosis") && confirm_menu.custom_apotheosis_active) {\n            custom_start_args.force_chart = "APOTHEOSIS";\n            custom_start_args.custom_apotheosis = true;\n        }\n    }\n    start_song(selected_song.song_id, custom_actual_difficulty, custom_start_args);')}));
+foreach (string modernDraw in new[] {{ "gml_Object_o_songselect_newconfirm_Draw_0", "gml_Object_o_songselect_newconfirm_Draw_64" }}) {{
+    string render = ReplaceOnce(Read(modernDraw), {cs('charter = struct_get(song, $"note_designer_{difficulty + 1}");')}, {cs('charter = (difficulty == 3 && custom_apotheosis_active) ? song.custom_apotheosis.designer : struct_get(song, $"note_designer_{difficulty + 1}");')});
+    render = ReplaceOnce(render, {cs('struct_get(song, $"difficulty_display_{i + 1}")')}, {cs('((i == 3 && custom_apotheosis_active) ? song.custom_apotheosis.display : struct_get(song, $"difficulty_display_{i + 1}"))')});
+    render = render.Replace({cs('format_score(global.highscores.normal[song.song_id][i].score)')}, {cs('((i == 3 && custom_apotheosis_active) ? "--" : format_score(global.highscores.normal[song.song_id][i].score))')});
+    render = ReplaceOnce(render, {cs('get_grade_string(get_score_grade(global.highscores.normal[song.song_id][i].score))')}, {cs('((i == 3 && custom_apotheosis_active) ? "" : get_grade_string(get_score_grade(global.highscores.normal[song.song_id][i].score)))')});
+    int enums = render.IndexOf("\\nenum ", StringComparison.Ordinal);
+    render = enums < 0 ? render + {cs(apotheosis_hint)} : render.Insert(enums, {cs(apotheosis_hint)});
+    Queue(modernDraw, render);
+}}
 imports.Import();
 File.WriteAllText(Path.Combine({cs(work)}, "patch-applied.txt"), "Compiled all custom song patches");
 '''
@@ -228,15 +298,18 @@ if (!output.ToArray().SequenceEqual(File.ReadAllBytes({cs(song['cover'])}))) thr
 }}
 '''
     markers = {
+        'gml_Object_o_transitionsong_Alarm_0': ['case \"APOTHEOSIS\":', 'song.custom_apotheosis.display', 'song.custom_apotheosis.designer', 'jacket_designer = struct_get_fallback'],
         'gml_GlobalScript_load_song_information': ['custom_chart_song_ids', 'custom_difficulties'],
         'gml_GlobalScript_create_song_packs': ['Custom Charts'],
-        'gml_GlobalScript_start_song': ['custom_audio_previous', 'custom_difficulties', 'arg2.clear_room = scene_songselect_old;', 'arg2.quit_room = scene_songselect_old;', 'arg2.fail_room = scene_songselect_old;'],
+        'gml_GlobalScript_start_song': ['custom_apotheosis', 'APOTHEOSIS', 'custom_audio_previous', 'custom_difficulties', 'arg2.clear_room = scene_songselect_old;', 'arg2.quit_room = scene_songselect_old;', 'arg2.fail_room = scene_songselect_old;'],
         'gml_Object_cc_CleanUp_0': ['custom_audio_restore_pending'],
         'gml_GlobalScript_refresh_song_objects': ['custom_difficulties'],
         'gml_Object_o_songselect_confirm_Step_0': ['custom_diffs'],
         'gml_Object_o_songselect_confirm_Draw_64': ['custom_difficulties'],
-        'gml_Object_o_songselect_newconfirm_Create_0': ['custom_wanted_diff'],
-        'gml_Object_o_songselect_newconfirm_Step_0': ['difficulties[selected_difficulty].id'],
+        'gml_Object_o_songselect_newconfirm_Create_0': ['custom_wanted_diff', 'custom_apotheosis_active'],
+        'gml_Object_o_songselect_newconfirm_Step_0': ['difficulties[selected_difficulty].id', 'custom_apotheosis_active', 'keyboard_check_pressed'],
+        'gml_Object_o_songselect_newconfirm_Draw_0': ['TAB: switch to APOTHEOSIS', 'custom_apotheosis_active'],
+        'gml_Object_o_songselect_newconfirm_Draw_64': ['TAB: switch to APOTHEOSIS', 'custom_apotheosis_active'],
         'gml_Object_o_songselect_main_Create_0': ['custom_actual_difficulty', 'difficulties[confirm_menu.selected_difficulty].id'],
     }
     for name, expected in markers.items():
@@ -622,6 +695,11 @@ class Manager:
         self._install({'data.win':Path(self.state['backup'])},newstate)
         progress('Original archive restored; stable song IDs retained')
         return dict(restored=True,source_sha256=SOURCE_SHA256)
+
+    def restore_clean(self,progress=None):
+        with self._lock():
+            self.validate_setup()
+            return self._restore_stock(progress or (lambda _:None))
 
     def rollback(self,progress=None):
         progress = progress or (lambda _:None)

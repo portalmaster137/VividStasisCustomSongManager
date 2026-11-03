@@ -9,6 +9,7 @@ import zipfile
 from pathlib import Path
 
 DIFFICULTIES = ('opening', 'middle', 'finale', 'encore')
+PACKAGE_DIFFICULTIES = DIFFICULTIES + ('apotheosis',)
 LIMIT = 1024 ** 3
 
 
@@ -91,7 +92,9 @@ class Package:
             if not isinstance(m.get(field), str) or not m[field]: raise ValueError(f'Missing {field}')
         self.asset(m['audio'])
         if m.get('jacket'): self.asset(m['jacket'])
-        if not isinstance(self.charts, dict) or not self.charts or set(self.charts) - set(DIFFICULTIES): raise ValueError('Invalid difficulty set')
+        if not isinstance(self.charts, dict) or not self.charts or set(self.charts) - set(PACKAGE_DIFFICULTIES): raise ValueError('Invalid difficulty set')
+        if 'apotheosis' in self.charts and 'encore' not in self.charts:
+            raise ValueError('APOTHEOSIS requires an ENCORE chart to toggle from')
         for name, chart in self.charts.items():
             if not isinstance(chart, dict) or not isinstance(chart.get('file'), str):
                 raise ValueError(f'Missing chart file for {name}')
@@ -148,3 +151,22 @@ class Package:
                 raise
             if old.exists(): shutil.rmtree(old)
         return target
+
+
+def delete_library_song(library, ident):
+    """Remove one local package; installed game assets and ID assignments stay intact."""
+    library = Path(library).resolve()
+    if not isinstance(ident, str) or not re.fullmatch('[a-z][a-z0-9_]{0,63}', ident):
+        raise ValueError('Invalid song ID')
+    target = library / ident
+    if target.is_symlink() or not target.is_dir() or target.resolve().parent != library:
+        raise ValueError('Unknown or unsafe library song')
+    # Rename before removal so the package disappears from library scans atomically.
+    with tempfile.TemporaryDirectory(prefix='.delete-', dir=library) as temporary:
+        staged = Path(temporary) / ident
+        target.rename(staged)
+        try:
+            shutil.rmtree(staged)
+        except BaseException:
+            if staged.exists(): staged.rename(target)
+            raise
