@@ -3,3 +3,5 @@ extraction/*
 testing/*
 out/*
 UndertaleMTCLI/*
+analysis/*
+.song-manager/*

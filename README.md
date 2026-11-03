@@ -1,5 +1,7 @@
 # Getting started: custom Vividstasis songs
 
+For the desktop song library, package editor and managed game builds, see [the Song Manager guide](docs/SONG_MANAGER.md). The command-line workflow below remains available for single-song builds.
+
 Build a custom song from an audio file, a **6K osu!mania `.osu` chart**, and the unaltered `data.win` supplied with this game build.
 
 ## Requirements
