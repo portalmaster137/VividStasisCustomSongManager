@@ -57,20 +57,18 @@ class ManagerActions(unittest.TestCase):
         self.window.artist.setText('Artist')
         self.window.audio.setText(str(self.audio))
 
-    def test_alternate_slot_requires_encore_without_saving_invalid_draft(self):
+    def test_apotheosis_slot_saves_without_encore(self):
         self.fill()
         self.window._chart_row('apotheosis', str(self.chart))
         slot = self.window.charts.cellWidget(0, 0)
         self.assertEqual(slot.count(), 5)
         self.assertEqual(slot.currentText(), 'APOTHEOSIS')
         self.assertEqual(self.window.charts.cellWidget(0, 6).text(), '4K')
-        with patch.object(QMessageBox, 'critical') as error:
-            self.assertFalse(self.window._save_package())
-        self.assertIn('ENCORE', str(error.call_args))
-        self.assertFalse((self.window.library / 'test_song').exists())
-        self.window._chart_row('encore', str(self.chart))
         self.assertTrue(self.window._save_package())
-        self.assertEqual(set(self.window._metadata['charts']), {'encore', 'apotheosis'})
+        self.assertEqual(set(self.window._metadata['charts']), {'apotheosis'})
+        self.assertTrue((self.window.library / 'test_song' / 'charts' / 'apotheosis.osu').is_file())
+        self.assertFalse((self.window.library / 'test_song' / 'charts' / 'encore.osu').exists())
+        self.assertIn('APOTHEOSIS', self.window.list.item(0).text())
 
     def test_delete_removes_only_library_and_leaves_install_pending_removal(self):
         self.fill()
