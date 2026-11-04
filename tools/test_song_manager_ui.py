@@ -81,12 +81,18 @@ class ManagerActions(unittest.TestCase):
         game.mkdir()
         (game / 'data.win').write_bytes(b'unchanged-game')
         self.window.manager.state['destination'] = str(game)
+        # Model a completed installation on disk. Selection updates reload state
+        # under the manager lock, as they would after an actual committed build.
+        self.window.manager._save()
         with patch.object(QMessageBox, 'question', return_value=QMessageBox.StandardButton.Yes):
             self.window._delete_song()
         self.assertFalse((self.window.library / 'test_song').exists())
         self.assertNotIn('test_song', self.window._selected_ids)
         self.assertNotIn('test_song', self.window.manager.state['selected_ids'])
         self.assertEqual(self.window.manager.state['installed_ids'], ['test_song'])
+        reloaded = type(self.window.manager)(self.window.workspace)
+        self.assertEqual(reloaded.state['installed_ids'], ['test_song'])
+        self.assertNotIn('test_song', reloaded.state['selected_ids'])
         self.assertEqual((game / 'data.win').read_bytes(), b'unchanged-game')
         self.assertTrue(any('Pending removal' in self.window.list.item(i).text()
                             for i in range(self.window.list.count())))
