@@ -37,7 +37,8 @@ from osz_import import OszArchive
 from custom_songs import PACKAGE_DIFFICULTIES, Package, write_metadata, delete_library_song
 from manager_backend import Manager, Cancelled
 
-PROJECT = Path(__file__).resolve().parents[1]
+# Bundled __file__ points inside the extracted runtime; keep user data beside the executable.
+PROJECT = Path(sys.executable).resolve().parent if getattr(sys, "frozen", False) else Path(__file__).resolve().parents[1]
 AUDIO_FILTER = 'Audio (*.ogg *.mp3 *.wav *.flac *.m4a *.aac *.opus);;All files (*)'
 IMAGE_FILTER = 'Images (*.png *.jpg *.jpeg *.webp *.bmp *.tiff);;All files (*)'
 CHART_FILTER = 'osu! beatmaps (*.osu);;All files (*)'

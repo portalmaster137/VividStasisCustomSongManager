@@ -1,0 +1,78 @@
+name: Build Song Manager
+
+on:
+  push:
+    paths:
+      - 'tools/**'
+      - 'requirements*.txt'
+      - 'docs/EXECUTABLE_BUILDS.md'
+      - '.github/workflows/build-manager.yml'
+  pull_request:
+    paths:
+      - 'tools/**'
+      - 'requirements*.txt'
+      - 'docs/EXECUTABLE_BUILDS.md'
+      - '.github/workflows/build-manager.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: ${{ matrix.platform }} executable
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-22.04
+            platform: linux-x64
+          - os: windows-2022
+            platform: windows-x64
+    env:
+      QT_QPA_PLATFORM: offscreen
+      PYTHONUTF8: '1'
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          architecture: x64
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            requirements-build.txt
+      - name: Install Linux Qt libraries
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y libegl1 libopengl0 libxkbcommon0
+      - name: Install Python dependencies
+        run: python -m pip install -r requirements-build.txt
+      - name: Run tests (including Qt with offscreen rendering)
+        run: python -m unittest discover -s tools -p "test_*.py"
+      - name: Build executable
+        run: >-
+          python -m PyInstaller --noconfirm --clean --onefile
+          --name VividstasisSongManager
+          --paths tools
+          --add-data "tools/patches:patches"
+          tools/song_manager.py
+      - name: Check packaged application starts
+        shell: bash
+        run: |
+          if [ "$RUNNER_OS" = "Windows" ]; then
+            ./dist/VividstasisSongManager.exe --help
+          else
+            ./dist/VividstasisSongManager --help
+          fi
+      - name: Package executable and instructions
+        run: python tools/package_manager.py --platform ${{ matrix.platform }}
+      - name: Upload executable archive
+        uses: actions/upload-artifact@v6
+        with:
+          name: VividstasisSongManager-${{ matrix.platform }}
+          path: release/*
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 30

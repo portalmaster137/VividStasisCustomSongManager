@@ -5,3 +5,9 @@ out/*
 UndertaleMTCLI/*
 analysis/*
 .song-manager/*
+# Executable build outputs
+build/
+dist/
+release/
+*.spec
+__pycache__/
