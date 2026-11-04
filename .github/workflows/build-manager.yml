@@ -57,6 +57,7 @@ jobs:
           python -m PyInstaller --noconfirm --clean --onefile
           --name VividstasisSongManager
           --paths tools
+          --collect-data certifi
           --add-data "tools/patches:patches"
           tools/song_manager.py
       - name: Check packaged application starts

@@ -4,7 +4,7 @@ GitHub Actions builds Linux x64 and Windows x64 executables when tool code or bu
 
 Extract the Windows ZIP or Linux tar.gz, then launch `VividstasisSongManager.exe` or `VividstasisSongManager`. The Linux archive preserves executable permissions. It is built on Ubuntu 22.04; use Ubuntu 22.04 or a compatible newer Linux system. These are unsigned builds, and the executable is native to its target platform.
 
-Python, PySide6 and the GML/C# patch templates are bundled. You still need:
+Python, PySide6, the certificate-authority bundle used for secure downloads, and the GML/C# patch templates are bundled. You still need:
 
 - FFmpeg with `libvorbis`, available on PATH.
 - UndertaleModTool CLI: click **Setup CLI Tool** during setup to download version 0.9.2.0 for Windows or Linux into the manager workspace. Alternatively, place a compatible distribution as `UndertaleMTCLI` beside the manager or choose its executable manually.
@@ -16,7 +16,7 @@ To build locally on the target operating system:
 
 ```sh
 python -m pip install -r requirements-build.txt
-python -m PyInstaller --noconfirm --clean --onefile --name VividstasisSongManager --paths tools --add-data "tools/patches:patches" tools/song_manager.py
+python -m PyInstaller --noconfirm --clean --onefile --name VividstasisSongManager --paths tools --collect-data certifi --add-data "tools/patches:patches" tools/song_manager.py
 python tools/package_manager.py --platform linux-x64
 ```
 

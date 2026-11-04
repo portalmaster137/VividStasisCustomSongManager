@@ -3,9 +3,11 @@ import hashlib
 import json
 from pathlib import Path
 import platform
+import ssl
 import subprocess
 import tempfile
 import urllib.request
+import certifi
 import zipfile
 from manager_backend import Cancelled
 
@@ -19,6 +21,13 @@ EXTRACT_LIMIT = 2 * 1024 ** 3
 
 def _cancelled(cancel):
     if cancel and cancel(): raise Cancelled('CLI setup cancelled')
+
+
+def download_context():
+    """Keep system trust and add packaged roots for standalone executables."""
+    context = ssl.create_default_context()
+    context.load_verify_locations(cafile=certifi.where())
+    return context
 
 
 def install_cli(workspace, progress=None, cancel=None):
@@ -48,7 +57,7 @@ def install_cli(workspace, progress=None, cancel=None):
         progress(f'Downloading UndertaleModTool CLI {VERSION} for {system}')
         request = urllib.request.Request(url, headers={'User-Agent': 'Vividstasis-Song-Manager'})
         digest = hashlib.sha256(); received = 0
-        with urllib.request.urlopen(request, timeout=30) as response, archive_path.open('wb') as output:
+        with urllib.request.urlopen(request, timeout=30, context=download_context()) as response, archive_path.open('wb') as output:
             while True:
                 _cancelled(cancel)
                 chunk = response.read(1024 * 1024)

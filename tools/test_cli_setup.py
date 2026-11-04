@@ -3,6 +3,7 @@ import json
 import os
 from pathlib import Path
 import subprocess
+import ssl
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -31,8 +32,20 @@ class CliSetup(unittest.TestCase):
              patch.object(cli_setup.subprocess,'run',return_value=subprocess.CompletedProcess([],0,'0.9.2.0+test')) as probe:
             executable=cli_setup.install_cli(self.workspace,**kwargs)
             self.assertEqual(download.call_args.args[0].full_url,cli_setup.ASSETS[system])
+            context = download.call_args.kwargs['context']
+            self.assertEqual(context.verify_mode, ssl.CERT_REQUIRED)
+            self.assertTrue(context.check_hostname)
             self.assertEqual(probe.call_args.args[0][1:], ['--version'])
             return executable
+
+    def test_packaged_roots_work_without_system_certificate_store(self):
+        empty = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+        self.assertEqual(empty.cert_store_stats()['x509_ca'], 0)
+        with patch.object(cli_setup.ssl, 'create_default_context', return_value=empty):
+            context = cli_setup.download_context()
+        self.assertGreater(context.cert_store_stats()['x509_ca'], 0)
+        self.assertEqual(context.verify_mode, ssl.CERT_REQUIRED)
+        self.assertTrue(context.check_hostname)
 
     def test_platform_download_dependencies_permissions_and_reuse(self):
         for system in ('Linux','Windows'):
