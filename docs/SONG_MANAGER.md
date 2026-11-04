@@ -10,7 +10,9 @@ python -m venv .venv
 .venv/bin/python tools/song_manager.py
 ```
 
-FFmpeg and UndertaleModTool CLI are also required. The default CLI location is `./UndertaleMTCLI`; both its containing directory and its executable can be configured. Only the original game build analyzed in this workspace is supported.
+FFmpeg and UndertaleModTool CLI are also required. In the initial setup dialog, **Setup CLI Tool** downloads the pinned UndertaleModTool CLI **0.9.2.0** for Windows or Ubuntu/Linux into the manager workspace, checks its version, and fills the CLI path after successful setup. A valid existing managed install is reused. You can also browse to a manually installed CLI executable or enter its containing directory; the default manual location is `./UndertaleMTCLI`. FFmpeg is configured separately. Only the original game build analyzed in this workspace is supported.
+
+CLI setup runs in the background and shows progress. The source/destination fields and **Create playable copy** are disabled until it finishes. **Cancel** requests cancellation and keeps the dialog alive until the worker finishes cleanup. Download or verification errors preserve your entered paths so you can retry or select a manual CLI.
 
 During setup select the complete original game directory and a separate new destination. The manager copies the game and preserves `<workspace>/original/data.win.backup`. Existing backups are verified and reused, never overwritten. Every build starts from that backup. Keep your profile backed up separately; the game's save location can be outside its installation directory.
 
@@ -40,7 +42,7 @@ Automated package, converter and transaction tests pass. They include interrupti
 
 A real two-song archive build, sparse chart slots, removal rebuild, asset-cache reuse and byte-identical previous-build rollback also passed; see [the evidence](../analysis/chart_manager/backend_smoke.json).
 
-The UI requires PySide6. Its installation could not be completed in the development environment because PyPI DNS was unavailable; window interaction and gameplay checks must be performed on a machine with that dependency installed.
+The UI requires PySide6. Offscreen Qt action tests pass, including CLI setup success, failure/retry, cancellation and close guards. CLI download calls are mocked in those UI tests; separate installer tests cover archive/version handling. Interactive desktop and in-game behavior require runtime checks on the target platform.
 
 Example package metadata:
 

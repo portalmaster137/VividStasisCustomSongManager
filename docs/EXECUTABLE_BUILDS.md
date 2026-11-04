@@ -7,7 +7,7 @@ Extract the Windows ZIP or Linux tar.gz, then launch `VividstasisSongManager.exe
 Python, PySide6 and the GML/C# patch templates are bundled. You still need:
 
 - FFmpeg with `libvorbis`, available on PATH.
-- A platform-compatible UndertaleModTool CLI distribution, including its supporting files. Place its folder as `UndertaleMTCLI` beside the manager or choose it during setup.
+- UndertaleModTool CLI: click **Setup CLI Tool** during setup to download version 0.9.2.0 for Windows or Linux into the manager workspace. Alternatively, place a compatible distribution as `UndertaleMTCLI` beside the manager or choose its executable manually.
 - The complete supported original game installation. On Linux, Wine is needed to launch its Windows executable.
 
 The default workspace is `.song-manager` beside the executable, with the clean backup inside that workspace. Extract into a writable directory and keep the workspace when replacing the executable. Use `--workspace /path/to/workspace` to choose another location. The manager does not bundle game data, music, existing user packages, or UndertaleModTool.
