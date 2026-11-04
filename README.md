@@ -4,6 +4,8 @@ For the desktop song library, package editor and managed game builds, see [the S
 
 Build a custom song from an audio file, a **4K or 6K osu!mania `.osu` chart**, and the unaltered `data.win` supplied with this game build.
 
+For Linux and Windows executable downloads or local builds, see [executable builds](docs/EXECUTABLE_BUILDS.md).
+
 ## Requirements
 
 - Python 3.11 or newer.
