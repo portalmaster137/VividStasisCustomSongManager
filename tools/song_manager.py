@@ -97,10 +97,17 @@ class Operation(QThread):
 
 
 class SetupDialog(QDialog):
-    def __init__(self, state, parent=None):
+    def __init__(self, state, parent=None, workspace=None):
         super().__init__(parent)
+        self.workspace = Path(workspace or getattr(parent, 'workspace', PROJECT / '.song-manager')).expanduser().resolve()
+        self._cli_worker = None
+        self._cli_result = None
+        self._cli_failure = None
+        self._cli_cancelled = None
+        self._close_after_cancel = False
+        self._browse_buttons = []
         self.setWindowTitle('Set up the playable game copy')
-        self.resize(700, 260)
+        self.resize(760, 360)
         layout = QVBoxLayout(self)
         explanation = QLabel('Choose the original game and a separate new destination. '
                              'Setup copies the complete game and preserves a clean archive for rebuilds.')
@@ -119,19 +126,39 @@ class SetupDialog(QDialog):
             row_layout.addWidget(edit)
             browse = QPushButton('Browse…')
             browse.clicked.connect(lambda checked=False, e=edit, c=is_cli: self._browse(e, c))
+            self._browse_buttons.append(browse)
             row_layout.addWidget(browse)
             form.addRow(label, row)
         layout.addLayout(form)
+        tool_row = QHBoxLayout()
+        self.cli_setup_button = QPushButton('Setup CLI Tool')
+        self.cli_setup_button.clicked.connect(self._install_cli)
+        tool_row.addWidget(self.cli_setup_button)
+        tool_note = QLabel('Download and check the supported CLI for this computer, or choose an existing CLI above.')
+        tool_note.setWordWrap(True)
+        tool_row.addWidget(tool_note, 1)
+        layout.addLayout(tool_row)
+        self.cli_status = QLabel()
+        self.cli_status.setWordWrap(True)
+        self.cli_status.setTextFormat(Qt.TextFormat.PlainText)
+        layout.addWidget(self.cli_status)
+        self.cli_progress = QProgressBar()
+        self.cli_progress.setRange(0, 1)
+        self.cli_progress.setValue(0)
+        self.cli_progress.setVisible(False)
+        layout.addWidget(self.cli_progress)
         note = QLabel('The destination must be new or empty. The CLI field accepts its executable or folder.')
         note.setWordWrap(True)
         layout.addWidget(note)
-        buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
-        buttons.button(QDialogButtonBox.StandardButton.Ok).setText('Create playable copy')
-        buttons.accepted.connect(self.accept)
-        buttons.rejected.connect(self.reject)
-        layout.addWidget(buttons)
+        self.buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
+        self.buttons.button(QDialogButtonBox.StandardButton.Ok).setText('Create playable copy')
+        self.buttons.accepted.connect(self.accept)
+        self.buttons.rejected.connect(self.reject)
+        layout.addWidget(self.buttons)
 
     def _browse(self, edit, cli):
+        if self._cli_worker is not None:
+            return
         if cli:
             filename, _ = QFileDialog.getOpenFileName(self, 'Choose UndertaleModCli', edit.text(), 'All files (*)')
         else:
@@ -139,11 +166,89 @@ class SetupDialog(QDialog):
         if filename:
             edit.setText(filename)
 
+    def _set_cli_busy(self, busy):
+        for edit in (self.original, self.destination, self.cli):
+            edit.setEnabled(not busy)
+        for button in self._browse_buttons:
+            button.setEnabled(not busy)
+        self.cli_setup_button.setEnabled(not busy)
+        self.buttons.button(QDialogButtonBox.StandardButton.Ok).setEnabled(not busy)
+        self.buttons.button(QDialogButtonBox.StandardButton.Cancel).setEnabled(True)
+        self.cli_progress.setVisible(busy)
+        self.cli_progress.setRange(0, 0 if busy else 1)
+        if not busy:
+            self.cli_progress.setValue(0)
+
+    def _install_cli(self):
+        if self._cli_worker is not None:
+            return
+        self._cli_result = self._cli_failure = self._cli_cancelled = None
+        self._close_after_cancel = False
+        self.cli_status.setText('Setting up the CLI Tool…')
+        def install(progress, cancel):
+            from cli_setup import install_cli
+            return install_cli(self.workspace, progress=progress, cancel=cancel)
+        self._cli_worker = Operation(install, self)
+        self._cli_worker.progress.connect(self.cli_status.setText)
+        self._cli_worker.succeeded.connect(self._cli_succeeded)
+        self._cli_worker.failed.connect(self._cli_failed)
+        self._cli_worker.cancelled.connect(self._cli_was_cancelled)
+        self._cli_worker.finished.connect(self._cli_finished)
+        self._set_cli_busy(True)
+        self._cli_worker.start()
+
+    def _cli_succeeded(self, executable):
+        self._cli_result = executable
+
+    def _cli_failed(self, failure):
+        self._cli_failure = failure
+
+    def _cli_was_cancelled(self, message):
+        self._cli_cancelled = message
+
+    def _cli_finished(self):
+        worker = self._cli_worker
+        executable, failure, cancelled = self._cli_result, self._cli_failure, self._cli_cancelled
+        self._cli_worker = None
+        worker.deleteLater()
+        self._set_cli_busy(False)
+        if failure:
+            self.cli_status.setText('CLI Tool setup failed. Your paths were retained; retry or choose an existing CLI.')
+            if not self._close_after_cancel:
+                QMessageBox.critical(self, 'Cannot set up CLI Tool', failure)
+        elif cancelled:
+            self.cli_status.setText(cancelled)
+        elif executable is not None:
+            self.cli.setText(str(executable))
+            self.cli_status.setText('CLI Tool is ready. Create the playable game copy when your other paths are set.')
+        else:
+            self.cli_status.setText('CLI Tool setup did not return an executable. Choose an existing CLI or retry.')
+        if self._close_after_cancel:
+            super().reject()
+
     def accept(self):
+        if self._cli_worker is not None:
+            return
         if not all(e.text().strip() for e in (self.original, self.destination, self.cli)):
             QMessageBox.information(self, 'Setup', 'Choose all three paths first.')
             return
         super().accept()
+
+    def reject(self):
+        if self._cli_worker is not None:
+            self._close_after_cancel = True
+            self._cli_worker.cancel_requested.set()
+            self.buttons.button(QDialogButtonBox.StandardButton.Cancel).setEnabled(False)
+            self.cli_status.setText('Canceling CLI Tool setup… The dialog will close when cleanup finishes.')
+            return
+        super().reject()
+
+    def closeEvent(self, event):
+        if self._cli_worker is not None:
+            self.cli_status.setText('CLI Tool setup is running. Use Cancel to stop it before closing.')
+            event.ignore()
+            return
+        super().closeEvent(event)
 
 
 class ReviewDialog(QDialog):
@@ -1015,7 +1120,7 @@ class SongManagerWindow(QMainWindow):
             QMessageBox.information(self, 'Configured game copy',
                 f"Original: {state.get('original', '')}\nPlayable copy: {state.get('destination', '')}\nCLI: {state.get('cli', '')}\nManager workspace: {self.workspace}\n\nUse --workspace with another directory to manage a different game copy.")
             return
-        dialog = SetupDialog(self.manager.state, self)
+        dialog = SetupDialog(self.manager.state, self, workspace=self.workspace)
         if dialog.exec() == QDialog.DialogCode.Accepted:
             original, destination, cli = (e.text().strip() for e in (dialog.original, dialog.destination, dialog.cli))
             self._start_operation('Creating the playable game copy…', lambda progress, cancel: self.manager.setup(original, destination, cli), cancelable=False)

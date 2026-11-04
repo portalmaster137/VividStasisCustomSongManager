@@ -10,7 +10,7 @@ For Linux and Windows executable downloads or local builds, see [executable buil
 
 - Python 3.11 or newer.
 - FFmpeg with the `libvorbis` encoder available on your PATH.
-- UndertaleModTool CLI at `./UndertaleMTCLI` (an executable or a directory containing `UndertaleModCli`), relative to the directory you run the command from. Use `--cli /path/to/UndertaleModCli` to override it.
+- UndertaleModTool CLI: the desktop setup dialog can download the supported version with **Setup CLI Tool**. For command-line builds, place the CLI at `./UndertaleMTCLI` (an executable or a directory containing `UndertaleModCli`), relative to the directory you run the command from. Use `--cli /path/to/UndertaleModCli` to override it.
 - The original game files. The patcher checks the archive hash and rejects other builds or previously patched archives.
 
 ## Build your song

@@ -3,6 +3,8 @@ import importlib.util
 import os
 from pathlib import Path
 import tempfile
+import threading
+import time
 import zipfile
 import unittest
 from unittest.mock import patch
@@ -10,8 +12,9 @@ from unittest.mock import patch
 HAS_QT = importlib.util.find_spec('PySide6') is not None
 if HAS_QT:
     os.environ.setdefault('QT_QPA_PLATFORM', 'offscreen')
-    from PySide6.QtWidgets import QApplication, QMessageBox
-    from song_manager import SongManagerWindow, OszImportDialog
+    from PySide6.QtWidgets import QApplication, QMessageBox, QDialogButtonBox
+    from song_manager import SongManagerWindow, OszImportDialog, SetupDialog
+    from manager_backend import Cancelled
     from osz_import import OszArchive
 
 CHART = '''osu file format v14
@@ -185,6 +188,99 @@ class ManagerActions(unittest.TestCase):
             self.window._restore_clean()
             self.window._delete_song()
             question.assert_not_called()
+
+
+@unittest.skipUnless(HAS_QT, 'PySide6 is not installed')
+class SetupCliActions(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.app = QApplication.instance() or QApplication([])
+
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.workspace = Path(self.temporary.name) / 'manager'
+        self.workspace.mkdir()
+        self.dialog = SetupDialog(dict(original='original-game', destination='playable-game', cli='manual-cli'), workspace=self.workspace)
+
+    def tearDown(self):
+        if self.dialog._cli_worker is not None:
+            self.dialog._cli_worker.cancel_requested.set()
+            self.dialog._cli_worker.wait(5000)
+            self.app.processEvents()
+        self.dialog.close()
+        self.dialog.deleteLater()
+        self.app.processEvents()
+        self.temporary.cleanup()
+
+    def wait_finished(self):
+        deadline = time.monotonic() + 5
+        while self.dialog._cli_worker is not None and time.monotonic() < deadline:
+            self.app.processEvents()
+            time.sleep(.005)
+        self.app.processEvents()
+        self.assertIsNone(self.dialog._cli_worker, 'CLI worker did not finish')
+
+    def test_cli_install_success_updates_path_after_worker_finished(self):
+        executable = self.workspace / 'cli' / 'UndertaleModCli'
+        def install(workspace, progress=None, cancel=None):
+            self.assertEqual(workspace, self.workspace)
+            progress('Checking the supported CLI…')
+            executable.parent.mkdir()
+            executable.write_text('verified test executable')
+            return executable
+        with patch('cli_setup.install_cli', side_effect=install):
+            self.dialog._install_cli()
+            self.assertEqual(self.dialog.cli.text(), 'manual-cli')
+            self.assertFalse(self.dialog.original.isEnabled())
+            self.assertFalse(self.dialog.cli_setup_button.isEnabled())
+            self.assertFalse(self.dialog.buttons.button(QDialogButtonBox.StandardButton.Ok).isEnabled())
+            self.wait_finished()
+        self.assertEqual(self.dialog.cli.text(), str(executable))
+        self.assertEqual(self.dialog.original.text(), 'original-game')
+        self.assertEqual(self.dialog.destination.text(), 'playable-game')
+        self.assertTrue(self.dialog.original.isEnabled())
+        self.assertTrue(self.dialog.cli_setup_button.isEnabled())
+        self.assertIn('ready', self.dialog.cli_status.text())
+
+    def test_cli_install_failure_keeps_paths_and_allows_retry(self):
+        with patch('cli_setup.install_cli', side_effect=ValueError('Test download failure')), patch.object(QMessageBox, 'critical') as error:
+            self.dialog._install_cli()
+            self.wait_finished()
+            error.assert_called_once()
+            self.assertIn('Test download failure', str(error.call_args))
+        self.assertEqual(self.dialog.cli.text(), 'manual-cli')
+        self.assertEqual(self.dialog.original.text(), 'original-game')
+        self.assertEqual(self.dialog.destination.text(), 'playable-game')
+        self.assertTrue(self.dialog.buttons.button(QDialogButtonBox.StandardButton.Ok).isEnabled())
+        with patch('cli_setup.install_cli', return_value=self.workspace / 'retry-cli'):
+            self.dialog._install_cli()
+            self.wait_finished()
+        self.assertEqual(self.dialog.cli.text(), str(self.workspace / 'retry-cli'))
+
+    def test_cli_cancel_waits_for_worker_and_close_is_guarded(self):
+        entered = threading.Event()
+        finish = threading.Event()
+        def install(workspace, progress=None, cancel=None):
+            entered.set()
+            while not finish.is_set():
+                time.sleep(.005)
+            if cancel():
+                raise Cancelled('Test CLI setup cancelled')
+            return workspace / 'should-not-be-selected'
+        self.dialog.show()
+        with patch('cli_setup.install_cli', side_effect=install):
+            self.dialog._install_cli()
+            self.assertTrue(entered.wait(2))
+            self.assertFalse(self.dialog.close())
+            self.assertTrue(self.dialog.isVisible())
+            self.dialog.reject()
+            self.assertIsNotNone(self.dialog._cli_worker)
+            self.assertTrue(self.dialog._cli_worker.cancel_requested.is_set())
+            self.assertTrue(self.dialog.isVisible())
+            finish.set()
+            self.wait_finished()
+        self.assertFalse(self.dialog.isVisible())
+        self.assertEqual(self.dialog.cli.text(), 'manual-cli')
 
 
 if __name__ == '__main__':
