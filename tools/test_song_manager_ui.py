@@ -3,6 +3,7 @@ import importlib.util
 import os
 from pathlib import Path
 import tempfile
+import zipfile
 import unittest
 from unittest.mock import patch
 
@@ -10,7 +11,8 @@ HAS_QT = importlib.util.find_spec('PySide6') is not None
 if HAS_QT:
     os.environ.setdefault('QT_QPA_PLATFORM', 'offscreen')
     from PySide6.QtWidgets import QApplication, QMessageBox
-    from song_manager import SongManagerWindow
+    from song_manager import SongManagerWindow, OszImportDialog
+    from osz_import import OszArchive
 
 CHART = '''osu file format v14
 [General]
@@ -88,6 +90,78 @@ class ManagerActions(unittest.TestCase):
         self.assertEqual((game / 'data.win').read_bytes(), b'unchanged-game')
         self.assertTrue(any('Pending removal' in self.window.list.item(i).text()
                             for i in range(self.window.list.count())))
+
+    def archive_fixture(self):
+        archive = self.root / 'song.osz'
+        source = CHART.replace('Mode:3', 'AudioFilename: audio.ogg\nMode:3')
+        with zipfile.ZipFile(archive, 'w') as output:
+            output.writestr('audio.ogg', b'OggS-test-asset')
+            output.writestr('other.ogg', b'OggS-other-test-asset')
+            output.writestr('chart.osu', source)
+            output.writestr('other.osu', source.replace('CircleSize:4', 'CircleSize:6'))
+            output.writestr('incompatible.osu', source.replace('Mode:3', 'Mode:0'))
+        return archive
+
+    def test_osz_dialog_requires_assignments_and_audio_rejects_duplicate_slots(self):
+        with OszArchive(self.archive_fixture()) as archive:
+            dialog = OszImportDialog(archive, {'test'}, self.window)
+            self.assertEqual(len(archive.charts), 2)
+            self.assertEqual(len(archive.rejected), 1)
+            self.assertIsNone(dialog.audio_choice.currentData())
+            with self.assertRaises(ValueError):
+                dialog.values()
+            dialog.table.cellWidget(0, 3).setCurrentIndex(1)  # OPENING
+            values = dialog.values()
+            self.assertEqual(values['audio'], 'audio.ogg')
+            self.assertEqual(values['ident'], 'test_2')
+            self.assertEqual(values['assignments']['opening']['level'], 4)
+            dialog.audio_choice.setCurrentIndex(0)
+            with self.assertRaisesRegex(ValueError, 'audio'):
+                dialog.values()
+            dialog.audio_choice.setCurrentIndex(dialog.audio_choice.findData('other.ogg'))
+            dialog.table.cellWidget(1, 3).setCurrentIndex(1)
+            with self.assertRaisesRegex(ValueError, 'more than once'):
+                dialog.values()
+            dialog.deleteLater()
+
+    def test_osz_import_copies_assets_before_archive_closes(self):
+        archive = OszArchive(self.archive_fixture())
+        archive_root = archive.root
+        def choose(dialog):
+            dialog.table.cellWidget(0, 3).setCurrentIndex(1)
+            return dialog.DialogCode.Accepted
+        with patch.object(OszImportDialog, 'exec', choose):
+            self.window._choose_osz_charts(archive)
+        self.assertFalse(archive_root.exists())
+        package = self.window.library / 'test'
+        self.assertTrue((package / 'audio.ogg').is_file())
+        self.assertTrue((package / 'charts' / 'opening.osu').is_file())
+        self.assertIn('test', self.window.manager.state['selected_ids'])
+        self.assertEqual(self.window._current_id, 'test')
+
+    def test_osz_validation_retry_preserves_chart_choices(self):
+        archive_file = self.root / 'hold.osz'
+        source = CHART.replace('Mode:3', 'AudioFilename: audio.ogg\nMode:3')
+        source = source.replace('CircleSize:4', 'CircleSize:6').replace('64,192,1000,1,0,0:0:0:0:', '0,192,1000,128,0,1500:0:0:0:0:')
+        with zipfile.ZipFile(archive_file, 'w') as output:
+            output.writestr('audio.ogg', b'OggS-test-asset')
+            output.writestr('chart.osu', source)
+        visits = []
+        def choose(dialog):
+            visits.append(1)
+            if len(visits) == 1:
+                dialog.table.cellWidget(0, 3).setCurrentIndex(1)
+            else:
+                self.assertEqual(len(visits), 2)
+                self.assertEqual(dialog.table.cellWidget(0, 3).currentData(), 'opening')
+                self.assertFalse((self.window.library / 'test').exists())
+                dialog.table.cellWidget(0, 5).setCurrentIndex(2)  # both bumper taps
+            return dialog.DialogCode.Accepted
+        with patch.object(OszImportDialog, 'exec', choose), patch.object(QMessageBox, 'critical') as error:
+            self.window._choose_osz_charts(OszArchive(archive_file))
+        self.assertEqual(len(visits), 2)
+        error.assert_called_once()
+        self.assertEqual(self.window._metadata['charts']['opening']['bumper_holds'], 'both')
 
     def test_restore_clean_is_separate_worker_action_and_idle_guarded(self):
         calls = []

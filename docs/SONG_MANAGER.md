@@ -14,6 +14,12 @@ FFmpeg and UndertaleModTool CLI are also required. The default CLI location is `
 
 During setup select the complete original game directory and a separate new destination. The manager copies the game and preserves `<workspace>/original/data.win.backup`. Existing backups are verified and reused, never overwritten. Every build starts from that backup. Keep your profile backed up separately; the game's save location can be outside its installation directory.
 
+Use **Auto Import osz…** to create a library song from an osu! archive. The manager inspects the archive in the background, then shows its supported 4K/6K mania charts and lists incompatible charts separately. Assign up to five source charts to different difficulty slots; leave unwanted charts set to Skip. Each slot has an editable level (default 4) and a 6K bumper-hold policy (default reject).
+
+Choose the audio track in the required dropdown. The first assigned chart's `AudioFilename` is suggested when it matches an archive track; every row also shows its referenced audio so you can compare sources. You can change the suggestion, and the chosen track supplies the entire imported song. Optionally choose a cover image from the archive. Title and artist default from the first assigned chart; a unique package ID is suggested automatically. Existing library entries are replaced only after confirmation. A validation error keeps the import dialog's choices for correction.
+
+Import copies the chosen audio, cover and charts into the editable library before closing the archive. It does not install them into the game immediately; use the regular review/build action afterward. Export the resulting song as `.vsc` when a portable package is needed.
+
 Create a song by choosing audio, an optional jacket, and one or more 4K or 6K osu!mania charts. Assign each chart to OPENING, MIDDLE, FINALE, ENCORE, or APOTHEOSIS, and set its level, designer and bumper-hold policy. APOTHEOSIS is directly selectable for custom songs in the game; it does not require an ENCORE chart or a keybind toggle. The normal lane conversion remains unchanged. Use audio matching the chart's timeline. Cover images become 100×100 square jackets.
 
 Import/export uses `.vsc` ZIP archives containing `data.toml` and referenced audio, cover and chart files. Package IDs are stable lowercase identifiers. Updating a library song with the same ID preserves its game ID; unrelated songs must use different IDs. Imported packages are copied into the local library so editing them does not change the original archive.

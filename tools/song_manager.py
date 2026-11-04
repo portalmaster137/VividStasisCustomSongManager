@@ -22,7 +22,7 @@ try:
         QDoubleSpinBox, QFileDialog, QFormLayout, QHBoxLayout, QHeaderView,
         QLabel, QLineEdit, QListWidget, QListWidgetItem, QMainWindow,
         QMessageBox, QPlainTextEdit, QProgressBar, QPushButton, QSplitter,
-        QTableWidget, QVBoxLayout, QWidget,
+        QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget,
     )
 except ImportError as exc:
     raise SystemExit(
@@ -33,6 +33,7 @@ except ImportError as exc:
     ) from exc
 
 from osu_to_vsb import detect_key_count
+from osz_import import OszArchive
 from custom_songs import PACKAGE_DIFFICULTIES, Package, write_metadata, delete_library_song
 from manager_backend import Manager, Cancelled
 
@@ -48,6 +49,16 @@ def identifier(title: str) -> str:
     if not text or not text[0].isalpha():
         text = 'song_' + text
     return text[:64]
+
+
+def unique_identifier(title: str, reserved) -> str:
+    base = identifier(title)
+    candidate, index = base, 2
+    while candidate in reserved:
+        suffix = f'_{index}'
+        candidate = base[:64 - len(suffix)] + suffix
+        index += 1
+    return candidate
 
 
 def osu_metadata(path: Path) -> dict:
@@ -168,6 +179,147 @@ class ReviewDialog(QDialog):
         layout.addWidget(buttons)
 
 
+class OszImportDialog(QDialog):
+    """Choose archive assets and chart assignments before creating a library package."""
+    def __init__(self, archive, reserved_ids, parent=None):
+        super().__init__(parent)
+        self.archive = archive
+        self.reserved_ids = set(reserved_ids)
+        self._title_edited = False
+        self._artist_edited = False
+        self._id_edited = False
+        self._audio_edited = False
+        self.setWindowTitle('Import an osu! archive')
+        self.resize(1100, 700)
+        layout = QVBoxLayout(self)
+        explanation = QLabel('Choose the audio track and up to five charts, one per difficulty, and set their levels. '
+                             'Unassigned charts will be skipped. Each difficulty can be assigned once.')
+        explanation.setWordWrap(True)
+        layout.addWidget(explanation)
+        form = QFormLayout()
+        self.audio_choice = QComboBox()
+        self.audio_choice.addItem('Choose audio…', None)
+        for name in archive.audio:
+            self.audio_choice.addItem(name, name)
+        self.jacket_choice = QComboBox()
+        self.jacket_choice.addItem('Generic game jacket', None)
+        for name in archive.images:
+            self.jacket_choice.addItem(name, name)
+        self.import_title = QLineEdit()
+        self.import_artist = QLineEdit()
+        self.import_id = QLineEdit()
+        self.import_title.setPlaceholderText('Title from the first assigned chart')
+        self.import_artist.setPlaceholderText('Artist from the first assigned chart')
+        self.import_id.setPlaceholderText('A unique library ID is suggested automatically')
+        form.addRow('Audio track', self.audio_choice)
+        form.addRow('Cover image (optional)', self.jacket_choice)
+        form.addRow('Title', self.import_title)
+        form.addRow('Artist', self.import_artist)
+        form.addRow('Package ID', self.import_id)
+        layout.addLayout(form)
+        self.table = QTableWidget(len(archive.charts), 6)
+        self.table.setHorizontalHeaderLabels(['Chart / version', 'Type', 'Referenced audio', 'Import as', 'Level', 'Bumper holds'])
+        self.table.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeMode.Stretch)
+        self.table.horizontalHeader().setSectionResizeMode(2, QHeaderView.ResizeMode.Stretch)
+        self.table.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
+        self.table.setMinimumHeight(200)
+        for row, chart in enumerate(archive.charts):
+            for column, text in ((0, f"{chart['version']}\n{chart['file']}"), (1, f"{chart['keys']}K"), (2, chart.get('audio', ''))):
+                item = QTableWidgetItem(text)
+                item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsEditable)
+                self.table.setItem(row, column, item)
+            slot = QComboBox()
+            slot.addItem('Skip', None)
+            for name in PACKAGE_DIFFICULTIES:
+                slot.addItem(name.upper(), name)
+            slot.currentIndexChanged.connect(self._suggest_metadata)
+            self.table.setCellWidget(row, 3, slot)
+            level = QDoubleSpinBox()
+            level.setRange(0.1, 100)
+            level.setDecimals(2)
+            level.setSingleStep(0.5)
+            level.setValue(4)
+            self.table.setCellWidget(row, 4, level)
+            bumper = QComboBox()
+            bumper.addItem('Reject bumper holds', 'reject')
+            bumper.addItem('Start tap', 'start')
+            bumper.addItem('Start and end taps', 'both')
+            bumper.setEnabled(chart['keys'] == 6)
+            if chart['keys'] == 4:
+                bumper.setToolTip('4K uses normal lanes only; bumper settings are ignored.')
+            self.table.setCellWidget(row, 5, bumper)
+        layout.addWidget(self.table, 1)
+        if archive.rejected:
+            layout.addWidget(QLabel('Unsupported charts — these cannot be imported:'))
+            rejected = QPlainTextEdit()
+            rejected.setReadOnly(True)
+            rejected.setPlainText('\n'.join(f'{name}: {error}' for name, error in archive.rejected))
+            rejected.setMaximumHeight(110)
+            layout.addWidget(rejected)
+        self.import_title.textEdited.connect(self._edit_title)
+        self.import_artist.textEdited.connect(lambda text: setattr(self, '_artist_edited', bool(text)))
+        self.import_id.textEdited.connect(lambda text: setattr(self, '_id_edited', bool(text)))
+        self.audio_choice.activated.connect(lambda index: setattr(self, '_audio_edited', True))
+        buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
+        buttons.button(QDialogButtonBox.StandardButton.Ok).setText('Import to library')
+        buttons.accepted.connect(self.accept)
+        buttons.rejected.connect(self.reject)
+        layout.addWidget(buttons)
+
+    def _edit_title(self, text):
+        self._title_edited = bool(text)
+        if not self._id_edited:
+            self.import_id.setText(unique_identifier(text, self.reserved_ids) if text else '')
+
+    def _suggest_metadata(self, *args):
+        selected = [chart for row, chart in enumerate(self.archive.charts)
+                    if self.table.cellWidget(row, 3).currentData() is not None]
+        if not selected:
+            return
+        first = selected[0]
+        if not self._title_edited:
+            self.import_title.setText(first.get('title') or Path(first['file']).stem)
+        if not self._artist_edited:
+            self.import_artist.setText(first.get('artist') or 'Unknown')
+        if not self._id_edited:
+            self.import_id.setText(unique_identifier(self.import_title.text(), self.reserved_ids))
+        if not self._audio_edited:
+            suggested = self.audio_choice.findData(first.get('audio'))
+            self.audio_choice.setCurrentIndex(max(0, suggested))
+
+    def values(self):
+        audio = self.audio_choice.currentData()
+        if audio is None:
+            raise ValueError('Choose an audio track from the archive.')
+        assignments = {}
+        for row, chart in enumerate(self.archive.charts):
+            slot = self.table.cellWidget(row, 3).currentData()
+            if slot is None:
+                continue
+            if slot in assignments:
+                raise ValueError(f'{slot.upper()} is assigned more than once. Assign each chart to a different slot or choose Skip.')
+            assignments[slot] = dict(file=chart['file'], level=self.table.cellWidget(row, 4).value(),
+                                     bumper_holds=self.table.cellWidget(row, 5).currentData())
+        if not assignments:
+            raise ValueError('Assign at least one supported chart to a difficulty slot.')
+        ident = self.import_id.text().strip()
+        if not re.fullmatch('[a-z][a-z0-9_]{0,63}', ident):
+            raise ValueError('Use a lowercase package ID beginning with a letter, with letters, digits or underscores (64 characters maximum).')
+        title, artist = self.import_title.text().strip(), self.import_artist.text().strip()
+        if not title or not artist:
+            raise ValueError('Provide a title and artist for the imported song.')
+        return dict(audio=audio, assignments=assignments, ident=ident, title=title,
+                    artist=artist, jacket=self.jacket_choice.currentData())
+
+    def accept(self):
+        try:
+            self.values()
+        except ValueError as exc:
+            QMessageBox.information(self, 'Import settings', str(exc))
+            return
+        super().accept()
+
+
 class SongManagerWindow(QMainWindow):
     def __init__(self, workspace: Path):
         super().__init__()
@@ -221,11 +373,13 @@ class SongManagerWindow(QMainWindow):
         library_buttons = QHBoxLayout()
         self.new_button = QPushButton('New song')
         self.import_button = QPushButton('Import .vsc…')
+        self.osz_button = QPushButton('Auto Import osz…')
         self.export_button = QPushButton('Export .vsc…')
         self.delete_button = QPushButton('Delete song…')
         for button in (self.new_button, self.import_button, self.export_button, self.delete_button):
             library_buttons.addWidget(button)
         library_layout.addLayout(library_buttons)
+        library_layout.addWidget(self.osz_button)
         splitter.addWidget(library_panel)
         self.editor = QWidget()
         editor_layout = QVBoxLayout(self.editor)
@@ -292,6 +446,7 @@ class SongManagerWindow(QMainWindow):
         self.open_button.clicked.connect(self._open_game)
         self.new_button.clicked.connect(self._new)
         self.import_button.clicked.connect(self._import)
+        self.osz_button.clicked.connect(self._import_osz)
         self.export_button.clicked.connect(self._export)
         self.delete_button.clicked.connect(self._delete_song)
         self.save_button.clicked.connect(self._save)
@@ -351,7 +506,7 @@ class SongManagerWindow(QMainWindow):
         self.status.setText(message or (f'{len(self._selected_ids)} selected · {len(installed)} installed · {destination}' if configured else 'Set up a game copy to build and play selected library songs.'))
         busy = self._worker is not None
         self.setup_button.setText('Game copy details…' if configured else 'Set up game copy…')
-        for button in (self.setup_button, self.new_button, self.import_button, self.export_button,
+        for button in (self.setup_button, self.new_button, self.import_button, self.osz_button, self.export_button,
                        self.save_button, self.add_chart_button, self.remove_chart_button):
             button.setEnabled(not busy)
         self.delete_button.setEnabled(not busy and self._current_id in self._packages)
@@ -710,6 +865,63 @@ class SongManagerWindow(QMainWindow):
             self._dirty = False
             self._reload_library(focus=imported[-1])
             self._load_editor(imported[-1])
+
+    def _import_osz(self):
+        if self._worker is not None or not self._prompt_unsaved():
+            return
+        if self._current_id:
+            self._reload_library(focus=self._current_id)
+        filename, _ = QFileDialog.getOpenFileName(self, 'Auto import an osu! archive', '', 'osu! archives (*.osz);;All files (*)')
+        if not filename:
+            return
+        # Archive inspection/extraction can be large, so keep it off the UI thread.
+        self._start_operation('Inspecting osu! archive…', lambda progress, cancel: OszArchive(filename),
+                              success=self._choose_osz_charts, cancelable=False)
+
+    def _choose_osz_charts(self, archive):
+        try:
+            with archive:
+                reserved = {folder.name for folder in self.library.iterdir()}
+                reserved.update(self.manager.state.get('assignments', {}))
+                dialog = OszImportDialog(archive, reserved, self)
+                while True:
+                    if dialog.exec() != QDialog.DialogCode.Accepted:
+                        return
+                    choices = dialog.values()
+                    package_id = choices['ident']
+                    replace = (self.library / package_id).exists()
+                    if replace:
+                        question = f'Replace the existing library package {package_id}? Its stable game ID will be retained. Choose Cancel to use a new package ID.'
+                        if QMessageBox.question(self, 'Update library song', question,
+                                                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.Cancel,
+                                                QMessageBox.StandardButton.Cancel) != QMessageBox.StandardButton.Yes:
+                            continue
+                    elif package_id in self.manager.state.get('assignments', {}):
+                        question = f'{package_id} was used by a previous library song. Reuse its reserved game identity? Choose Cancel to import with a new ID.'
+                        if QMessageBox.question(self, 'Reuse package identity', question,
+                                                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.Cancel,
+                                                QMessageBox.StandardButton.Cancel) != QMessageBox.StandardButton.Yes:
+                            continue
+                    try:
+                        # Copy every selected asset before the archive temporary root closes.
+                        with tempfile.TemporaryDirectory(prefix='.osz-import-', dir=self.workspace) as temporary:
+                            with archive.create_package(Path(temporary) / 'package', **choices) as package:
+                                package.install_library(self.library, replace=replace)
+                    except Exception as exc:
+                        self._error('Cannot import the selected charts', exc)
+                        continue  # Keep the user's assignments and metadata for correction.
+                    break
+            self._selected_ids.add(package_id)
+            try:
+                self._persist_selection()
+            except Exception as exc:
+                self._error('Song imported; selection could not be saved', exc)
+            self._dirty = False
+            self._reload_library(focus=package_id)
+            self._load_editor(package_id)
+            self._update_status('Archive imported to the library. Review its charts, then build when ready.')
+        except Exception as exc:
+            self._error('Cannot import osu! archive', exc)
 
     def _export(self):
         if not self._prompt_unsaved():
