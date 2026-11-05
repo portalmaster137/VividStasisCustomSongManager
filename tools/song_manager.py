@@ -22,7 +22,7 @@ try:
         QDoubleSpinBox, QFileDialog, QFormLayout, QHBoxLayout, QHeaderView,
         QLabel, QLineEdit, QListWidget, QListWidgetItem, QMainWindow,
         QMessageBox, QPlainTextEdit, QProgressBar, QPushButton, QSplitter,
-        QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget,
+        QTableWidget, QTableWidgetItem, QTabWidget, QVBoxLayout, QWidget,
     )
 except ImportError as exc:
     raise SystemExit(
@@ -36,6 +36,7 @@ from osu_to_vsb import detect_key_count
 from osz_import import OszArchive
 from custom_songs import PACKAGE_DIFFICULTIES, Package, write_metadata, delete_library_song
 from manager_backend import Manager, Cancelled
+from disk_usage import scan_usage, format_bytes
 
 # Bundled __file__ points inside the extracted runtime; keep user data beside the executable.
 PROJECT = Path(sys.executable).resolve().parent if getattr(sys, "frozen", False) else Path(__file__).resolve().parents[1]
@@ -467,7 +468,28 @@ class SongManagerWindow(QMainWindow):
         self.status.setTextFormat(Qt.TextFormat.PlainText)
         layout.addWidget(self.status)
         splitter = QSplitter()
-        layout.addWidget(splitter, 1)
+        self.tabs = QTabWidget()
+        layout.addWidget(self.tabs, 1)
+        self.tabs.addTab(splitter, 'Song Manager')
+        disk_panel = QWidget()
+        disk_layout = QVBoxLayout(disk_panel)
+        disk_note = QLabel('File sizes exclude filesystem overhead. Links are skipped. Workspace total includes the categories below; game folders are shown separately and may overlap. Refresh after changing files.')
+        disk_note.setWordWrap(True)
+        disk_layout.addWidget(disk_note)
+        self.disk_refresh = QPushButton('Refresh disk usage')
+        disk_layout.addWidget(self.disk_refresh)
+        self.disk_table = QTableWidget(0, 4)
+        self.disk_table.setHorizontalHeaderLabels(['Location', 'Size', 'Status', 'Path'])
+        self.disk_table.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
+        self.disk_table.horizontalHeader().setSectionResizeMode(3, QHeaderView.ResizeMode.Stretch)
+        disk_layout.addWidget(self.disk_table, 1)
+        self.disk_summary = QLabel('Open this tab to measure disk usage.')
+        self.disk_summary.setWordWrap(True)
+        self.disk_summary.setTextFormat(Qt.TextFormat.PlainText)
+        disk_layout.addWidget(self.disk_summary)
+        self.tabs.addTab(disk_panel, 'Disk Space Usage')
+        self.disk_refresh.clicked.connect(self._refresh_disk_usage)
+        self.tabs.currentChanged.connect(self._disk_tab_changed)
         library_panel = QWidget()
         library_layout = QVBoxLayout(library_panel)
         library_layout.addWidget(QLabel('Library — checked songs are included in the next build'))
@@ -570,6 +592,28 @@ class SongManagerWindow(QMainWindow):
         self._new(prompt=False)
         self._update_status()
 
+    def _disk_tab_changed(self, index):
+        if index == 1 and self.disk_table.rowCount() == 0:
+            self._refresh_disk_usage()
+
+    def _refresh_disk_usage(self):
+        state = copy.deepcopy(self.manager.state)
+        self._start_operation('Scanning disk space usage...',
+                              lambda progress, cancel: scan_usage(self.workspace, state, progress, cancel),
+                              self._show_disk_usage)
+
+    def _show_disk_usage(self, result):
+        rows, drives = result
+        self.disk_table.setRowCount(len(rows))
+        for index, (label, path, size, errors) in enumerate(rows):
+            values = [label, format_bytes(size), f'Partial: {errors} unreadable entries' if errors else 'Measured', path]
+            for column, value in enumerate(values):
+                item = QTableWidgetItem(value)
+                item.setToolTip(value)
+                self.disk_table.setItem(index, column, item)
+        self.disk_table.resizeColumnsToContents()
+        self.disk_summary.setText('\n'.join(drives))
+
     def _asset_picker(self, edit, file_filter, title):
         row = QWidget()
         layout = QHBoxLayout(row)
@@ -617,6 +661,7 @@ class SongManagerWindow(QMainWindow):
             button.setEnabled(not busy)
         self.delete_button.setEnabled(not busy and self._current_id in self._packages)
         self.editor.setEnabled(not busy)
+        self.disk_refresh.setEnabled(not busy)
         self.list.setEnabled(not busy)
         self.review_button.setEnabled(configured and not busy)
         self.rollback_button.setEnabled(configured and not busy and bool(self.manager.state.get('previous_installation')))
