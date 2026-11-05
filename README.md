@@ -87,6 +87,8 @@ Custom songs use GameMaker audio and return to song select after playback, skipp
 
 The default workspace is `.song-manager` beside the project, or beside the executable for packaged builds. It contains the library, clean backup, manager state, build logs and stable ID assignments. Keep it when moving or updating the manager.
 
+Open **Disk Space Usage** to measure the library, clean backup, conversion cache, build files, rollback files and other workspace data. The tab also shows configured game folder sizes and available drive space. Use **Refresh disk usage** to update the figures; scans run in the background and can be cancelled. Sizes are logical file sizes, exclude filesystem overhead and skip links. Unreadable entries are marked as partial measurements. Game folders are separate measurements and may overlap with workspace data; do not add every row together.
+
 To manage another game copy or store data elsewhere, launch with a separate workspace:
 
 ```sh

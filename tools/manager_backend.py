@@ -500,8 +500,13 @@ class Manager:
         target.parent.mkdir(parents=True,exist_ok=True)
         temporary=target.with_name('.'+target.name+'.manager-'+uuid.uuid4().hex)
         try:
-            shutil.copy2(source,temporary)
-            with temporary.open('rb') as stream:os.fsync(stream.fileno())
+            # Windows requires a writable descriptor for fsync/_commit.
+            # Flush before copying metadata, which may make the file read-only.
+            with source.open('rb') as incoming, temporary.open('wb') as stream:
+                shutil.copyfileobj(incoming, stream)
+                stream.flush()
+                os.fsync(stream.fileno())
+            shutil.copystat(source,temporary)
             os.replace(temporary,target)
         finally:
             if temporary.exists():temporary.unlink()

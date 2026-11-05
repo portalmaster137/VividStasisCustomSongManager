@@ -62,6 +62,17 @@ class ManagerActions(unittest.TestCase):
         self.window.artist.setText('Artist')
         self.window.audio.setText(str(self.audio))
 
+    def test_disk_usage_tab_renders_sizes_and_partial_results(self):
+        self.assertEqual(self.window.tabs.tabText(1), 'Disk Space Usage')
+        self.window._show_disk_usage(([
+            ('Song library', str(self.window.library), 2048, 0),
+            ('Playable game copy', str(self.root / 'game'), 1024, 2),
+        ], ['Drive: 10 GiB free']))
+        self.assertEqual(self.window.disk_table.rowCount(), 2)
+        self.assertEqual(self.window.disk_table.item(0, 1).text(), '2.00 KiB')
+        self.assertIn('Partial', self.window.disk_table.item(1, 2).text())
+        self.assertEqual(self.window.disk_summary.text(), 'Drive: 10 GiB free')
+
     def test_apotheosis_slot_saves_without_encore(self):
         self.fill()
         self.window._chart_row('apotheosis', str(self.chart))

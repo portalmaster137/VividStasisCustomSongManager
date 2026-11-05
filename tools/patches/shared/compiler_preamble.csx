@@ -13,6 +13,11 @@ string Read(string name) {
     return new Underanalyzer.Decompiler.DecompileContext(context, code, Data.ToolInfo.DecompilerSettings).DecompileToString();
 }
 string ReplaceOnce(string source, string anchor, string replacement) {
+    // Windows script writes also translate newlines inside verbatim strings.
+    // The decompiler emits LF; retain exact matching after normalizing CRLF.
+    source = source.Replace("\r\n", "\n");
+    anchor = anchor.Replace("\r\n", "\n");
+    replacement = replacement.Replace("\r\n", "\n");
     int at = source.IndexOf(anchor, StringComparison.Ordinal);
     if (at < 0 || source.IndexOf(anchor, at + anchor.Length, StringComparison.Ordinal) >= 0)
         throw new Exception("Patch anchor missing or ambiguous: " + anchor);
