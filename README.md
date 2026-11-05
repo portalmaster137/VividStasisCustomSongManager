@@ -1,56 +1,99 @@
-# Getting started: custom Vividstasis songs
+# Vividstasis Custom Song Manager
 
-For the desktop song library, package editor and managed game builds, see [the Song Manager guide](docs/SONG_MANAGER.md). The manager includes **Auto Import osz…** for choosing audio and charts directly from an osu! archive. The command-line workflow below remains available for single-song builds.
+A desktop tool for creating, importing and managing custom Vividstasis songs. [tools/song_manager.py](tools/song_manager.py) maintains an editable song library and builds your selected songs into a separate playable copy of the game.
 
-Build a custom song from an audio file, a **4K or 6K osu!mania `.osu` chart**, and the unaltered `data.win` supplied with this game build.
-
-For Linux and Windows executable downloads or local builds, see [executable builds](docs/EXECUTABLE_BUILDS.md).
+Import 4K or 6K osu!mania charts, assign up to five difficulties per song, add audio and a cover, and share songs as portable `.vsc` packages.
 
 ## Requirements
 
-- Python 3.11 or newer.
+- The complete, unmodified **Vividstasis 6.2.2.2** game installation. Setup checks the original `data.win` hash and rejects unsupported or previously patched archives.
 - FFmpeg with the `libvorbis` encoder available on your PATH.
-- UndertaleModTool CLI: the desktop setup dialog can download the supported version with **Setup CLI Tool**. For command-line builds, place the CLI at `./UndertaleMTCLI` (an executable or a directory containing `UndertaleModCli`), relative to the directory you run the command from. Use `--cli /path/to/UndertaleModCli` to override it.
-- The original game files. The patcher checks the archive hash and rejects other builds or previously patched archives.
+- UndertaleModTool CLI. **Setup CLI Tool** downloads and checks the supported version; you can also select an existing CLI executable or its containing folder.
+- For running from source: Python 3.11 or newer and the dependencies in `requirements.txt`.
 
-## Build your song
+See [Executable builds](docs/EXECUTABLE_BUILDS.md) for Windows and Linux downloads and build instructions. Packaged executables bundle Python and its dependencies. On Linux, launching the Windows game also requires Wine.
 
-From this directory, run:
+## Launch from source
+
+Run these commands from the repository root. A Python virtual environment is recommended.
 
 ```sh
-python tools/patch_custom_song.py \
-  /path/to/music.mp3 \
-  /path/to/chart.osu \
-  vividstasis/data.win \
-  --output-dir custom-build \
-  --chart-id my_song \
-  --cover /path/to/cover.jpg \
-  --bump-both
+python -m pip install -r requirements.txt
+python tools/song_manager.py
 ```
 
-The optional `--cover` image is embedded as the song jacket, resized and center-cropped to 100×100. Omit it to use the generic jacket.
+## Set up a playable game copy
 
-Choose a new output directory for each build. Title, artist and designer come from the chart; override them with `--title`, `--artist` and `--designer`. Use `--level 8` to set the displayed difficulty.
+1. Click **Set up game copy…**.
+2. Choose the complete original game folder and a separate **new or empty** destination folder for the playable copy.
+3. Click **Setup CLI Tool**, or select your existing UndertaleModTool CLI.
+4. Click **Create playable copy**.
 
-Source lanes **1 and 6** become left/right bumpers. Lanes **2–5** become the four normal lanes, preserving holds. Choose how bumper holds are converted:
+Setup copies the complete game and preserves a clean archive in the manager workspace. Every build starts from this backup. Back up your game profile separately, since saves can live outside the game folder.
 
-- `--bump-start`: one bumper at the hold start.
-- `--bump-both`: bumpers at the start and end.
-- `--reject-bump-holds`: reject them; this is the default when no option is given.
+## Add songs to the library
 
-Use audio that matches the chart's timeline, including leading silence. The converter does not transfer osu scroll-speed changes, hitsounds or storyboard effects.
+### Import an osu! archive
 
-## Install and play
+Click **Auto Import osz…** and choose an `.osz` file. In the import dialog:
 
-1. Make a copy of the **complete original game directory**.
-2. Copy `custom-build/data.win` into that copy, replacing its archive.
-3. Merge `custom-build/Charts/` into that copy's `Charts/` directory, preserving existing charts.
-4. Launch the copied game and open the **Custom Charts** pack.
+1. Choose the audio track and, optionally, a cover image.
+2. Assign supported 4K or 6K mania charts to OPENING, MIDDLE, FINALE, ENCORE or APOTHEOSIS. Each difficulty accepts one chart; leave unwanted charts set to Skip.
+3. Set each chart's displayed level and, for 6K charts, its bumper-hold policy.
+4. Review the title, artist and package ID, then import.
 
-The three base difficulties contain the same input chart. Custom playback uses GameMaker audio and skips the stock results screen, returning to song select. This version adds one custom song per clean build.
+The manager suggests metadata and audio from the first assigned chart. Check the referenced audio shown for each chart: the selected audio track is used for the entire song.
 
-The builder has passed synthetic compilation, saved-archive, audio and chart checks. **In-game playback has not yet been verified here.** Test with a copied game and backed-up profile. Build logs and generated patch code are in `custom-build/build/`.
+### Create or edit a song
 
-For more detail, see [the builder guide](docs/BUILD_CUSTOM_SONG.md), [chart registration](docs/CHART_REGISTRATION.md), [custom audio](docs/CUSTOM_AUDIO.md), and [the VSB format](docs/VSB_FORMAT.md).
+Click **New song**, choose audio and an optional cover, then use **Add chart files…** to add `.osu` charts. Set their difficulty slots, levels, designers and bumper-hold policies, then click **Save song to library**. Select an existing library song to edit it.
 
-Chart type is auto-detected from `CircleSize`. 4K columns map directly to the four normal lanes and preserve holds. Bumper policies apply only to 6K charts. In the manager, the Type column shows 4K or 6K and bumper controls are disabled for 4K; switching back to 6K restores the existing policy selection. No package mode field is required.
+Songs can contain any nonempty subset of the five difficulty slots. APOTHEOSIS can be used without ENCORE. Covers are resized and center-cropped to 100 × 100 pixels.
+
+### Share packages
+
+Use **Import .vsc…** to copy packages into your library and **Export .vsc…** to share a saved song. Packages contain the metadata and referenced audio, cover and chart files. Export requires a new filename.
+
+Package IDs identify songs across updates. Replacing a package with the same ID preserves its game ID; use different IDs for unrelated songs.
+
+## Build and play
+
+1. Check the library songs you want installed.
+2. Click **Review & build…** to review additions, updates and removals.
+3. Click **Build and install**. The manager stages and verifies the build before installing it into the playable copy.
+4. Click **Launch game** and open the **Custom Charts** pack.
+
+Saving or importing a library song does not install it immediately. Unchecking a song removes it from the next committed build while keeping its editable package. Building with no songs selected restores the stock archive and removes manager-owned custom chart folders.
+
+- **Restore previous build** restores the previous complete manager installation.
+- **RESTORE (clean game)** restores the pristine archive and removes manager-installed custom charts.
+- **Delete song…** deletes the editable library package. An installed copy remains until the next build or clean restore; export first if you want to keep a portable copy.
+
+Both restore actions retain the library and reserved song IDs.
+
+## Chart conversion and playback
+
+4K charts map directly to the four normal lanes and preserve holds. For 6K charts, the two outer lanes become left and right bumpers, while the middle four become normal lanes. Choose how outer-lane holds are handled:
+
+- **Reject bumper holds**: reject charts containing them (the default).
+- **Start tap**: create a bumper at the hold start.
+- **Start and end taps**: create bumpers at both ends.
+
+Bumper controls are disabled for 4K charts. Use audio that matches the chart timeline, including leading silence. Conversion does not transfer osu! scroll-speed changes, hitsounds or storyboard effects.
+
+Custom songs use GameMaker audio and return to song select after playback, skipping the stock results screen. A custom score system is not included. Interactive desktop behavior, playback and visual layout still need verification on the target platform.
+
+## Workspace and further documentation
+
+The default workspace is `.song-manager` beside the project, or beside the executable for packaged builds. It contains the library, clean backup, manager state, build logs and stable ID assignments. Keep it when moving or updating the manager.
+
+To manage another game copy or store data elsewhere, launch with a separate workspace:
+
+```sh
+python tools/song_manager.py --workspace /path/to/workspace
+```
+
+- [Detailed Song Manager guide](docs/SONG_MANAGER.md)
+- [Executable downloads and local builds](docs/EXECUTABLE_BUILDS.md)
+- [Command-line single-song builder](docs/BUILD_CUSTOM_SONG.md)
+- [Chart registration](docs/CHART_REGISTRATION.md), [custom audio](docs/CUSTOM_AUDIO.md) and [VSB format](docs/VSB_FORMAT.md)
