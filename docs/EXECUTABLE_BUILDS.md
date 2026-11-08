@@ -23,3 +23,23 @@ python tools/package_manager.py --platform linux-x64
 On Windows, use `--platform windows-x64` for the packaging step. Executables are written to `dist/`; distributable archives and checksums are in `release/`. Run each platform build on that platform. The workflow runs the test suite with Qt offscreen rendering and checks that the packaged executable accepts `--help` before uploading its archive.
 
 Resource and executable paths follow [PyInstaller's runtime conventions](https://pyinstaller.org/en/stable/runtime-information.html): read bundled templates relative to their module, and locate persistent user files relative to the executable. The pipeline has not been run on GitHub from this workspace; its first Actions run will validate the native builds and Qt tests.
+
+## Nix (Linux)
+
+With flakes enabled, build or launch the manager from the repository:
+
+```sh
+nix build
+./result/bin/vividstasis-song-manager
+# Or build and launch directly:
+nix run
+```
+
+The flake supports x86_64 and aarch64 Linux and includes Python, PySide6,
+certifi, FFmpeg, and the patch templates. Its default workspace is
+`~/.local/share/vividstasis-song-manager`; pass
+`--workspace /path/to/workspace` (after `nix run --` when using Nix)
+to override it. Game files and UndertaleModTool are still required.
+On NixOS, the downloaded UndertaleModTool executable may require a compatible
+runtime environment such as nix-ld. Wine must be installed separately to
+launch the Windows game.
